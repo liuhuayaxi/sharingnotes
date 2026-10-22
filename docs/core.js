@@ -47,3 +47,35 @@ export function highlightedHtml(text, query) {
 export function reviewLabel(status) {
   return ({passed:'已自动核对',pending:'待核对',failed:'核对未通过',needs_review:'待核对',unknown:'未标注核对状态'})[status] || '待核对';
 }
+// Sidebar course badges come from each course's own name, never from list
+// order. Published courses keep a fixed badge so a new course can never change
+// them; other names use keyword rules, then the first distinctive character of
+// the name that no other course uses.
+const KNOWN_COURSE_SYMBOLS = {'光电子器件（全英文）':'器','光电子学':'电','微型计算机原理与接口技术':'微','激光原理':'激','物理光学':'物','通信原理C':'信'};
+const courseKey = name => String(name || '').normalize('NFKC').replace(/\s+/g, '').replace(/\(/g, '（').replace(/\)/g, '）');
+const COURSE_SYMBOL_RULES = [['器件','器'],['光电子','电'],['计算机','微'],['激光','激'],['物理','物'],['通信','信'],['信号','号'],['电路','路']];
+const GENERIC_SYMBOL_CHARS = new Set([...'课程原理学与和及的之基础概论导引全英文中双语实验（）()［］[]·、，, -—_：:']);
+const symbolChars = name => [...String(name || '').normalize('NFKC')].filter(c => /[\p{Script=Han}\p{L}\p{N}]/u.test(c));
+export function courseSymbols(courses) {
+  const result = new Map(), used = new Set(['全']);
+  const names = [...new Set((courses || []).map(String).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+  const take = (name, symbol) => { result.set(name, symbol); used.add(symbol); };
+  for (const name of names) {
+    const known = KNOWN_COURSE_SYMBOLS[courseKey(name)];
+    if (known && !used.has(known)) take(name, known);
+  }
+  for (const name of names) {
+    if (result.has(name)) continue;
+    const rule = COURSE_SYMBOL_RULES.find(([key, symbol]) => name.includes(key) && !used.has(symbol));
+    if (rule) take(name, rule[1]);
+  }
+  for (const name of names) {
+    if (result.has(name)) continue;
+    const chars = symbolChars(name);
+    const symbol = chars.find(c => !GENERIC_SYMBOL_CHARS.has(c) && !used.has(c.toLocaleUpperCase()))
+      || chars.find(c => !used.has(c.toLocaleUpperCase())) || '课';
+    take(name, symbol.toLocaleUpperCase());
+  }
+  return result;
+}
+export function courseSymbol(course, courses = [course]) { return course ? courseSymbols(courses).get(course) || '课' : '全'; }

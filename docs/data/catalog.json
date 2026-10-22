@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T19:43:17+08:00",
+  "publishedAt": "2026-10-22T19:56:28+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -85,12 +85,12 @@
       "course": "光电子学",
       "title": "低维半导体与量子阱激光器",
       "date": "2026-10-19",
-      "abstract": "系统阐述以量子阱为核心的低维半导体激光器物理模型、能带与阶跃态密度、性能优势及光限制结构，拓展多量子阱与应变工程，并介绍激光器稳态与瞬态性能分类及 P-I 工作特性。",
+      "abstract": "",
       "reviewStatus": "skipped",
-      "version": "2464580db2b9ffddd31534a532b8d01e9127275afb941adb5f37c85b5e3613f6",
-      "wordCount": 30418,
+      "version": "b5a7d51465cdb11f66a4642a91c749a38f18b82241b437c30a3ddbb7e07116a0",
+      "wordCount": 50771,
       "imageCount": 7,
-      "file": "notes/646ea86148bfe4401acc-2464580db2b9.json",
+      "file": "notes/646ea86148bfe4401acc-b5a7d51465cd.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-19T09:50:00+08:00"
     },

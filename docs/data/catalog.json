@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T23:05:46+08:00",
+  "publishedAt": "2026-10-23T00:40:03+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -183,12 +183,12 @@
       "course": "微型计算机原理与接口技术",
       "title": "8086算术运算与逻辑移位指令",
       "date": "2026-10-15",
-      "abstract": "本课系统讲解 8086 微处理器的算术运算与逻辑移位指令，重点涵盖加减乘除、比较、BCD 码十进制调整 DAA 机理，以及逻辑运算、移位与循环移位指令的操作规则、寻址修饰与状态标志位变化特性。",
-      "reviewStatus": "passed",
-      "version": "4e498112bdddc836b26314152edeea9ef07b58b4eacae7394fa680245f88a9e2",
-      "wordCount": 41968,
-      "imageCount": 25,
-      "file": "notes/edd25264da1d43a53094-4e498112bddd.json",
+      "abstract": "8086算术运算与逻辑移位指令",
+      "reviewStatus": "skipped",
+      "version": "063935a04076ee22cb861ec8a95e829eb64da81b38901ea89a0432b70bd0aa3c",
+      "wordCount": 16117,
+      "imageCount": 10,
+      "file": "notes/edd25264da1d43a53094-063935a04076.json",
       "sourceCount": 64,
       "lessonAt": "2026-10-15T15:35:00+08:00"
     },

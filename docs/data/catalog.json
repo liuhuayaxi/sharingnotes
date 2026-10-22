@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T19:36:53+08:00",
+  "publishedAt": "2026-10-22T19:43:17+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -59,10 +59,10 @@
       "date": "2026-10-19",
       "abstract": "依据第二次翻转课堂课件，整理 FM/PM、调频带宽与抗噪声推导、频分复用及三道计算题。",
       "reviewStatus": "unreviewed",
-      "version": "9297158b222e7216d7b2fee63ca4e905572a0f59f8a7eeb68bae33344182b03c",
-      "wordCount": 14356,
+      "version": "52598691ada896931e8bb51733fb4321990da68172c159feb5242b42193bf4c0",
+      "wordCount": 16467,
       "imageCount": 7,
-      "file": "notes/d8af181ee3001418bd56-9297158b222e.json",
+      "file": "notes/d8af181ee3001418bd56-52598691ada8.json",
       "sourceCount": 0,
       "lessonAt": "2026-10-19T08:00:00+08:00"
     },

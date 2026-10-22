@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T16:46:13+08:00",
+  "publishedAt": "2026-10-22T19:18:56+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -29,12 +29,12 @@
       "course": "光电子学",
       "title": "半导体激光器工作特性与光场模式",
       "date": "2026-10-21",
-      "abstract": "半导体激光器的稳态特性与核心物理机制，涵盖有源区几何尺寸与工作温度对阈值的调控规律、四种量子及功率效率表征体系、近远场发散角计算，以及谐振腔光场模式与单模控制途径。",
+      "abstract": "",
       "reviewStatus": "skipped",
-      "version": "2a4d11edb63f763744292f6f19db7dd5d9630d5e04c0fe607f31482187dede87",
-      "wordCount": 40320,
-      "imageCount": 13,
-      "file": "notes/8f971580ade45771a9a1-2a4d11edb63f.json",
+      "version": "32ed4c21de3f113fbd92e6dd5fd6607defcd63d69c96d41ed48bc26342c3e960",
+      "wordCount": 49352,
+      "imageCount": 10,
+      "file": "notes/8f971580ade45771a9a1-32ed4c21de3f.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-21T08:00:00+08:00"
     },

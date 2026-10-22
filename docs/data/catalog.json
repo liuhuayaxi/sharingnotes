@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-23T01:53:03+08:00",
+  "publishedAt": "2026-10-23T01:53:26+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -125,7 +125,7 @@
     {
       "id": "21acf8055dab7fdc964e",
       "course": "物理光学",
-      "title": "全反射、隐失波与光在介质中的传播规律",
+      "title": "全反射与隐失波的物理特性",
       "date": "2026-10-16",
       "abstract": "全反射、隐失波与光在介质中的传播规律",
       "reviewStatus": "skipped",
@@ -171,10 +171,10 @@
       "date": "2026-10-15",
       "abstract": "光学谐振腔横模与自再现模理论",
       "reviewStatus": "skipped",
-      "version": "6ca4122411afc9f8753e6ecc79d2d2acb02682f4302e2075c77970b6b9381d42",
-      "wordCount": 20298,
+      "version": "7a538b1915e98ec9db2a16a0dda54fde1014e81212ffd73126406970d830141d",
+      "wordCount": 10614,
       "imageCount": 0,
-      "file": "notes/e669084ef0b919712a67-6ca4122411af.json",
+      "file": "notes/e669084ef0b919712a67-7a538b1915e9.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-15T09:50:00+08:00"
     },

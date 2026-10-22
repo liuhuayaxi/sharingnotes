@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:11:41+08:00",
+  "publishedAt": "2026-10-22T21:13:14+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -255,10 +255,10 @@
       "date": "2026-10-12",
       "abstract": "半导体激光器工作原理与阈值条件",
       "reviewStatus": "skipped",
-      "version": "1a0ec1861578d9b809d4dd855c95ea29ec84521223c3291f08bdfe872bd09ae6",
-      "wordCount": 34709,
-      "imageCount": 18,
-      "file": "notes/44fad1735fadbfff2cdb-1a0ec1861578.json",
+      "version": "b2a5049ffc159d48dd60256ead57beab3f301d7684d8a46e86eeade5c9852506",
+      "wordCount": 32397,
+      "imageCount": 10,
+      "file": "notes/44fad1735fadbfff2cdb-b2a5049ffc15.json",
       "sourceCount": 95,
       "lessonAt": "2026-10-12T09:50:00+08:00"
     },

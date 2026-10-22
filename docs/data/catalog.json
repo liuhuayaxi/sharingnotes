@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T20:09:11+08:00",
+  "publishedAt": "2026-10-22T20:12:17+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -253,13 +253,13 @@
       "course": "通信原理 C",
       "title": "通信原理：信息度量与信道容量",
       "date": "2026-10-10",
-      "abstract": "涵盖通信系统模型与信息熵度量、香农信道容量公式、经典数字调制技术（ASK、FSK、PSK、QAM），以及基带传输中消除码间串扰的奈奎斯特准则与升余弦滚降脉冲成形。",
-      "reviewStatus": "unknown",
-      "version": "a43122ded67d6a930c2ebe351392d761deb2d4ef8979be74b7d6182772fc5c24",
-      "wordCount": 11185,
-      "imageCount": 0,
-      "file": "notes/e66ed74f3ace74a2197f-a43122ded67d.json",
-      "sourceCount": 44,
+      "abstract": "通信原理：信息度量与信道容量",
+      "reviewStatus": "skipped",
+      "version": "482a8623eb5f175da7ea394131b71c49ee67f4d7196f4835838056e69ad3a7c4",
+      "wordCount": 18436,
+      "imageCount": 8,
+      "file": "notes/e66ed74f3ace74a2197f-482a8623eb5f.json",
+      "sourceCount": 43,
       "lessonAt": "2026-10-10T09:50:00+08:00"
     },
     {

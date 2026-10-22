@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T20:07:39+08:00",
+  "publishedAt": "2026-10-22T20:09:11+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -58,7 +58,7 @@
       "title": "通信原理C（混合式） · 2026-10-19 08:00–09:35",
       "date": "2026-10-19",
       "abstract": "依据第二次翻转课堂课件，整理 FM/PM、调频带宽与抗噪声推导、频分复用及三道计算题。",
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "skipped",
       "version": "52598691ada896931e8bb51733fb4321990da68172c159feb5242b42193bf4c0",
       "wordCount": 16467,
       "imageCount": 7,

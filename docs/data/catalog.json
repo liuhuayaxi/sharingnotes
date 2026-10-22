@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T22:44:36+08:00",
+  "publishedAt": "2026-10-22T22:48:06+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -185,10 +185,10 @@
       "date": "2026-10-14",
       "abstract": "通信原理：模拟线性调制与抗噪性能分析",
       "reviewStatus": "skipped",
-      "version": "f3fb8073c0d479988048fb4fab95244035b322dd8388288509b04f2db448a537",
-      "wordCount": 30700,
+      "version": "e117dc30e53a821b34e21efe884c9487139455df63f9d79b643bf717854e04f6",
+      "wordCount": 30673,
       "imageCount": 12,
-      "file": "notes/72eed12466747d4a6ba8-f3fb8073c0d4.json",
+      "file": "notes/72eed12466747d4a6ba8-e117dc30e53a.json",
       "sourceCount": 94,
       "lessonAt": "2026-10-14T09:50:00+08:00"
     },

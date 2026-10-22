@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T20:12:17+08:00",
+  "publishedAt": "2026-10-22T20:13:26+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -169,12 +169,12 @@
       "course": "通信原理 C",
       "title": "通信原理：模拟线性调制与抗噪性能分析",
       "date": "2026-10-14",
-      "abstract": "本讲围绕模拟通信系统的线性调制展开，系统讲解AM、DSB、SSB和VSB的时频域特性、调制解调原理及滤波准则，并定量分析各调制体制在加性高斯白噪声信道下的抗噪性能与制度增益。",
-      "reviewStatus": "passed",
-      "version": "804775583d57eb20ed5f5c14e31142b8c7a63fa0409069777be2f1d4ef360186",
-      "wordCount": 42492,
-      "imageCount": 0,
-      "file": "notes/72eed12466747d4a6ba8-804775583d57.json",
+      "abstract": "通信原理：模拟线性调制与抗噪性能分析",
+      "reviewStatus": "skipped",
+      "version": "25a22a6821b6d97059b7541fd160ace1b28fc8f3a8065d675e5d7a7c298c3b81",
+      "wordCount": 33481,
+      "imageCount": 11,
+      "file": "notes/72eed12466747d4a6ba8-25a22a6821b6.json",
       "sourceCount": 94,
       "lessonAt": "2026-10-14T09:50:00+08:00"
     },

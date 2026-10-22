@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:15:58+08:00",
+  "publishedAt": "2026-10-22T21:18:29+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -507,10 +507,10 @@
       "date": "2026-09-07",
       "abstract": "信息量、信源熵与通信系统性能指标",
       "reviewStatus": "skipped",
-      "version": "9c5080c7f11b9d0164c6f12e19ed613c70ef9bd819d2f6526586c456d0f05563",
-      "wordCount": 27397,
+      "version": "cdd937e3fcffd5e91a48a4f3b79d12ba74e2f89664517d8bbc4dbf149d5599fb",
+      "wordCount": 17911,
       "imageCount": 10,
-      "file": "notes/7d284003db5262ffb280-9c5080c7f11b.json",
+      "file": "notes/7d284003db5262ffb280-cdd937e3fcff.json",
       "sourceCount": 32,
       "lessonAt": "2026-09-07T16:47:28+08:00"
     },

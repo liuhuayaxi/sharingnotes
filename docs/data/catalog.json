@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T20:13:26+08:00",
+  "publishedAt": "2026-10-22T20:15:49+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -239,12 +239,12 @@
       "course": "光电子学",
       "title": "半导体激光器工作原理与阈值条件",
       "date": "2026-10-12",
-      "abstract": "本节讲解半导体激光器的工作原理与基本结构，深入剖析受激辐射光放大、斯特恩增益模型与增益钳制效应，系统推导激光器阈值振幅与相位条件，并分析腔损耗及纵模选模机制。",
-      "reviewStatus": "passed",
-      "version": "2dd0cca1494a870a937a12b96820647e4dcb31d66275354c38cd445192765786",
-      "wordCount": 49741,
-      "imageCount": 11,
-      "file": "notes/44fad1735fadbfff2cdb-2dd0cca1494a.json",
+      "abstract": "半导体激光器工作原理与阈值条件",
+      "reviewStatus": "skipped",
+      "version": "1a0ec1861578d9b809d4dd855c95ea29ec84521223c3291f08bdfe872bd09ae6",
+      "wordCount": 34709,
+      "imageCount": 18,
+      "file": "notes/44fad1735fadbfff2cdb-1a0ec1861578.json",
       "sourceCount": 95,
       "lessonAt": "2026-10-12T09:50:00+08:00"
     },

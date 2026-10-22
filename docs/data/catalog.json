@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T20:00:27+08:00",
+  "publishedAt": "2026-10-22T20:07:39+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -113,12 +113,12 @@
       "course": "光电子学",
       "title": "DFB与VCSEL半导体激光器原理与特性",
       "date": "2026-10-16",
-      "abstract": "基于光子状态调控的半导体激光器体系，涵盖FP腔物理局限与多纵模成因、DFB激光器的布拉格光栅耦合波选模机理与阈值模谱特性，以及VCSEL超短微腔结构与DBR分布式布拉格反射器设计。",
-      "reviewStatus": "passed",
-      "version": "4d36c39fca38e6460e09d0eb827227c3563b9c63e9ff42c7fb888671d09854f8",
-      "wordCount": 47725,
-      "imageCount": 15,
-      "file": "notes/7e2d5d8510f7d45caed9-4d36c39fca38.json",
+      "abstract": "DFB与VCSEL半导体激光器原理与特性",
+      "reviewStatus": "skipped",
+      "version": "c74ccd43056ed880735e682708528bdbe24d1c1303a905fa34a558ecedd2538b",
+      "wordCount": 34214,
+      "imageCount": 10,
+      "file": "notes/7e2d5d8510f7d45caed9-c74ccd43056e.json",
       "sourceCount": 96,
       "lessonAt": "2026-10-16T15:35:00+08:00"
     },

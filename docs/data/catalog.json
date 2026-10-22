@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T19:19:40+08:00",
+  "publishedAt": "2026-10-22T19:36:08+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -15,12 +15,12 @@
       "course": "通信原理 C",
       "title": "通信原理：数字基带传输系统与线路编码",
       "date": "2026-10-21",
-      "abstract": "数字基带传输系统核心理论，涵盖基带信号生成机制、符号映射与脉冲成形、码间串扰成因、功率谱推导与位同步提取，以及AMI和HDB3线路编码规则。",
+      "abstract": "",
       "reviewStatus": "skipped",
-      "version": "386ecdd68562c60b096c1336b81f9f10b656a383b62ca1ba8a9f5fd078aac778",
-      "wordCount": 41821,
-      "imageCount": 3,
-      "file": "notes/62d28b8a26fce34bed0d-386ecdd68562.json",
+      "version": "c3de1b296bfd322aa06629bca8b6dec06f417117ae30e186c3539d66d4f8880b",
+      "wordCount": 37076,
+      "imageCount": 16,
+      "file": "notes/62d28b8a26fce34bed0d-c3de1b296bfd.json",
       "sourceCount": 92,
       "lessonAt": "2026-10-21T09:50:00+08:00"
     },

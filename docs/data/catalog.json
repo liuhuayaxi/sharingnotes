@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-23T00:45:21+08:00",
+  "publishedAt": "2026-10-23T01:16:05+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -185,10 +185,10 @@
       "date": "2026-10-15",
       "abstract": "8086算术运算与逻辑移位指令",
       "reviewStatus": "skipped",
-      "version": "063935a04076ee22cb861ec8a95e829eb64da81b38901ea89a0432b70bd0aa3c",
-      "wordCount": 16117,
-      "imageCount": 10,
-      "file": "notes/edd25264da1d43a53094-063935a04076.json",
+      "version": "2910d5e493e12d9b74b2855fd450c790c020ac83355874dbc7052d5d0ae38d15",
+      "wordCount": 14711,
+      "imageCount": 11,
+      "file": "notes/edd25264da1d43a53094-2910d5e493e1.json",
       "sourceCount": 64,
       "lessonAt": "2026-10-15T15:35:00+08:00"
     },

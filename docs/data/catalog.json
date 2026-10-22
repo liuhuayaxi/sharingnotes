@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T22:09:52+08:00",
+  "publishedAt": "2026-10-22T22:44:36+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -269,10 +269,10 @@
       "date": "2026-10-10",
       "abstract": "通信原理：信息度量与系统性能指标",
       "reviewStatus": "skipped",
-      "version": "e3c0c65ff4434f6b9df086564de2a5c1253f201fcc289dce90dab90cd1052bb8",
-      "wordCount": 20632,
+      "version": "1930777956598dd8dbdbba012c17f2e6842ace13131798c0f5dfe16a82e7cede",
+      "wordCount": 14558,
       "imageCount": 3,
-      "file": "notes/e66ed74f3ace74a2197f-e3c0c65ff443.json",
+      "file": "notes/e66ed74f3ace74a2197f-193077795659.json",
       "sourceCount": 43,
       "lessonAt": "2026-10-10T09:50:00+08:00"
     },

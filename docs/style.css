@@ -45,6 +45,17 @@
 
 .material-pending{font-size:10px;color:var(--muted);padding:8px;white-space:nowrap}
 
+/* Clickable places inside notes (source citations, in-note anchors, other
+   links) are blue so readers can tell them apart from plain text. Only <a>
+   elements change; ordinary text keeps its colour. Dark chip rules use
+   :is(#note-body,.markdown-body) to outrank the older dark :is() reset. */
+.markdown-body a{--link:#1a5fb4;--link-hover:#0b4596;--link-line:#9dbbe6;--chip-bg:#eaf2fe;--chip-bg-hover:#d6e6fd;--chip-line:#b9d0f3;color:var(--link);border-bottom:1px solid var(--link-line);cursor:pointer;transition:background-color .12s,color .12s,border-color .12s}
+.markdown-body a:hover{color:var(--link-hover);border-bottom-color:var(--link-hover);background:var(--chip-bg)}
+.markdown-body a[href^="#source-"]{color:var(--link);background:var(--chip-bg);border:1px solid var(--chip-line);border-radius:999px;padding:1px 6px}
+.markdown-body a[href^="#source-"]:hover{color:var(--link-hover);background:var(--chip-bg-hover);border-color:var(--link)}
+.markdown-body a:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+@media screen{:root[data-theme=dark] .markdown-body a{--link:#8ab4f8;--link-hover:#aecbfa;--link-line:#4f74ad;--chip-bg:#0f1a2b;--chip-bg-hover:#18294a;--chip-line:#3a5b8f;color:var(--link);border-bottom-color:var(--link-line)}:root[data-theme=dark] .markdown-body a:hover{color:var(--link-hover);border-bottom-color:var(--link-hover);background:var(--chip-bg)}:root[data-theme=dark] :is(#note-body,.markdown-body) a[href^="#source-"]{color:var(--link);background:var(--chip-bg);border-color:var(--chip-line)}:root[data-theme=dark] :is(#note-body,.markdown-body) a[href^="#source-"]:hover{color:var(--link-hover);background:var(--chip-bg-hover);border-color:var(--link)}:root[data-theme=dark] .markdown-body a:focus-visible{outline-color:var(--link)}}
+
 /* Copy protection. Only selection behaviour changes; nothing is moved, resized
    or recoloured on screen. Fields the reader types into stay selectable. */
 html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}

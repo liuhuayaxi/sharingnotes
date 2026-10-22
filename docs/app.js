@@ -1,8 +1,8 @@
-import {renderMarkdown} from './render.js?v=protect2';
-import {escapeHtml as esc, safeNoteFile, stamp, searchText, snippet, highlightedHtml, reviewLabel, safeImageFile, newestNotes} from './core.js?v=protect2';
-import {initWorkspace} from './workspace.js?v=protect2';
-import {initLibrary} from './library.js?v=protect2';
-import {revealNote,revealIndex} from './cipher.js?v=protect2';
+import {renderMarkdown} from './render.js?v=links1';
+import {escapeHtml as esc, safeNoteFile, stamp, searchText, snippet, highlightedHtml, reviewLabel, safeImageFile, newestNotes} from './core.js?v=links1';
+import {initWorkspace} from './workspace.js?v=links1';
+import {initLibrary} from './library.js?v=links1';
+import {revealNote,revealIndex} from './cipher.js?v=links1';
 const $=id=>document.getElementById(id);
 let workspace,library;
 const PREF='shared-course-notes.preferences.v1';

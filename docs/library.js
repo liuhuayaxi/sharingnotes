@@ -1,4 +1,4 @@
-import {escapeHtml as esc,stamp} from './core.js?v=protect2';
+import {escapeHtml as esc,stamp} from './core.js?v=links1';
 export function safeResourceUrl(value,kind){
   return new RegExp('^https://github\\.com/liuhuayaxi/sharingnotes/releases/download/course-media/'+kind+'-[a-f0-9]{64}\\.'+(kind==='audio'?'m4a':'pdf')+'$').test(value||'');
 }

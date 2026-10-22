@@ -1,5 +1,5 @@
 {
-  "publishedAt": "2026-10-23T01:16:05+08:00",
+  "publishedAt": "2026-10-23T01:53:03+08:00",
   "notes": [
     {
       "id": "5261614e3ed96329c982",
@@ -57,9 +57,9 @@
     },
     {
       "id": "21acf8055dab7fdc964e",
-      "file": "notes/21acf8055dab7fdc964e-dc855a14231b.json",
-      "sha256": "d87b312348dc0f6e5ef73084bbe1fcd6f706f4b10174ff5ce461285e25f6caf2",
-      "bytes": 90941
+      "file": "notes/21acf8055dab7fdc964e-6fba023c8b16.json",
+      "sha256": "c9fffb33b5cb1a0faf6befb9df0167bdf4c636d4d9e70a59d30d8d49a87c8a49",
+      "bytes": 80979
     },
     {
       "id": "edd25264da1d43a53094",
@@ -945,16 +945,9 @@
       "height": 864
     },
     {
-      "file": "images/f94e677958bc21ef966724e464d58f5928afd7960d0f308d5799e11ef1ff31f9.png",
-      "sha256": "f94e677958bc21ef966724e464d58f5928afd7960d0f308d5799e11ef1ff31f9",
-      "bytes": 178496,
-      "width": 1152,
-      "height": 864
-    },
-    {
-      "file": "images/8c27bb5d07d8f61224a5d28a45ef8f1a589b113345d104e11096939ff5b80e47.png",
-      "sha256": "8c27bb5d07d8f61224a5d28a45ef8f1a589b113345d104e11096939ff5b80e47",
-      "bytes": 110647,
+      "file": "images/80a1228ef58f531c6f794d0a45bbff679a627b2d1533a9475cdfe9cf2d3f324e.png",
+      "sha256": "80a1228ef58f531c6f794d0a45bbff679a627b2d1533a9475cdfe9cf2d3f324e",
+      "bytes": 343049,
       "width": 1152,
       "height": 864
     },
@@ -962,13 +955,6 @@
       "file": "images/e535dad1fd1f65f82fd3a77fe3ec86334cd7187c2aa048b7644b484f676843ba.png",
       "sha256": "e535dad1fd1f65f82fd3a77fe3ec86334cd7187c2aa048b7644b484f676843ba",
       "bytes": 158323,
-      "width": 1152,
-      "height": 864
-    },
-    {
-      "file": "images/d0e254c576e2c30b72a228ccc6b466c47fd2a167a09aa00e4caaf1b13d5ae735.png",
-      "sha256": "d0e254c576e2c30b72a228ccc6b466c47fd2a167a09aa00e4caaf1b13d5ae735",
-      "bytes": 143446,
       "width": 1152,
       "height": 864
     },
@@ -983,6 +969,13 @@
       "file": "images/59de8a1faf39770da1c6e407457fe53d1cb402f821f533d5e0c3b978556e8f3d.png",
       "sha256": "59de8a1faf39770da1c6e407457fe53d1cb402f821f533d5e0c3b978556e8f3d",
       "bytes": 254307,
+      "width": 1152,
+      "height": 864
+    },
+    {
+      "file": "images/afc4a4dd908f25ba3675b19e330e45b4831be4a5e4d54416528a34d5ea8334cc.png",
+      "sha256": "afc4a4dd908f25ba3675b19e330e45b4831be4a5e4d54416528a34d5ea8334cc",
+      "bytes": 248259,
       "width": 1152,
       "height": 864
     },

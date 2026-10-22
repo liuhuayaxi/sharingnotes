@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-23T01:16:05+08:00",
+  "publishedAt": "2026-10-23T01:53:03+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -129,10 +129,10 @@
       "date": "2026-10-16",
       "abstract": "全反射、隐失波与光在介质中的传播规律",
       "reviewStatus": "skipped",
-      "version": "dc855a14231b27168bf2eef075e72f632676df55f6874552fd338dab142c7284",
-      "wordCount": 22280,
-      "imageCount": 9,
-      "file": "notes/21acf8055dab7fdc964e-dc855a14231b.json",
+      "version": "6fba023c8b162e6f5d0ab53d35c6264f9ec743a587a2155aa7d9f7dce48eb663",
+      "wordCount": 17624,
+      "imageCount": 8,
+      "file": "notes/21acf8055dab7fdc964e-6fba023c8b16.json",
       "sourceCount": 88,
       "lessonAt": "2026-10-16T08:00:00+08:00"
     },

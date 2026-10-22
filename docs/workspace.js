@@ -1,4 +1,4 @@
-import {escapeHtml as esc, newestNotes, snippet} from './core.js?v=protect2';
+import {escapeHtml as esc, newestNotes, snippet} from './core.js?v=links1';
 
 export function initWorkspace({catalog, getFavorites, getCourse, openNote}) {
   const root=document.getElementById('workspace');

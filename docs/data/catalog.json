@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:03:11+08:00",
+  "publishedAt": "2026-10-22T21:07:32+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -99,12 +99,12 @@
       "course": "光电子学",
       "title": "低维半导体与量子阱激光器",
       "date": "2026-10-19",
-      "abstract": "系统讲解低维半导体与量子阱激光器，涵盖子能带、价带失简并、台阶状态密度与跃迁选择定则，解析高微分增益、波长可调控性与分离限制结构，并介绍应变量子阱与半导体激光器P-I特性曲线。",
+      "abstract": "低维半导体与量子阱激光器",
       "reviewStatus": "skipped",
-      "version": "b5a7d51465cdb11f66a4642a91c749a38f18b82241b437c30a3ddbb7e07116a0",
-      "wordCount": 50771,
-      "imageCount": 7,
-      "file": "notes/646ea86148bfe4401acc-b5a7d51465cd.json",
+      "version": "b432673fb50278092b08524e8716b73d0c1133b02b224503793c7e0a8bbd1d26",
+      "wordCount": 21427,
+      "imageCount": 13,
+      "file": "notes/646ea86148bfe4401acc-b432673fb502.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-19T09:50:00+08:00"
     },

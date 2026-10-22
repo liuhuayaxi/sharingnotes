@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-23T00:40:32+08:00",
+  "publishedAt": "2026-10-23T00:45:21+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -155,12 +155,12 @@
       "course": "光电子器件（全英文）",
       "title": "光纤波导理论与非线性光学效应",
       "date": "2026-10-15",
-      "abstract": "涵盖光纤波导导模理论、数值孔径与单模截止条件，光纤损耗、色散与非线性三大传输限制机理，链路功率损耗预算计算，以及克尔效应与受激散射等光纤非线性光学效应体系。",
-      "reviewStatus": "passed",
-      "version": "cf4324231993fa9912006e91ae2ab511d007477398ca33fbfddc4bb719a406db",
-      "wordCount": 49516,
-      "imageCount": 20,
-      "file": "notes/9d0e8d80420bbcda8ab3-cf4324231993.json",
+      "abstract": "光纤波导理论与非线性光学效应",
+      "reviewStatus": "skipped",
+      "version": "98e41d2a7be5406b4f80436764c56658eb4ce8828eddc3958b398966ebc50acf",
+      "wordCount": 26651,
+      "imageCount": 11,
+      "file": "notes/9d0e8d80420bbcda8ab3-98e41d2a7be5.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-15T13:45:00+08:00"
     },

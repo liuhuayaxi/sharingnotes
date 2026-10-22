@@ -1,6 +1,6 @@
 import { marked } from "./vendor/marked/marked.esm.js";
 import DOMPurify from "./vendor/dompurify/purify.es.mjs";
-import { safeImageFile } from './core.js?v=protect2';
+import { safeImageFile } from './core.js?v=noaudio1';
 
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 function canonicalMathExpression(value) {

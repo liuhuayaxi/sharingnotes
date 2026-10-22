@@ -1,8 +1,8 @@
-import {renderMarkdown} from './render.js?v=noaudio1';
-import {escapeHtml as esc, safeNoteFile, stamp, searchText, snippet, highlightedHtml, reviewLabel, safeImageFile, newestNotes} from './core.js?v=noaudio1';
-import {initWorkspace} from './workspace.js?v=noaudio1';
-import {initLibrary} from './library.js?v=noaudio1';
-import {revealNote,revealIndex} from './cipher.js?v=noaudio1';
+import {renderMarkdown} from './render.js?v=icons1';
+import {escapeHtml as esc, safeNoteFile, stamp, searchText, snippet, highlightedHtml, reviewLabel, safeImageFile, newestNotes, courseSymbols} from './core.js?v=icons1';
+import {initWorkspace} from './workspace.js?v=icons1';
+import {initLibrary} from './library.js?v=icons1';
+import {revealNote,revealIndex} from './cipher.js?v=icons1';
 const $=id=>document.getElementById(id);
 let workspace,library;
 const PREF='shared-course-notes.preferences.v1';
@@ -18,7 +18,7 @@ function setTheme(theme){const value=['paper','sepia','dark'].includes(theme)?th
 function setSize(size){prefs.size=Math.max(15,Math.min(23,Number(size)||18));document.documentElement.style.setProperty('--reading-size',prefs.size+'px');savePrefs();}
 async function json(path,options={}){const response=await fetch(path,{cache:'no-cache',...options});if(!response.ok)throw new Error(`资料读取未完成（${response.status}）`);return response.json();}
 function courseNotes(){let notes=state.catalog.notes.filter(n=>(!state.course||n.course===state.course)&&(!state.favoritesOnly||state.favorites.has(n.id)));notes=newestNotes(notes);return state.sort==='oldest'?notes.reverse():notes;}
-function renderCourses(){const symbols=['全','光','波','μ','纤','信'];const courses=['',...state.catalog.courses];$('course-list').innerHTML=courses.map((course,i)=>`<button type="button" class="course-button${state.course===course?' active':''}" data-course="${esc(course)}" ${state.course===course?'aria-current="true"':''}><span class="course-symbol" aria-hidden="true">${symbols[i]||'课'}</span><span>${esc(course||'全部课程')}</span><span class="course-count">${state.catalog.notes.filter(n=>!course||n.course===course).length}</span></button>`).join('');}
+function renderCourses(){const symbols=courseSymbols(state.catalog.courses);const courses=['',...state.catalog.courses];$('course-list').innerHTML=courses.map((course,i)=>`<button type="button" class="course-button${state.course===course?' active':''}" data-course="${esc(course)}" ${state.course===course?'aria-current="true"':''}><span class="course-symbol" aria-hidden="true">${esc(course?symbols.get(course)||'课':'全')}</span><span>${esc(course||'全部课程')}</span><span class="course-count">${state.catalog.notes.filter(n=>!course||n.course===course).length}</span></button>`).join('');}
 function renderLessons(){if(workspace&&state.view==='workspace')workspace.render({favoritesOnly:state.favoritesOnly});const notes=courseNotes();$('lesson-list-label').textContent=(state.favoritesOnly?'我的收藏':state.course||'全部课堂笔记')+` · ${notes.length}`;$('lesson-list').innerHTML=notes.map(n=>`<button type="button" class="lesson-button${state.current?.id===n.id?' active':''}" data-note="${n.id}" ${state.current?.id===n.id?'aria-current="page"':''}><span class="lesson-title">${esc(n.title)}</span><span class="lesson-meta"><span>${esc(n.date)}</span>${state.course?'':`<span>${esc(n.course)}</span>`}${state.favorites.has(n.id)?'<span class="favorite-star">★</span>':''}</span></button>`).join('')||'<p class="empty-list">这里还没有收藏。打开一篇笔记，点击“收藏本篇”即可加入。</p>';$('favorites-count').textContent=state.favorites.size;$('favorites-filter').setAttribute('aria-pressed',String(state.favoritesOnly));}
 function favoriteButton(){const selected=Boolean(state.current&&state.favorites.has(state.current.id));$('favorite-note').textContent=selected?'★ 已收藏':'☆ 收藏本篇';$('favorite-note').setAttribute('aria-pressed',String(selected));}
 function closeMenu(){$('sidebar').classList.remove('open');$('nav-backdrop').hidden=true;$('menu-button').setAttribute('aria-expanded','false');}

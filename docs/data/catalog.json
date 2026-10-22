@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:13:14+08:00",
+  "publishedAt": "2026-10-22T21:13:37+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -199,10 +199,10 @@
       "date": "2026-10-14",
       "abstract": "半导体激光器结构原理与分类演进",
       "reviewStatus": "skipped",
-      "version": "16515743541ba00228002f8168f879369eaad7e138f5419cfc790e42ded55d12",
-      "wordCount": 34458,
-      "imageCount": 11,
-      "file": "notes/f749e6a08bedbd39292e-16515743541b.json",
+      "version": "4f3efbf88ec1658cb743b78f073a66e5451e0ad9a6098cfb07d6e4432049e805",
+      "wordCount": 30425,
+      "imageCount": 12,
+      "file": "notes/f749e6a08bedbd39292e-4f3efbf88ec1.json",
       "sourceCount": 91,
       "lessonAt": "2026-10-14T08:00:00+08:00"
     },

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T20:40:04+08:00",
+  "publishedAt": "2026-10-22T20:59:07+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,20 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "838e5f7f3c0b1e825547",
+      "course": "光电子器件（全英文）",
+      "title": "光电子器件（全英文） · 2026-10-22 13:45–15:20",
+      "date": "2026-10-22",
+      "abstract": "光电子器件（全英文） · 2026-10-22 13:45–15:20",
+      "reviewStatus": "skipped",
+      "version": "2b6ddbf72ba32b1c83a442ca7889c5154ee002d42bcca41210c7963846736636",
+      "wordCount": 39001,
+      "imageCount": 17,
+      "file": "notes/838e5f7f3c0b1e825547-2b6ddbf72ba3.json",
+      "sourceCount": 93,
+      "lessonAt": "2026-10-22T13:45:00+08:00"
+    },
     {
       "id": "62d28b8a26fce34bed0d",
       "course": "通信原理 C",

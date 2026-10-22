@@ -1,5 +1,5 @@
 {
-  "publishedAt": "2026-10-22T21:13:37+08:00",
+  "publishedAt": "2026-10-22T21:14:04+08:00",
   "notes": [
     {
       "id": "838e5f7f3c0b1e825547",
@@ -111,9 +111,9 @@
     },
     {
       "id": "e66ed74f3ace74a2197f",
-      "file": "notes/e66ed74f3ace74a2197f-482a8623eb5f.json",
-      "sha256": "8a446d9d89fcb1a96eb612412fd4f007dfa6645cd06db8d3e4229ca5b2b8875d",
-      "bytes": 61160
+      "file": "notes/e66ed74f3ace74a2197f-8f875001590f.json",
+      "sha256": "580a03572c509a49a7cc74866aafcd1f63db96f08117d861a07cd9182b6d9087",
+      "bytes": 64097
     },
     {
       "id": "afb31d14b2f7aa992a1d",
@@ -1511,41 +1511,6 @@
       "bytes": 143423,
       "width": 1152,
       "height": 864
-    },
-    {
-      "file": "images/6fc50c470a2b3e992aec312ef6812ec9d36b45efe011c2abf68f9dbfbf229072.png",
-      "sha256": "6fc50c470a2b3e992aec312ef6812ec9d36b45efe011c2abf68f9dbfbf229072",
-      "bytes": 131646,
-      "width": 953,
-      "height": 1348
-    },
-    {
-      "file": "images/3bbe24fae2cf94dc45b3e194c16f637c1b232b26af14e8dd7a9814309f311582.png",
-      "sha256": "3bbe24fae2cf94dc45b3e194c16f637c1b232b26af14e8dd7a9814309f311582",
-      "bytes": 131653,
-      "width": 953,
-      "height": 1348
-    },
-    {
-      "file": "images/1f1304b0347c018dfc92717b368be7e6ded94fe2c969a4cd25b5b5dfff47832c.png",
-      "sha256": "1f1304b0347c018dfc92717b368be7e6ded94fe2c969a4cd25b5b5dfff47832c",
-      "bytes": 130812,
-      "width": 953,
-      "height": 1348
-    },
-    {
-      "file": "images/3956ce180a4231497596865a65127e999c8c174f74f98fc994ea96450b407b68.png",
-      "sha256": "3956ce180a4231497596865a65127e999c8c174f74f98fc994ea96450b407b68",
-      "bytes": 153004,
-      "width": 953,
-      "height": 1348
-    },
-    {
-      "file": "images/e69b3cf419bdc387ac5bc722ae8b3de0863fecf35a71c201f3c9b3e4972a767f.png",
-      "sha256": "e69b3cf419bdc387ac5bc722ae8b3de0863fecf35a71c201f3c9b3e4972a767f",
-      "bytes": 121410,
-      "width": 953,
-      "height": 1348
     },
     {
       "file": "images/4e40173b0d93148b589aefefa37aa6c7ccaa4e2a37066b53d1d132759a73735e.png",

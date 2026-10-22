@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:13:37+08:00",
+  "publishedAt": "2026-10-22T21:14:04+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -267,12 +267,12 @@
       "course": "通信原理 C",
       "title": "通信原理：信息度量与系统性能指标",
       "date": "2026-10-10",
-      "abstract": "通信原理：信息度量与信道容量",
+      "abstract": "通信原理：信息度量与系统性能指标",
       "reviewStatus": "skipped",
-      "version": "482a8623eb5f175da7ea394131b71c49ee67f4d7196f4835838056e69ad3a7c4",
-      "wordCount": 18436,
-      "imageCount": 8,
-      "file": "notes/e66ed74f3ace74a2197f-482a8623eb5f.json",
+      "version": "8f875001590f7d702d0cea4f98ea3f3b10dcb45aa591146a8ff658b5b51958c8",
+      "wordCount": 20541,
+      "imageCount": 3,
+      "file": "notes/e66ed74f3ace74a2197f-8f875001590f.json",
       "sourceCount": 43,
       "lessonAt": "2026-10-10T09:50:00+08:00"
     },

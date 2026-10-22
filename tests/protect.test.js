@@ -65,7 +65,7 @@ test('content selection, context menu, drag and copy/save/print/source shortcuts
   for(const key of ['c','x','a','s','p','u'])assert.equal(fire('keydown',{target:element('body'),ctrlKey:true,key,code:'Key'+key.toUpperCase()}).defaultPrevented,true,key);
   assert.equal(fire('keydown',{target:element('body'),metaKey:true,altKey:true,key:'ú',code:'KeyU'}).defaultPrevented,true);
   assert.equal(fire('keydown',{target:element('body'),key:'/',code:'Slash'}).defaultPrevented,false);
-  // Course materials (recordings and PDFs) keep their link menu for downloading.
+  // Course materials (AI PDFs) keep their link menu for downloading.
   assert.equal(fire('contextmenu',{target:element('a',{inside:['a.material-link']})}).defaultPrevented,false);
 });
 
@@ -75,7 +75,7 @@ test('note and transcript downloads are gone while course materials stay downloa
   assert.equal(/打包下载|下载本篇|下载包/.test(html+workspace),false);
   assert.equal(/createPackageBuilder|initDownloadPicker|\.download\s*=|application\/zip|window\.print/.test(app+workspace),false);
   for(const file of ['package.js','zip-worker.js','offline-assets.json','vendor/fflate/fflate.js'])assert.equal(existsSync(docs(file)),false,file);
-  assert.ok(html.includes('id="audio-download"'));assert.ok(library.includes('下载录音'));assert.ok(library.includes('打开 / 下载'));
+  assert.equal(html.includes('id="audio-download"'),false);assert.equal(library.includes('下载录音'),false);assert.ok(library.includes('打开 / 下载'));
   assert.ok(html.indexOf('protect.js')>0&&html.indexOf('protect.js')<html.indexOf('app.js'));
 });
 test('copy protection CSS changes selection only and print hiding is print-only',()=>{

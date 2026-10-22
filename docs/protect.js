@@ -41,9 +41,9 @@ export function isEditable(target) {
   const input = element.closest('input');
   return Boolean(input && !/^(checkbox|radio|button|submit|reset|image|file|range|color)$/i.test(input.type || 'text'));
 }
-// Course materials (录音 / PDF) stay downloadable, so their links and the audio
-// player keep the browser context menu ("save link as").
-const MATERIAL_SELECTOR = 'a.material-link,#audio-download,audio';
+// Course materials (AI PDF) stay downloadable, so their links keep the browser
+// context menu ("save link as"). Recordings are never published.
+const MATERIAL_SELECTOR = 'a.material-link';
 export function installCopyProtection(doc = globalThis.document) {
   if (!doc || doc.__copyProtection) return;
   doc.__copyProtection = true;

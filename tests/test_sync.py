@@ -21,13 +21,14 @@ class SyncTests(unittest.TestCase):
    sync.reconcile(old,new)
    self.assertEqual(json.loads((new/'catalog.json').read_text())['publishedAt'],'yesterday')
  def test_pending_attachments_have_no_live_link_and_ready_urls_are_retained(self):
-  original={'recordings':[{'url':'https://github.com/a/audio-1.m4a'}],'pdfs':[{'url':'https://github.com/a/pdf-2.pdf'}],'noteMaterials':{}}
+  original={'pdfs':[{'url':'https://github.com/a/pdf-2.pdf'},{'url':'https://github.com/a/pdf-3.pdf'}],'noteMaterials':{}}
   candidate=sync.pending_snapshot(original,{'pdf-2.pdf'})
-  self.assertEqual(candidate['recordings'][0],{'url':'','pending':True});self.assertEqual(candidate['pdfs'],original['pdfs']);self.assertNotIn('pending',original['recordings'][0])
+  self.assertEqual(candidate['pdfs'][0],original['pdfs'][0]);self.assertEqual(candidate['pdfs'][1],{'url':'','pending':True});self.assertNotIn('pending',original['pdfs'][1])
+  self.assertNotIn('recordings',sync.pending_snapshot({**original,'recordings':[{'url':'https://github.com/a/audio-1.m4a'}]},set()))
  def test_unchanged_snapshot_does_not_push(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);stage=root/'stage';stage.mkdir();target=root/'docs/data';target.mkdir(parents=True)
-   catalog={'notes':[],'courses':[],'publishedAt':'same'};resources={'recordings':[],'pdfs':[],'noteMaterials':{}}
+   catalog={'notes':[],'courses':[],'publishedAt':'same'};resources={'version':2,'pdfs':[],'noteMaterials':{}}
    for folder in [stage,target]:
     sync.write(folder/'catalog.json',catalog);sync.write(folder/'resources.json',resources)
    calls=[]
@@ -53,7 +54,7 @@ class SyncTests(unittest.TestCase):
    with self.assertRaises(ValueError):sync.validate_snapshot(root)
    publish([{'id':'1','cipher':'abc'}],[{'kind':'source','cipher':'abc','part':0},{'kind':'note','text':'正文'}])
    sync.validate_snapshot(root)
- def test_removed_pdf_is_withdrawn_but_unavailable_recording_is_kept(self):
+ def test_removed_pdf_is_withdrawn_and_old_recordings_are_never_carried_forward(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);stage=root/'stage';stage.mkdir();target=root/'docs/data';target.mkdir(parents=True)
    old={'recordings':[{'id':'r1','url':'a'}],'pdfs':[{'id':'old','course':'课','url':'x'},{'id':'kept','course':'课','url':'y'}],'noteMaterials':{'n1':['old','kept'],'n2':['old']}}
@@ -62,8 +63,40 @@ class SyncTests(unittest.TestCase):
    with patch.object(sync,'ROOT',root),patch.object(sync,'reconcile'),patch.object(sync,'validate_snapshot'),patch.object(sync,'run',return_value=''):
     sync.publish(stage,new,no_push=True)
    result=json.loads((stage/'resources.json').read_text())
-   self.assertEqual([x['id'] for x in result['recordings']],['r1'])
+   self.assertNotIn('recordings',result)
    self.assertEqual(sorted(x['id'] for x in result['pdfs']),['kept','ppt3'])
    self.assertEqual(next(x for x in result['pdfs'] if x['id']=='kept')['url'],'y')
    self.assertEqual(result['noteMaterials'],{'n1':['kept'],'n2':[]})
+class NoRecordingsGuardTests(unittest.TestCase):
+ def asset(self,name,path=None):return {'name':name,'path':path or '/m/'+name,'sha256':'0'*64,'bytes':1}
+ def test_audio_attachments_are_refused(self):
+  sync.assert_no_recordings([self.asset('pdf-'+'a'*64+'.pdf')])
+  for bad in [self.asset('audio-'+'a'*64+'.m4a'),self.asset('pdf-'+'a'*64+'.pdf','/m/x.m4a'),self.asset('rec.mp3'),self.asset('pdf-'+'a'*64+'.m4a')]:
+   with self.assertRaises(ValueError):sync.assert_no_recordings([bad])
+ def test_upload_refuses_audio_before_contacting_github(self):
+  with patch.object(sync,'run') as run:
+   with self.assertRaises(ValueError):sync.upload([self.asset('audio-'+'a'*64+'.m4a')])
+   run.assert_not_called()
+ def test_snapshot_with_recordings_or_audio_links_is_refused(self):
+  url='https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/'
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d);(root/'notes').mkdir()
+   sync.write(root/'resources.json',{'version':2,'pdfs':[{'url':url+'pdf-'+'a'*64+'.pdf'}],'noteMaterials':{}})
+   sync.write(root/'notes/n.json',{'markdown':'正文 [原文](#source-1)','sources':[{'cipher':'ab/cd+m4a=='}]})
+   sync.assert_no_recordings(folder=root)
+   for name,value in [('resources.json',{'recordings':[{'id':'r'}],'pdfs':[]}),('resources.json',{'pdfs':[{'url':url+'audio-'+'b'*64+'.m4a'}]}),('notes/n.json',{'markdown':'[录音](https://example.com/lesson.mp3)'}),('catalog.json',{'x':'https://cdn.example/a.wav?x=1'})]:
+    original=(root/name).read_text() if (root/name).exists() else None
+    sync.write(root/name,value)
+    with self.assertRaises(ValueError,msg=name):sync.assert_no_recordings(folder=root)
+    if original is None:(root/name).unlink()
+    else:(root/name).write_text(original)
+ def test_publish_refuses_a_stage_containing_recordings(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d);stage=root/'stage';stage.mkdir();target=root/'docs/data';target.mkdir(parents=True)
+   sync.write(stage/'catalog.json',{'notes':[],'courses':[]});sync.write(stage/'leak.json',{'u':'https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/audio-'+'c'*64+'.m4a'})
+   with patch.object(sync,'ROOT',root),patch.object(sync,'reconcile'),patch.object(sync,'validate_snapshot'),patch.object(sync,'run',return_value='') as run:
+    with self.assertRaises(ValueError):sync.publish(stage,{'pdfs':[],'noteMaterials':{}})
+   self.assertFalse((target/'leak.json').exists());self.assertFalse(any(c.args[:2]==('git','push') for c in run.call_args_list))
+ def test_published_site_data_has_no_recordings(self):
+  sync.assert_no_recordings(folder=Path(__file__).resolve().parents[1]/'docs/data')
 if __name__=='__main__':unittest.main()

@@ -1,5 +1,8 @@
-"""Read completed local coursework, publish media attachments, and update Pages.
+"""Read completed local coursework, publish AI PDF attachments, and update Pages.
 
+Classroom recordings are never published: no audio is prepared, uploaded,
+listed in docs/data or linked from the site. assert_no_recordings() is a
+pre-publish guard that refuses any snapshot or upload that would expose audio.
 Only docs/data is auto-committed. Original course files and application settings
 are never copied into Git. State, media cache, lock and receipts stay outside it.
 """
@@ -26,6 +29,23 @@ def run(*args,**kw):
     return subprocess.run(args,cwd=ROOT,check=True,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,**kw).stdout.strip()
 def digest(path):
     with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+# Permanent rule: recordings never leave this Mac. Only AI PDFs are attachments.
+PUBLISHABLE_ASSET=re.compile(r'pdf-[a-f0-9]{64}\.pdf')
+AUDIO_URL=re.compile(r'https?://[^"\s]*?(?:/audio-[^"\s/]*|\.(?:m4a|aac|mp3|wav|flac|ogg|oga|opus|weba|amr|aiff?|caf|wma))(?![\w-])',re.I)
+def assert_no_recordings(assets=(),folder=None):
+    """Refuse to publish anything that would put a recording online."""
+    for a in assets:
+        if not PUBLISHABLE_ASSET.fullmatch(str(a.get('name',''))) or not str(a.get('path','')).lower().endswith('.pdf'):
+            raise ValueError('Recordings are never published; refusing attachment '+str(a.get('name')))
+    if folder is None:return
+    folder=Path(folder)
+    resources=folder/'resources.json'
+    if resources.exists() and json.loads(resources.read_text()).get('recordings'):
+        raise ValueError('Recordings are never published; resources.json lists recordings')
+    for path in folder.rglob('*.json'):
+        match=AUDIO_URL.search(path.read_text(errors='replace'))
+        if match:raise ValueError(f'Recordings are never published; audio link in {path.name}: {match.group(0)[:120]}')
+
 def checked_file(folder,relative,suffixes):
     root=Path(folder).resolve();path=(root/relative).resolve()
     if not path.is_relative_to(root) or not path.is_file() or path.suffix.lower() not in suffixes:raise ValueError('Course asset is missing or outside its folder')
@@ -48,24 +68,18 @@ def prepare(base,folder):
     cache_dir=STATE/'media';cache_dir.mkdir(parents=True,exist_ok=True)
     cache_path=STATE/'media-cache.json'
     cache=json.loads(cache_path.read_text()) if cache_path.exists() else {}
-    assets=[];audio=[];pdfs=[];material_ids={};sessions=[]
+    assets=[];pdfs=[];material_ids={};sessions=[]
     def asset(path,kind):
+        if kind!='pdf':raise ValueError('Recordings are never published')
         stat=path.stat();key=str(path);stamp=[stat.st_ino,stat.st_size,stat.st_mtime_ns]
         cached=cache.get(key,{})
         if cached.get('stamp')==stamp and (cache_dir/cached.get('name','')).is_file():info=cached['info']
         else:
-            before=stamp;source_hash=digest(path);out=path
-            if kind=='audio':
-                out=cache_dir/(source_hash+'.m4a')
-                if not out.exists():
-                    temporary=cache_dir/(source_hash+'.partial.m4a')
-                    run('ffmpeg','-nostdin','-v','error','-y','-threads','1','-i',str(path),'-map','0:a:0','-vn','-c:a','copy','-map_metadata','-1','-movflags','+faststart',str(temporary));temporary.replace(out)
-            else:
-                with path.open('rb') as stream:
-                    if not stream.read(8).startswith(b'%PDF-'):raise ValueError('AI PDF signature is invalid')
-            sha=digest(out);name=kind+'-'+sha+('.m4a' if kind=='audio' else '.pdf');target=cache_dir/name
-            if not target.exists():shutil.copyfile(out,target)
-            if out!=path and out!=target:out.unlink()
+            before=stamp
+            with path.open('rb') as stream:
+                if not stream.read(8).startswith(b'%PDF-'):raise ValueError('AI PDF signature is invalid')
+            sha=digest(path);name='pdf-'+sha+'.pdf';target=cache_dir/name
+            if not target.exists():shutil.copyfile(path,target)
             after=path.stat()
             if before!=[after.st_ino,after.st_size,after.st_mtime_ns]:raise ValueError('Course asset changed during export; retry next sync')
             info={'sha256':sha,'bytes':target.stat().st_size,'url':f'https://github.com/{REPO}/releases/download/{TAG}/{name}'}
@@ -79,13 +93,8 @@ def prepare(base,folder):
         s=get_json(base,'/api/recordings/'+row['id'])['session']
         ident=hashlib.sha256((s['category']+':'+s['id']).encode()).hexdigest()[:20]
         if not (s.get('ai_note_summary') or {}).get('summary'):continue
+        # Only the note's PDF links are needed; its recording is never read or published.
         sessions.append((s,ident))
-        try:path=checked_file(s['directory'],s['audio_filename'],{'.aac','.m4a','.mp3','.wav','.flac','.mp4'})
-        except ValueError:
-            print('Recording not locally available; keeping previous published audio:',ident,flush=True);continue
-        print('Preparing recording:',clean_text(s.get('title')),flush=True)
-        info=asset(path,'audio')
-        audio.append({'id':ident,'noteId':ident,'course':clean_text(s['category']),'title':clean_text(s['title']),'date':str(s.get('recorded_at') or s['started_at'])[:10],'duration':s.get('duration',0),**info})
     for course in courses:
         listing=get_json(base,'/api/course-files?category='+quote(course))
         for item in listing['files']:
@@ -103,9 +112,10 @@ def prepare(base,folder):
     for s,ident in sessions:
         used=((s.get('ai_note_summary') or {}).get('material_version') or {}).get('course_files') or {}
         links[ident]=[material_ids[(s['category'],asset_id)] for asset_id in used if (s['category'],asset_id) in material_ids]
-    data={'version':1,'recordings':audio,'pdfs':pdfs,'noteMaterials':links}
+    data={'version':2,'pdfs':pdfs,'noteMaterials':links}
     (folder/'resources.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
-    return list({a['name']:a for a in assets}.values())
+    result=list({a['name']:a for a in assets}.values());assert_no_recordings(result,folder)
+    return result
 
 def release_assets(release_id):
     result=[];page=1
@@ -115,10 +125,11 @@ def release_assets(release_id):
         page+=1
 
 def upload(assets,on_ready=lambda completed:None):
+    assert_no_recordings(assets)
     try:release=json.loads(run('gh','api',f'repos/{REPO}/releases/tags/{TAG}'))
     except subprocess.CalledProcessError as exc:
         if '404' not in exc.stderr:raise
-        body=STATE/'release-description.txt';body.write_text('课程资料共享附件：与 Sharing Notes 笔记对应的回听录音及已生成的 AI 友好版 PDF。文件按内容哈希命名，供课程阅读站使用。')
+        body=STATE/'release-description.txt';body.write_text('课程资料共享附件：与 Sharing Notes 笔记对应的已生成 AI 友好版 PDF（不含课堂录音）。文件按内容哈希命名，供课程阅读站使用。')
         run('gh','release','create',TAG,'--repo',REPO,'--target','main','--title','Sharing Notes 课程资料','--notes-file',str(body));release=json.loads(run('gh','api',f'repos/{REPO}/releases/tags/{TAG}'))
     existing=[];page=1
     while True:
@@ -190,7 +201,8 @@ def reconcile(old,new):
 
 def pending_snapshot(resources,complete):
     result=copy.deepcopy(resources)
-    for key in ['recordings','pdfs']:
+    result.pop('recordings',None)
+    for key in ['pdfs']:
         for item in result[key]:
             if item['url'].split('/')[-1] not in complete:
                 item['url']='';item['pending']=True
@@ -215,12 +227,13 @@ def publish(stage,resources,no_push=False):
     target=ROOT/'docs/data'
     prior=json.loads((target/'resources.json').read_text()) if (target/'resources.json').exists() else {}
     resources=copy.deepcopy(resources)
-    for key in ['recordings','pdfs']:
-        # Recordings whose audio is temporarily not on this Mac stay published.
+    # Recordings are never carried forward from an older snapshot either.
+    resources.pop('recordings',None);resources['version']=2
+    for key in ['pdfs']:
         # The completed AI PDF list is read in full each sync, so a PDF the
         # owner removed or replaced is withdrawn instead of carried forward.
         exported={x['id'] for x in resources[key]}
-        current={x['id']:x for x in prior.get(key,[]) if key=='recordings' or x['id'] in exported}
+        current={x['id']:x for x in prior.get(key,[]) if x['id'] in exported}
         for item in resources[key]:
             if item.get('pending') and item['id'] in current and not current[item['id']].get('pending'):continue
             current[item['id']]=item
@@ -228,12 +241,13 @@ def publish(stage,resources,no_push=False):
     available={x['id'] for x in resources['pdfs']}
     resources['noteMaterials']={note:[x for x in ids if x in available] for note,ids in {**prior.get('noteMaterials',{}),**resources['noteMaterials']}.items()};write(stage/'resources.json',resources)
     catalog=json.loads((stage/'catalog.json').read_text());catalog['courses']=list(dict.fromkeys(catalog['courses']+[p['course'] for p in resources['pdfs']]));write(stage/'catalog.json',catalog)
-    reconcile(target,stage);validate_snapshot(stage)
+    reconcile(target,stage);validate_snapshot(stage);assert_no_recordings(folder=stage)
     for path in stage.rglob('*'):
         if not path.is_file():continue
         destination=target/path.relative_to(stage)
         if destination.exists() and destination.read_bytes()==path.read_bytes():continue
         destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(path,destination)
+    assert_no_recordings(folder=target)
     changed=bool(run('git','status','--porcelain','--','docs/data'))
     if changed and not no_push:
         subprocess.run(['npm','test'],cwd=ROOT,check=True,stdout=subprocess.DEVNULL)

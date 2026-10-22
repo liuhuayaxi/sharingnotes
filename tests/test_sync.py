@@ -54,6 +54,9 @@ class SyncTests(unittest.TestCase):
    with self.assertRaises(ValueError):sync.validate_snapshot(root)
    publish([{'id':'1','cipher':'abc'}],[{'kind':'source','cipher':'abc','part':0},{'kind':'note','text':'正文'}])
    sync.validate_snapshot(root)
+   body=json.dumps({'id':ident,'markdown':'[原文 S1](#source-1) [原文 Sxx](#source-xx)','sources':[{'id':'1','cipher':'abc'}],'images':[]},ensure_ascii=False).encode();(root/file).write_bytes(body)
+   (root/'publish-manifest.json').write_text(json.dumps({'notes':[{'id':ident,'sha256':hashlib.sha256(body).hexdigest()}]}))
+   with self.assertRaises(ValueError):sync.validate_snapshot(root)
  def test_removed_pdf_is_withdrawn_and_old_recordings_are_never_carried_forward(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);stage=root/'stage';stage.mkdir();target=root/'docs/data';target.mkdir(parents=True)

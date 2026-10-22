@@ -79,3 +79,14 @@ export function courseSymbols(courses) {
   return result;
 }
 export function courseSymbol(course, courses = [course]) { return course ? courseSymbols(courses).get(course) || '课' : '全'; }
+// A citation without a published passage (e.g. an AI template such as
+// [原文 Sxx](#source-xx)) is shown as plain text, never as a chip leading nowhere.
+export function unlinkUnresolvedCitations(root, sources) {
+  const ids = new Set((sources || []).map(s => String(s.id)));
+  let count = 0;
+  for (const a of [...root.querySelectorAll('a[href^="#source-"]')]) {
+    if (ids.has(a.getAttribute('href').slice(8))) continue;
+    a.replaceWith(a.ownerDocument.createTextNode(a.textContent)); count++;
+  }
+  return count;
+}

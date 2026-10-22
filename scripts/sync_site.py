@@ -216,7 +216,8 @@ def validate_snapshot(folder):
         if hashlib.sha256(payload).hexdigest()!=by_id[meta['id']]['sha256']:raise ValueError('Published note integrity failed')
         note=json.loads(payload);sources={x['id'] for x in note['sources']}
         if any('text' in x or not isinstance(x.get('cipher'),str) for x in note['sources']):raise ValueError('Classroom text must be obfuscated before publication')
-        if any(x not in sources for x in re.findall(r'\]\(#source-(\d+)\)',note['markdown'])):raise ValueError('A citation has no classroom source; preserving last published version')
+        # Every source link must open a real passage; placeholders such as #source-xx are rejected too.
+        if any(x not in sources for x in re.findall(r'\]\(#source-([^)\s]*)\)',note['markdown'])):raise ValueError('A citation has no classroom source; preserving last published version')
         for image in note.get('images',[]):
             if not re.fullmatch(r'data/images/[a-f0-9]{64}\.png',image['src']):raise ValueError('Invalid public image path')
             if digest(folder/image['src'].removeprefix('data/'))!=image['sha256']:raise ValueError('Published image integrity failed')

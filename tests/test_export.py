@@ -5,6 +5,16 @@ spec=importlib.util.spec_from_file_location('export_courses',Path(__file__).reso
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 
 class ExportTests(unittest.TestCase):
+    def test_placeholder_citations_become_plain_text(self):
+        text='讲授 [原文 Sxx](#source-xx) 与 [原文 SXX](#source-XX)；真实 [课堂 S2 · 00:01:00–00:02:00](#source-2)，缺失 [原文 S9](#source-9)，代码 `[原文 Sxx](#source-xx)`'
+        out=module.unlink_unresolved_citations(text,['1','2'])
+        self.assertEqual(out,'讲授 原文 Sxx 与 原文 SXX；真实 [课堂 S2 · 00:01:00–00:02:00](#source-2)，缺失 原文 S9，代码 `原文 Sxx`')
+    def test_public_note_never_links_a_placeholder_citation(self):
+        session={'id':'s1','status':'completed','category':'课','title':'t','started_at':'2026-10-01',
+                 'segments':[{'id':1,'raw':'甲','corrected':'甲'}],
+                 'ai_note_summary':{'summary':'来源 [原文 S1](#source-1) 格式 [原文 Sxx](#source-xx)','source_map':{'1':{'segment_ids':[1],'start':0,'end':1}}}}
+        note=module.public_note(session)
+        self.assertEqual(note['markdown'],'来源 [原文 S1](#source-1) 格式 原文 Sxx')
     def test_embedded_image_is_preserved_only_with_explicit_published_mapping(self):
         target='data/images/'+'a'*64+'.png'
         text=module.clean_text('![课堂配图](assets/fig-0123456789abcdef.png)',{'assets/fig-0123456789abcdef.png':target})

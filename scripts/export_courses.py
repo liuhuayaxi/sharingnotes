@@ -157,6 +157,15 @@ def source_texts(session, note):
                         'corrected': all(bool(s.get('corrected')) for s in selected)})
     return results
 
+SOURCE_LINK = re.compile(r'\[([^\]\n]*)\]\(#source-([^)\s]*)\)')
+
+def unlink_unresolved_citations(markdown, source_ids):
+    """AI notes sometimes describe the citation format with a template such as
+    [原文 Sxx](#source-xx). Such a link has no classroom passage, so it is kept as
+    plain, non-clickable label text. Real citations are left untouched."""
+    ids = {str(i) for i in source_ids}
+    return SOURCE_LINK.sub(lambda m: m.group(0) if m.group(2) in ids else m.group(1), markdown)
+
 def search_chunks(markdown):
     heading, number, fenced, block = '', 0, False, []
     def emit():
@@ -177,8 +186,8 @@ def public_note(session, published_images=None, images=None):
     if session.get('status') != 'completed' or not str(note.get('summary') or '').strip(): return None
     course = clean_text(session.get('category'))
     ident = hashlib.sha256((course + ':' + str(session['id'])).encode()).hexdigest()[:20]
-    markdown = clean_text(note['summary'], published_images)
     sources = source_texts(session, note)
+    markdown = unlink_unresolved_citations(clean_text(note['summary'], published_images), [s['id'] for s in sources])
     version = hashlib.sha256(json.dumps([markdown, sources], ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     date = str(session.get('recorded_at') or session.get('started_at') or '')[:10]
     return {'id': ident, 'course': course, 'title': clean_text(session.get('title') or course), 'date': date,

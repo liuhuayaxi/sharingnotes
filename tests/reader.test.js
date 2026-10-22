@@ -69,3 +69,23 @@ test('all published notes match their manifest and every citation has a source t
     }
   }
 });
+test('citations without a published passage become plain text; real chips stay links',async()=>{
+  const {unlinkUnresolvedCitations}=await import('../docs/core.js');
+  const doc={createTextNode:text=>({text})};
+  const link=href=>{const a={href,textContent:'原文 '+href.slice(8),ownerDocument:doc,getAttribute:()=>href,replaceWith(node){this.replaced=node;}};return a;};
+  const links=[link('#source-7'),link('#source-xx'),link('#source-XX'),link('#source-99')];
+  const root={querySelectorAll:selector=>{assert.equal(selector,'a[href^="#source-"]');return links;}};
+  assert.equal(unlinkUnresolvedCitations(root,[{id:'7'},{id:'8'}]),3);
+  assert.equal(links[0].replaced,undefined);
+  for(const a of links.slice(1))assert.deepEqual(a.replaced,{text:a.textContent});
+});
+test('every published source link, numeric or not, resolves to a passage',()=>{
+  const root=new URL('../docs/data/',import.meta.url);
+  const catalog=JSON.parse(readFileSync(new URL('catalog.json',root),'utf8'));
+  for(const entry of catalog.notes){
+    const note=JSON.parse(readFileSync(new URL(entry.file,root),'utf8'));const ids=new Set(note.sources.map(s=>s.id));
+    for(const match of note.markdown.matchAll(/\]\(#source-([^)\s]*)\)/g))assert.ok(ids.has(match[1]),entry.id+':'+match[1]);
+  }
+  const app=readFileSync(new URL('../docs/app.js',import.meta.url),'utf8');
+  assert.match(app,/renderMarkdown\(doc\.markdown,doc\.images\|\|\[\]\);unlinkUnresolvedCitations\(\$\('note-body'\),doc\.sources\)/);
+});

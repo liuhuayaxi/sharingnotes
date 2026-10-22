@@ -1,4 +1,4 @@
-import {escapeHtml as esc} from './core.js?v=icons1';
+import {escapeHtml as esc} from './core.js?v=cite1';
 // Recordings are never published: only content-addressed AI PDFs on the
 // course-media release are accepted as resource links.
 export function safeResourceUrl(value){

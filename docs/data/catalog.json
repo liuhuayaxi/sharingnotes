@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:08:22+08:00",
+  "publishedAt": "2026-10-22T21:09:15+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -43,12 +43,12 @@
       "course": "光电子学",
       "title": "半导体激光器工作特性与光场模式",
       "date": "2026-10-21",
-      "abstract": "半导体激光器稳态P-I特性、几何结构与温度对阈值的调控规律、各级量子与电光功率效率体系、远场不对称发散分布及垂直横模、侧模与纵模的激射控制条件。",
+      "abstract": "半导体激光器工作特性与光场模式",
       "reviewStatus": "skipped",
-      "version": "32ed4c21de3f113fbd92e6dd5fd6607defcd63d69c96d41ed48bc26342c3e960",
-      "wordCount": 49352,
-      "imageCount": 10,
-      "file": "notes/8f971580ade45771a9a1-32ed4c21de3f.json",
+      "version": "cef2a35bf4617eb204f1f00bd7e478d66ad4f309a8db03b46bcea9372146a2f0",
+      "wordCount": 31233,
+      "imageCount": 9,
+      "file": "notes/8f971580ade45771a9a1-cef2a35bf461.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-21T08:00:00+08:00"
     },

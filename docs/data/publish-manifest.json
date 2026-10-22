@@ -1,5 +1,5 @@
 {
-  "publishedAt": "2026-10-22T21:08:22+08:00",
+  "publishedAt": "2026-10-22T21:09:15+08:00",
   "notes": [
     {
       "id": "838e5f7f3c0b1e825547",
@@ -15,9 +15,9 @@
     },
     {
       "id": "8f971580ade45771a9a1",
-      "file": "notes/8f971580ade45771a9a1-32ed4c21de3f.json",
-      "sha256": "65e5be430c2e32ba55b0c5dabc02e84cfe40923cb03e7a7c3320a555121e901d",
-      "bytes": 152017
+      "file": "notes/8f971580ade45771a9a1-cef2a35bf461.json",
+      "sha256": "339b60b04a70f556c399f467a6b09e67f62e22c27c9038619b53b6a005a9d009",
+      "bytes": 117757
     },
     {
       "id": "adc6381bd8fb478dd0e7",
@@ -463,13 +463,6 @@
       "height": 952
     },
     {
-      "file": "images/929d8b17fc0c434dbe350b87f3496f07b1a588329ecfff7794d54193cf420db7.png",
-      "sha256": "929d8b17fc0c434dbe350b87f3496f07b1a588329ecfff7794d54193cf420db7",
-      "bytes": 474964,
-      "width": 1348,
-      "height": 952
-    },
-    {
       "file": "images/c00df2de30b8244e86fa47b858e1544afd26606da09f7ca5c78179cc3743fd12.png",
       "sha256": "c00df2de30b8244e86fa47b858e1544afd26606da09f7ca5c78179cc3743fd12",
       "bytes": 325298,
@@ -505,9 +498,9 @@
       "height": 952
     },
     {
-      "file": "images/2b098152ec698c8104e0b43babad21ed0cd2d154a00629e6200871dcbd791670.png",
-      "sha256": "2b098152ec698c8104e0b43babad21ed0cd2d154a00629e6200871dcbd791670",
-      "bytes": 252224,
+      "file": "images/fb821dc4178952e4934605b248f179199620b4808b3113663628f1b7aa9d94e7.png",
+      "sha256": "fb821dc4178952e4934605b248f179199620b4808b3113663628f1b7aa9d94e7",
+      "bytes": 427763,
       "width": 1348,
       "height": 952
     },

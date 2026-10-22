@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:14:04+08:00",
+  "publishedAt": "2026-10-22T21:15:58+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -281,12 +281,12 @@
       "course": "光电子学",
       "title": "LED材料选择与器件结构设计",
       "date": "2026-10-10",
-      "abstract": "LED设计：材料选择、结构权衡与前沿技术",
+      "abstract": "LED材料选择与器件结构设计",
       "reviewStatus": "skipped",
-      "version": "ccd1128569172f71f8394c0549392fcfff0482a0b03f6783b0dc39a389cbafbb",
-      "wordCount": 30890,
-      "imageCount": 8,
-      "file": "notes/afb31d14b2f7aa992a1d-ccd112856917.json",
+      "version": "ee6722f4e90a63f26ee331b50d70352db811bcf284e34b616848874a508616ed",
+      "wordCount": 31693,
+      "imageCount": 7,
+      "file": "notes/afb31d14b2f7aa992a1d-ee6722f4e90a.json",
       "sourceCount": 61,
       "lessonAt": "2026-10-10T08:00:00+08:00"
     },

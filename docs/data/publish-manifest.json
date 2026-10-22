@@ -1,5 +1,5 @@
 {
-  "publishedAt": "2026-10-22T21:18:29+08:00",
+  "publishedAt": "2026-10-22T21:18:59+08:00",
   "notes": [
     {
       "id": "838e5f7f3c0b1e825547",
@@ -123,9 +123,9 @@
     },
     {
       "id": "7b75d58873e4cc109da4",
-      "file": "notes/7b75d58873e4cc109da4-0d545acc55c5.json",
-      "sha256": "c6964ec6bda7435ecf2aadefc9ef4474bf4cdb3d5ebfb0a1465b634de3748d42",
-      "bytes": 111978
+      "file": "notes/7b75d58873e4cc109da4-c89618b8473e.json",
+      "sha256": "08637de440e715f351d099c7728e5ca5c692fc1b728758fbe385d73f7a358af8",
+      "bytes": 133656
     },
     {
       "id": "201c749b6f64dee4f105",
@@ -1576,13 +1576,6 @@
       "height": 952
     },
     {
-      "file": "images/fa5bf67b7946199d66710a95affb393b09c07f6d2739a56c86f0a2cc28752394.png",
-      "sha256": "fa5bf67b7946199d66710a95affb393b09c07f6d2739a56c86f0a2cc28752394",
-      "bytes": 319383,
-      "width": 1348,
-      "height": 952
-    },
-    {
       "file": "images/1c980ae25d035df1fadddea201da580017c89ec233608d768b3103e211a48769.png",
       "sha256": "1c980ae25d035df1fadddea201da580017c89ec233608d768b3103e211a48769",
       "bytes": 440960,
@@ -1590,9 +1583,9 @@
       "height": 952
     },
     {
-      "file": "images/c8b0cb1e1f24f2b608bef88796011846f5748d015cb9eb8ac87d181fd25d1184.png",
-      "sha256": "c8b0cb1e1f24f2b608bef88796011846f5748d015cb9eb8ac87d181fd25d1184",
-      "bytes": 232104,
+      "file": "images/fa5bf67b7946199d66710a95affb393b09c07f6d2739a56c86f0a2cc28752394.png",
+      "sha256": "fa5bf67b7946199d66710a95affb393b09c07f6d2739a56c86f0a2cc28752394",
+      "bytes": 319383,
       "width": 1348,
       "height": 952
     },
@@ -1614,13 +1607,6 @@
       "file": "images/9c5ecb180aa3f7a78e4da06fb83f84f618cc42d0b6c9049e1f20c304906990f3.png",
       "sha256": "9c5ecb180aa3f7a78e4da06fb83f84f618cc42d0b6c9049e1f20c304906990f3",
       "bytes": 332872,
-      "width": 1348,
-      "height": 952
-    },
-    {
-      "file": "images/9409c723df83c5e74701f5b53957f9387e2694f7956936203ce683e22c2a47ea.png",
-      "sha256": "9409c723df83c5e74701f5b53957f9387e2694f7956936203ce683e22c2a47ea",
-      "bytes": 190334,
       "width": 1348,
       "height": 952
     },
@@ -1656,13 +1642,6 @@
       "file": "images/5a9c1d1f900698b134010a9f8f341a32bc6b961bdbcb174cd25fbbf82e77cfb8.png",
       "sha256": "5a9c1d1f900698b134010a9f8f341a32bc6b961bdbcb174cd25fbbf82e77cfb8",
       "bytes": 251425,
-      "width": 1348,
-      "height": 952
-    },
-    {
-      "file": "images/74345ed0a07fbd27f3144f43e38daaa9ce330a9b82a367c4a0c292ff43d33c5b.png",
-      "sha256": "74345ed0a07fbd27f3144f43e38daaa9ce330a9b82a367c4a0c292ff43d33c5b",
-      "bytes": 409451,
       "width": 1348,
       "height": 952
     },

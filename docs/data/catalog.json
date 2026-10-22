@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-22T21:18:29+08:00",
+  "publishedAt": "2026-10-22T21:18:59+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -297,10 +297,10 @@
       "date": "2026-10-09",
       "abstract": "发光二极管结构与性能参数",
       "reviewStatus": "skipped",
-      "version": "0d545acc55c57b49023751e02f1504a4c2d868dafbbb3a7ebe631ef4c3f3c944",
-      "wordCount": 28634,
-      "imageCount": 14,
-      "file": "notes/7b75d58873e4cc109da4-0d545acc55c5.json",
+      "version": "c89618b8473e7258a6597865256fb34da0b06e2fbfe64e140bfc9dab42ae3b30",
+      "wordCount": 37502,
+      "imageCount": 11,
+      "file": "notes/7b75d58873e4cc109da4-c89618b8473e.json",
       "sourceCount": 92,
       "lessonAt": "2026-10-09T15:35:00+08:00"
     },

@@ -1,5 +1,5 @@
 import {renderMarkdown} from './render.js?v=cite1';
-import {mountRedo} from './redo.js?v=redo1';
+import {mountRedo} from './redo.js?v=redo2';
 import {escapeHtml as esc, safeNoteFile, stamp, searchText, snippet, highlightedHtml, reviewLabel, safeImageFile, newestNotes, courseSymbols, unlinkUnresolvedCitations} from './core.js?v=cite1';
 import {initWorkspace} from './workspace.js?v=cite1';
 import {initLibrary} from './library.js?v=cite1';

@@ -36,12 +36,27 @@ test('extracts stems without answers and keeps explanation separately', () => {
   assert.match(items[1].stem, /异质结/);
 });
 
-test('blank markers become inputs and other text is escaped', () => {
+test('blank markers become inputs and other text is escaped without markdown', () => {
   const html = stemHtml('A <b>[填空1]</b> 与[填空2]');
   assert.equal(html.includes('<b>'), false);
   assert.match(html, /data-blank="1"/);
   assert.match(html, /data-blank="2"/);
   assert.match(html, /&lt;b&gt;/);
+});
+
+test('stem uses renderMarkdown for formulas and restores blanks after sanitize', () => {
+  const html = stemHtml('波长 $\\lambda_0 = 1.31$，$d$ 与[填空1]', {
+    renderMarkdown: (md) => {
+      // Mimic note-body pipeline: turn $...$ into katex markup; blank tokens survive.
+      return `<p>${md.replace(/\$([^$]+)\$/g, '<span class="katex">$1</span>')}</p>`;
+    },
+  });
+  assert.match(html, /class="katex"/);
+  assert.match(html, /\\lambda_0/);
+  assert.match(html, /data-blank="1"/);
+  assert.equal(html.includes('@@REDOBLANK'), false);
+  assert.equal(html.includes('[填空'), false);
+  assert.equal(/\$\\lambda/.test(html), false);
 });
 
 test('panel is omitted without exercises and lists progress', () => {
@@ -50,5 +65,6 @@ test('panel is omitted without exercises and lists progress', () => {
   assert.match(html, /重做雨课堂习题/);
   assert.match(html, /1\/2 已重做/);
   assert.match(html, /第1题/);
+  assert.match(html, /redo-blank/);
   assert.equal(storageKey('abc'), 'shared-course-notes.redo.abc');
 });

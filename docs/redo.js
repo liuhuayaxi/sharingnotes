@@ -48,19 +48,21 @@ function esc(text) {
   return String(text).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
 
-/** Turn [填空N] markers into short inputs; leave other stem text escaped. */
-export function stemHtml(stem) {
-  const parts = [];
-  let last = 0;
-  const re = /\[填空\s*(\d+)\]/g;
-  let match;
-  while ((match = re.exec(stem))) {
-    parts.push(esc(stem.slice(last, match.index)));
-    parts.push(`<input class="redo-blank" type="text" data-blank="${esc(match[1])}" aria-label="填空${esc(match[1])}" autocomplete="off" spellcheck="false">`);
-    last = match.index + match[0].length;
+const BLANK_TOKEN = (n) => `@@REDOBLANK:${n}@@`;
+const BLANK_TOKEN_RE = /@@REDOBLANK:(\d+)@@/g;
+
+/** Render stem like the note body (KaTeX via renderMarkdown), then restore blank inputs.
+ *  Inputs are injected after sanitize because renderMarkdown forbids <input>. */
+export function stemHtml(stem, {renderMarkdown} = {}) {
+  const withTokens = String(stem || '').replace(/\[填空\s*(\d+)\]/g, (_m, n) => BLANK_TOKEN(n));
+  let html;
+  if (typeof renderMarkdown === 'function') {
+    html = renderMarkdown(withTokens);
+  } else {
+    html = esc(withTokens).replace(/\n/g, '<br>');
   }
-  parts.push(esc(stem.slice(last)));
-  return parts.join('').replace(/\n/g, '<br>');
+  return html.replace(BLANK_TOKEN_RE, (_m, n) =>
+    `<input class="redo-blank" type="text" data-blank="${esc(n)}" aria-label="填空${esc(n)}" autocomplete="off" spellcheck="false">`);
 }
 
 export function renderRedoPanel(exercises, progress, {renderMarkdown}) {
@@ -72,7 +74,7 @@ export function renderRedoPanel(exercises, progress, {renderMarkdown}) {
     const draft = typeof saved.draft === 'string' ? saved.draft : '';
     return `<article class="redo-card" data-number="${ex.number}" data-done="${done}" data-revealed="${revealed}">
       <header class="redo-card-header"><span>第${ex.number}题</span><span class="redo-card-status">${done ? '已重做' : revealed ? '已核对' : '待作答'}</span></header>
-      <div class="redo-stem markdown-body">${stemHtml(ex.stem)}</div>
+      <div class="redo-stem markdown-body">${stemHtml(ex.stem, {renderMarkdown})}</div>
       <label class="redo-draft-label">我的作答（可选，仅保存在本浏览器）
         <textarea class="redo-draft" rows="3" placeholder="写下填空或简答…">${esc(draft)}</textarea>
       </label>

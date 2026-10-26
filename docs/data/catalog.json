@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-27T00:53:26+08:00",
+  "publishedAt": "2026-10-27T00:54:00+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,20 +10,6 @@
     "通信原理 C"
   ],
   "notes": [
-    {
-      "id": "db92d1184ade974d90a3",
-      "course": "物理光学",
-      "title": "物理光学 · 2026-10-26 13:45–15:20",
-      "date": "2026-10-26",
-      "abstract": "物理光学 · 2026-10-26 13:45–15:20",
-      "reviewStatus": "skipped",
-      "version": "03a1516fe955c9d5149704951e4713116c850b2834f65136bce2fe0b56e11a83",
-      "wordCount": 18047,
-      "imageCount": 10,
-      "file": "notes/db92d1184ade974d90a3-03a1516fe955.json",
-      "sourceCount": 90,
-      "lessonAt": "2026-10-26T13:45:00+08:00"
-    },
     {
       "id": "da8eef5b0b86445a76b9",
       "course": "光电子学",
@@ -37,6 +23,20 @@
       "file": "notes/da8eef5b0b86445a76b9-77fe79358eb3.json",
       "sourceCount": 91,
       "lessonAt": "2026-10-26T09:50:00+08:00"
+    },
+    {
+      "id": "db92d1184ade974d90a3",
+      "course": "物理光学",
+      "title": "光拍现象与相速度、群速度",
+      "date": "2026-10-26",
+      "abstract": "物理光学 · 2026-10-26 13:45–15:20",
+      "reviewStatus": "skipped",
+      "version": "03a1516fe955c9d5149704951e4713116c850b2834f65136bce2fe0b56e11a83",
+      "wordCount": 18047,
+      "imageCount": 10,
+      "file": "notes/db92d1184ade974d90a3-03a1516fe955.json",
+      "sourceCount": 90,
+      "lessonAt": "2026-10-26T13:45:00+08:00"
     },
     {
       "id": "5261614e3ed96329c982",

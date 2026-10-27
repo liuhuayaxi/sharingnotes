@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-27T00:54:00+08:00",
+  "publishedAt": "2026-10-27T18:49:27+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,20 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "d106c1d3d265c3027b45",
+      "course": "微型计算机原理与接口技术",
+      "title": "微型计算机原理与接口技术 · 2026-10-27 13:45–15:20",
+      "date": "2026-10-27",
+      "abstract": "微型计算机原理与接口技术 · 2026-10-27 13:45–15:20",
+      "reviewStatus": "skipped",
+      "version": "e9a49041147cdd8e121ca3452908ebb3e7a8ba07afb4c1ef3d455f63bd17959b",
+      "wordCount": 14230,
+      "imageCount": 6,
+      "file": "notes/d106c1d3d265c3027b45-e9a49041147c.json",
+      "sourceCount": 89,
+      "lessonAt": "2026-10-27T13:45:00+08:00"
+    },
     {
       "id": "da8eef5b0b86445a76b9",
       "course": "光电子学",

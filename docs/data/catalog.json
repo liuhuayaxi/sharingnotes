@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-28T16:15:52+08:00",
+  "publishedAt": "2026-10-28T18:39:28+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,20 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "07eb529042997b9b7667",
+      "course": "通信原理 C",
+      "title": "通信原理C（混合式） · 2026-10-28 09:50–11:25",
+      "date": "2026-10-28",
+      "abstract": "通信原理C（混合式） · 2026-10-28 09:50–11:25",
+      "reviewStatus": "skipped",
+      "version": "89524c003d4a8fa72c0e0ed776a2166e0009d8f8caf94f14c6e52fc65111383f",
+      "wordCount": 20617,
+      "imageCount": 9,
+      "file": "notes/07eb529042997b9b7667-89524c003d4a.json",
+      "sourceCount": 92,
+      "lessonAt": "2026-10-28T09:50:00+08:00"
+    },
     {
       "id": "c4794188e384cce5ebbe",
       "course": "光电子学",

@@ -341,17 +341,6 @@
       "sha256": "7e6a6c10300750b110cd753dbdc6b71171d277c67ac283ed1464294125a59086",
       "bytes": 21200379,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-7e6a6c10300750b110cd753dbdc6b71171d277c67ac283ed1464294125a59086.pdf"
-    },
-    {
-      "id": "0cc7a0f2526e17ef963a",
-      "course": "通信原理 C",
-      "title": "4-数字基带传输系统第二次课堂讨论思考题 (答案）.pdf",
-      "kind": "课件",
-      "pages": 95,
-      "updatedAt": "2026-10-28T16:15:10+08:00",
-      "sha256": "77d7d60556cf01675893576de16047ecab6e26cafcc39cdbd3a515a38ea2a497",
-      "bytes": 13333923,
-      "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-77d7d60556cf01675893576de16047ecab6e26cafcc39cdbd3a515a38ea2a497.pdf"
     }
   ],
   "noteMaterials": {
@@ -508,7 +497,6 @@
       "056563103a3be1e1ea62"
     ],
     "07eb529042997b9b7667": [
-      "0cc7a0f2526e17ef963a",
       "e60ea5a172aef28f0de2",
       "0f64f12d3ce7acb408ca"
     ]

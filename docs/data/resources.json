@@ -330,6 +330,18 @@
       "sha256": "c88b979a8de177ab65615efdf92fcfc28dc8c49dedde3654e8837c8bda9141fc",
       "bytes": 46859128,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-c88b979a8de177ab65615efdf92fcfc28dc8c49dedde3654e8837c8bda9141fc.pdf"
+    },
+    {
+      "id": "3f25779620c7fd25785a",
+      "course": "微型计算机原理与接口技术",
+      "title": "第4章.pdf",
+      "kind": "课件",
+      "pages": 113,
+      "updatedAt": "2026-10-28T09:27:55+08:00",
+      "sha256": "7e6a6c10300750b110cd753dbdc6b71171d277c67ac283ed1464294125a59086",
+      "bytes": 21200379,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

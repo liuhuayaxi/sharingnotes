@@ -1,6 +1,12 @@
 {
-  "publishedAt": "2026-10-27T18:49:51+08:00",
+  "publishedAt": "2026-10-28T16:15:52+08:00",
   "notes": [
+    {
+      "id": "c4794188e384cce5ebbe",
+      "file": "notes/c4794188e384cce5ebbe-79ed765cfb50.json",
+      "sha256": "36655b6bbd07f28c8c4de91ca33e065663336b128cba7322069249bcb389836a",
+      "bytes": 93537
+    },
     {
       "id": "d106c1d3d265c3027b45",
       "file": "notes/d106c1d3d265c3027b45-e9a49041147c.json",
@@ -297,6 +303,69 @@
     }
   ],
   "images": [
+    {
+      "file": "images/7d0a31602c134749820e45dc147d25704d594968417e31b917824d68142ff1c4.png",
+      "sha256": "7d0a31602c134749820e45dc147d25704d594968417e31b917824d68142ff1c4",
+      "bytes": 540229,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/601570022f5cc49bf2dbcad82fd9e93db6a3b8aca2abdc8221699f136fb243ee.png",
+      "sha256": "601570022f5cc49bf2dbcad82fd9e93db6a3b8aca2abdc8221699f136fb243ee",
+      "bytes": 362266,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/cfbae7599cfcce779d3040771dffc0293be9a42d098d7074f88e3902a94ae3d9.png",
+      "sha256": "cfbae7599cfcce779d3040771dffc0293be9a42d098d7074f88e3902a94ae3d9",
+      "bytes": 310839,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/8f5e80dfb6b5e2678532e6af146a962ee0be5863aa2c37835b3095a4f45d134e.png",
+      "sha256": "8f5e80dfb6b5e2678532e6af146a962ee0be5863aa2c37835b3095a4f45d134e",
+      "bytes": 325234,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/6ccdb35d2dfaa9348a9eca3f0a22ab0af775473a2e19de60bb0305d758e5dbb1.png",
+      "sha256": "6ccdb35d2dfaa9348a9eca3f0a22ab0af775473a2e19de60bb0305d758e5dbb1",
+      "bytes": 341912,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/ca359e3dedad3eadba3cde80b00b35b72f0737f8248dfd4b79f656c68de83e44.png",
+      "sha256": "ca359e3dedad3eadba3cde80b00b35b72f0737f8248dfd4b79f656c68de83e44",
+      "bytes": 239616,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/0fb35c72f4223e1019a47b2f8a9b8287805e96d98d23ea29e6a966588d57a9bd.png",
+      "sha256": "0fb35c72f4223e1019a47b2f8a9b8287805e96d98d23ea29e6a966588d57a9bd",
+      "bytes": 349124,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/f5cc5b462ea19b5922120188871cb381cc25ac7e1aeecec8aab9cd6312b8383b.png",
+      "sha256": "f5cc5b462ea19b5922120188871cb381cc25ac7e1aeecec8aab9cd6312b8383b",
+      "bytes": 394838,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/370cded7dd177379ca01e3d883944c418750d8ede318f6e7dab4d50b70f0152a.png",
+      "sha256": "370cded7dd177379ca01e3d883944c418750d8ede318f6e7dab4d50b70f0152a",
+      "bytes": 347013,
+      "width": 1348,
+      "height": 952
+    },
     {
       "file": "images/cd8242c0afc1dbe1f370e4101fb9675c6e82436b3eba80f2e6844f596e5ad616.png",
       "sha256": "cd8242c0afc1dbe1f370e4101fb9675c6e82436b3eba80f2e6844f596e5ad616",
@@ -3098,5 +3167,5 @@
       "height": 864
     }
   ],
-  "sourceCount": 3501
+  "sourceCount": 3592
 }

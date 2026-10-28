@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-27T18:49:51+08:00",
+  "publishedAt": "2026-10-28T16:15:52+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,20 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "c4794188e384cce5ebbe",
+      "course": "光电子学",
+      "title": "半导体激光器直接调制与瞬态响应",
+      "date": "2026-10-28",
+      "abstract": "光电子学 · 2026-10-28 08:00–09:35",
+      "reviewStatus": "skipped",
+      "version": "79ed765cfb507616559bf4805382e3312af5d7cbf73733df274f99e3e46fcc17",
+      "wordCount": 20525,
+      "imageCount": 9,
+      "file": "notes/c4794188e384cce5ebbe-79ed765cfb50.json",
+      "sourceCount": 91,
+      "lessonAt": "2026-10-28T08:00:00+08:00"
+    },
     {
       "id": "d106c1d3d265c3027b45",
       "course": "微型计算机原理与接口技术",

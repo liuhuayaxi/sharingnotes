@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-28T18:39:54+08:00",
+  "publishedAt": "2026-10-29T16:16:51+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -15,12 +15,12 @@
       "course": "通信原理 C",
       "title": "数字基带传输系统与码间串扰及眼图",
       "date": "2026-10-28",
-      "abstract": "通信原理C（混合式） · 2026-10-28 09:50–11:25",
+      "abstract": "数字基带传输系统与码间串扰及眼图",
       "reviewStatus": "skipped",
-      "version": "89524c003d4a8fa72c0e0ed776a2166e0009d8f8caf94f14c6e52fc65111383f",
-      "wordCount": 20617,
-      "imageCount": 9,
-      "file": "notes/07eb529042997b9b7667-89524c003d4a.json",
+      "version": "f19b84e320e2aa1eaed32981f852387fc610afc47674dcb0075323323fa4c2f3",
+      "wordCount": 17189,
+      "imageCount": 11,
+      "file": "notes/07eb529042997b9b7667-f19b84e320e2.json",
       "sourceCount": 92,
       "lessonAt": "2026-10-28T09:50:00+08:00"
     },

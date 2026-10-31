@@ -5,6 +5,34 @@ spec=importlib.util.spec_from_file_location('export_courses',Path(__file__).reso
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 
 class ExportTests(unittest.TestCase):
+    def test_explicit_chapters_are_published_and_change_content_version(self):
+        session={'id':'chapters','status':'completed','category':'示例课','title':'第一章标题不能猜章节',
+                 'ai_note_summary':{'summary':'正文'},'segments':[]}
+        unknown=module.public_note(session)
+        self.assertEqual((unknown['chapter'],unknown['chapters']),('',[]))
+        first=module.public_note({**session,'chapter':'第1章 绪论','chapters':['第1章 绪论']})
+        self.assertEqual(first['chapter'],'第1章 绪论')
+        self.assertNotEqual(first['version'],unknown['version'])
+        spanning=module.public_note({**session,'chapters':['第1章 绪论','第2章 电路','第1章 绪论']})
+        self.assertEqual(spanning['chapters'],['第1章 绪论','第2章 电路'])
+        self.assertEqual(spanning['chapter'],'第1章 绪论 · 第2章 电路')
+        self.assertNotEqual(spanning['version'],first['version'])
+        dirty=module.public_note({**session,'chapter':'/Users/example/private/lesson','chapters':['第1章 绪论',None,3]})
+        self.assertNotIn('/Users/',dirty['chapter'])
+        self.assertEqual(dirty['chapters'],['第1章 绪论'])
+    def test_catalog_and_note_document_share_chapter_metadata(self):
+        import json,tempfile
+        from unittest.mock import patch
+        session={'id':'chapter-export','status':'completed','category':'示例课','title':'课堂标题','chapter':'第2章','chapters':['第2章'],
+                 'started_at':'2026-10-31T08:00:00+08:00','ai_note_summary':{'summary':'## 课堂正文\n正文'},'segments':[]}
+        def response(base,path):
+            return {'records':[{'id':session['id'],'category':'示例课'}],'next_offset':None} if path.startswith('/api/library?') else {'session':session}
+        with tempfile.TemporaryDirectory() as folder,patch.object(module,'get_json',side_effect=response):
+            module.export('http://127.0.0.1:1',['示例课'],folder)
+            root=Path(folder);entry=json.loads((root/'catalog.json').read_text())['notes'][0]
+            document=json.loads((root/entry['file']).read_text())
+            for item in [entry,document]:
+                self.assertEqual(item['chapter'],'第2章');self.assertEqual(item['chapters'],['第2章'])
     def test_placeholder_citations_become_plain_text(self):
         text='讲授 [原文 Sxx](#source-xx) 与 [原文 SXX](#source-XX)；真实 [课堂 S2 · 00:01:00–00:02:00](#source-2)，缺失 [原文 S9](#source-9)，代码 `[原文 Sxx](#source-xx)`'
         out=module.unlink_unresolved_citations(text,['1','2'])

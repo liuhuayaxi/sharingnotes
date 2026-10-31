@@ -3,5 +3,7 @@ node_modules/
 *.log
 .env*
 screenshots/
+output/
+.playwright-cli/
 __pycache__/
 *.pyc

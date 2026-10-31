@@ -6,23 +6,51 @@ export function safeImageFile(file) { return /^data\/images\/[a-f0-9]{64}\.png$/
 export function newestNotes(notes) {
   return [...notes].sort((a,b) => String(b.lessonAt || b.date).localeCompare(String(a.lessonAt || a.date)) || a.title.localeCompare(b.title,'zh-CN') || a.id.localeCompare(b.id));
 }
+export const UNASSIGNED_CHAPTER = '__unassigned__';
+export function noteChapters(note) {
+  const declared = Array.isArray(note?.chapters) ? note.chapters : [];
+  const chapters = [...new Set(declared.filter(value => typeof value === 'string').map(value => value.trim()).filter(Boolean))];
+  if (!chapters.length && typeof note?.chapter === 'string' && note.chapter.trim()) chapters.push(note.chapter.trim());
+  return chapters;
+}
+export function chapterLabel(note) { return (typeof note?.chapter === 'string' && note.chapter.trim()) || noteChapters(note).join(' · ') || '章节待确认'; }
+export function matchesChapter(note, chapter = '') {
+  if (!chapter) return true;
+  const chapters = noteChapters(note);
+  return chapter === UNASSIGNED_CHAPTER ? chapters.length === 0 : chapters.includes(chapter);
+}
+export function scopedNotes(notes, {course = '', chapter = '', favoritesOnly = false, favorites = new Set(), sort = 'newest'} = {}) {
+  const result = newestNotes(notes.filter(note => (!course || note.course === course) && matchesChapter(note, chapter) && (!favoritesOnly || favorites.has(note.id))));
+  return sort === 'oldest' ? result.reverse() : result;
+}
+export function chapterCounts(notes, course = '') {
+  const counts = new Map();
+  // Keep explicit chapters in teaching order. No title/body guessing is used.
+  for (const note of scopedNotes(notes, {course, sort: 'oldest'})) {
+    const chapters = noteChapters(note);
+    for (const chapter of chapters.length ? chapters : [UNASSIGNED_CHAPTER]) counts.set(chapter, (counts.get(chapter) || 0) + 1);
+  }
+  return [...counts].filter(([chapter]) => chapter !== UNASSIGNED_CHAPTER)
+    .concat(counts.has(UNASSIGNED_CHAPTER) ? [[UNASSIGNED_CHAPTER, counts.get(UNASSIGNED_CHAPTER)]] : [])
+    .map(([chapter, notes]) => ({chapter, label: chapter === UNASSIGNED_CHAPTER ? '章节待确认' : chapter, notes}));
+}
 export function stamp(seconds) {
   const value = Math.max(0, Math.floor(Number(seconds) || 0));
   return value >= 3600 ? `${Math.floor(value/3600)}:${String(Math.floor(value%3600/60)).padStart(2,'0')}:${String(value%60).padStart(2,'0')}` : `${Math.floor(value/60)}:${String(value%60).padStart(2,'0')}`;
 }
-export function searchText(index, query, notes, {course = '', includeSources = false, limit = 70} = {}) {
+export function searchText(index, query, notes, {course = '', chapter = '', favoritesOnly = false, favorites = new Set(), includeSources = false, limit = 70} = {}) {
   const terms = queryTerms(query);
   if (!terms.length) return [];
   const byId = new Map(notes.map(n => [n.id, n]));
   const best = new Map();
   for (const chunk of index) {
     const note = byId.get(chunk.note);
-    if (!note || (course && note.course !== course) || (!includeSources && chunk.kind === 'source')) continue;
-    const title = compact(note.title), heading = compact(chunk.heading), text = compact(chunk.text);
+    if (!note || (course && note.course !== course) || !matchesChapter(note, chapter) || (favoritesOnly && !favorites.has(note.id)) || (!includeSources && chunk.kind === 'source')) continue;
+    const title = compact(note.title + ' ' + chapterLabel(note)), heading = compact(chunk.heading), text = compact(chunk.text);
     if (!terms.every(term => (title + heading + text).includes(term))) continue;
     const score = terms.reduce((total, term) => total + (title.includes(term) ? 8 : 0) + (heading.includes(term) ? 5 : 0) + (text.includes(term) ? 2 : 0), chunk.kind === 'note' ? 2 : 0);
     const key = [chunk.note, chunk.kind, chunk.section].join(':');
-    if (!best.has(key) || best.get(key).score < score) best.set(key, {...chunk, score, title: note.title, course: note.course, date: note.date});
+    if (!best.has(key) || best.get(key).score < score) best.set(key, {...chunk, score, title: note.title, chapter: chapterLabel(note), course: note.course, date: note.date});
   }
   return [...best.values()].sort((a,b) => b.score-a.score || b.date.localeCompare(a.date)).slice(0, limit);
 }

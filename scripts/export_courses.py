@@ -188,9 +188,15 @@ def public_note(session, published_images=None, images=None):
     ident = hashlib.sha256((course + ':' + str(session['id'])).encode()).hexdigest()[:20]
     sources = source_texts(session, note)
     markdown = unlink_unresolved_citations(clean_text(note['summary'], published_images), [s['id'] for s in sources])
-    version = hashlib.sha256(json.dumps([markdown, sources], ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+    chapter = clean_text(session.get('chapter')) if isinstance(session.get('chapter'), str) else ''
+    declared = session.get('chapters') if isinstance(session.get('chapters'), list) else []
+    chapters = list(dict.fromkeys(clean_text(value) for value in declared if isinstance(value, str) and clean_text(value)))
+    if not chapters and chapter: chapters = [chapter]
+    if not chapter and chapters: chapter = ' · '.join(chapters)
+    version = hashlib.sha256(json.dumps([markdown, sources, chapter, chapters], ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     date = str(session.get('recorded_at') or session.get('started_at') or '')[:10]
     return {'id': ident, 'course': course, 'title': clean_text(session.get('title') or course), 'date': date,
+            'chapter': chapter, 'chapters': chapters,
             'abstract': clean_text(note.get('abstract') or '')[:700], 'markdown': markdown, 'sources': sources,
             'reviewStatus': str(note.get('review_status') or 'unknown'), 'version': version,
             'wordCount': len(re.sub(r'\s', '', markdown)), 'images': images or [], 'imageCount': len(images or [])}
@@ -226,7 +232,7 @@ def export(base, courses, destination):
         filename = f"notes/{note['id']}-{note['version'][:12]}.json"
         body = json.dumps(note, ensure_ascii=False, separators=(',', ':'))
         (destination/filename).write_text(body)
-        summary = {k: note[k] for k in ['id', 'course', 'title', 'date', 'abstract', 'reviewStatus', 'version', 'wordCount', 'imageCount']}
+        summary = {k: note[k] for k in ['id', 'course', 'title', 'chapter', 'chapters', 'date', 'abstract', 'reviewStatus', 'version', 'wordCount', 'imageCount']}
         summary.update(file=filename, sourceCount=len(note['sources']), lessonAt=str(session.get('recorded_at') or session.get('started_at') or note['date']))
         catalog.append(summary)
         for chunk in search_chunks(note['markdown']): index.append({'note': note['id'], 'kind': 'note', **chunk})

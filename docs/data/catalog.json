@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-31T14:14:24+08:00",
+  "publishedAt": "2026-10-31T14:15:00+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -18,11 +18,11 @@
       "title": "欧姆定律概念公式与例题计算",
       "date": "2026-10-31",
       "abstract": "浏览器实测-欧姆定律短音频",
-      "reviewStatus": "skipped",
-      "version": "7a138f89ae3ecede4782df91ba915229be49b57ce233f5b6f01c5910689a21e4",
-      "wordCount": 1675,
+      "reviewStatus": "stale",
+      "version": "f09f6bff48b2f8660ae7062b0d79040e5c0066f25225c8a0773261395cd3d28b",
+      "wordCount": 1709,
       "imageCount": 0,
-      "file": "notes/361e7859c64e3829404a-7a138f89ae3e.json",
+      "file": "notes/361e7859c64e3829404a-f09f6bff48b2.json",
       "sourceCount": 1,
       "lessonAt": "2026-10-31T14:01:11+08:00"
     },

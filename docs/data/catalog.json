@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-30T15:13:30+08:00",
+  "publishedAt": "2026-10-31T09:11:39+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -23,6 +23,20 @@
       "file": "notes/fd680e60359a73f2526a-c19a33e7c339.json",
       "sourceCount": 92,
       "lessonAt": "2026-10-30T08:00:00+08:00"
+    },
+    {
+      "id": "9b4ab47fadd488e657db",
+      "course": "光电子学",
+      "title": "光电子学 · 2026-10-30 15:35–17:10",
+      "date": "2026-10-30",
+      "abstract": "光电子学 · 2026-10-30 15:35–17:10",
+      "reviewStatus": "skipped",
+      "version": "1691bc5882498692fb847eeafbbf40903d757280d88e04496f0c5592f3961f35",
+      "wordCount": 17843,
+      "imageCount": 7,
+      "file": "notes/9b4ab47fadd488e657db-1691bc588249.json",
+      "sourceCount": 93,
+      "lessonAt": "2026-10-30T15:35:00+08:00"
     },
     {
       "id": "ca612a080d912e7a71db",

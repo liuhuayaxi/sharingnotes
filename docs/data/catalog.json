@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-31T16:05:51+08:00",
+  "publishedAt": "2026-10-31T16:32:50+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,24 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "9b4ab47fadd488e657db",
+      "course": "光电子学",
+      "title": "半导体光放大器原理与分类",
+      "chapter": "第5章 半导体光放大器",
+      "chapters": [
+        "第5章 半导体光放大器"
+      ],
+      "date": "2026-10-30",
+      "abstract": "光电子学：半导体光放大器原理与分类",
+      "reviewStatus": "skipped",
+      "version": "f9b6b0339c842989db8dfa411a4c5669154033ca6788162d5979a94fe8fdb76d",
+      "wordCount": 17693,
+      "imageCount": 8,
+      "file": "notes/9b4ab47fadd488e657db-f9b6b0339c84.json",
+      "sourceCount": 93,
+      "lessonAt": "2026-10-30T15:35:00+08:00"
+    },
     {
       "id": "fd680e60359a73f2526a",
       "course": "物理光学",
@@ -27,24 +45,6 @@
       "file": "notes/fd680e60359a73f2526a-190a1a8efe98.json",
       "sourceCount": 92,
       "lessonAt": "2026-10-30T08:00:00+08:00"
-    },
-    {
-      "id": "9b4ab47fadd488e657db",
-      "course": "光电子学",
-      "title": "光电子学：半导体光放大器原理与分类",
-      "chapter": "第5章 半导体光放大器",
-      "chapters": [
-        "第5章 半导体光放大器"
-      ],
-      "date": "2026-10-30",
-      "abstract": "光电子学 · 2026-10-30 15:35–17:10",
-      "reviewStatus": "skipped",
-      "version": "97c796b5ce1383e4b8e8020165ad3e784aa86c56b6256cd4596437d2f14b59ae",
-      "wordCount": 17843,
-      "imageCount": 7,
-      "file": "notes/9b4ab47fadd488e657db-97c796b5ce13.json",
-      "sourceCount": 93,
-      "lessonAt": "2026-10-30T15:35:00+08:00"
     },
     {
       "id": "ca612a080d912e7a71db",

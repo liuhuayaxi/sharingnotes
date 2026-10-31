@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-31T14:15:00+08:00",
+  "publishedAt": "2026-10-31T14:16:02+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -19,10 +19,10 @@
       "date": "2026-10-31",
       "abstract": "浏览器实测-欧姆定律短音频",
       "reviewStatus": "stale",
-      "version": "f09f6bff48b2f8660ae7062b0d79040e5c0066f25225c8a0773261395cd3d28b",
+      "version": "474c363fc61cf1ffd290a4bae9737482813017a33f2a48cc9bdbc009a937797b",
       "wordCount": 1709,
       "imageCount": 0,
-      "file": "notes/361e7859c64e3829404a-f09f6bff48b2.json",
+      "file": "notes/361e7859c64e3829404a-474c363fc61c.json",
       "sourceCount": 1,
       "lessonAt": "2026-10-31T14:01:11+08:00"
     },

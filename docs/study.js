@@ -37,11 +37,11 @@ export function duration(ms) {
   if(!minutes)return ms>0?"不足 1 分钟":"0 分钟";
   return minutes>=60?`${Math.floor(minutes/60)} 小时 ${minutes%60} 分钟`:`${minutes} 分钟`;
 }
-export function initStudy() {
+export function initStudy({onFocus=()=>{}}={}) {
   const $=id=>document.getElementById(id), dialog=$("study-dialog");
   const key=PREFIX+crypto.randomUUID(), own={};let saved=true, alive=true, selected=dayKey(new Date()), month=selected.slice(0,7);
   // Per-page records prevent tabs from overwriting each other’s totals.
-  const clock=createStudyClock({add(day,ms){own[day]=(own[day]||0)+ms;try{localStorage.setItem(key,JSON.stringify(own));saved=true;}catch{saved=false;}}});
+  const clock=createStudyClock({add(day,ms){onFocus(ms);own[day]=(own[day]||0)+ms;try{localStorage.setItem(key,JSON.stringify(own));saved=true;}catch{saved=false;}}});
   function totals(){let storage;try{storage=localStorage;}catch{}const days=storage?readStudyDays(storage):{};if(!saved)for(const [day,ms] of Object.entries(own))days[day]=(days[day]||0)+ms;return days;}
   function render() {
     const days=totals(), today=dayKey(new Date());

@@ -1,0 +1,2 @@
+CREATE TABLE passkeys(id TEXT PRIMARY KEY,public_key TEXT NOT NULL,counter INTEGER NOT NULL,transports TEXT NOT NULL,created_at INTEGER NOT NULL);
+CREATE TABLE auth_challenges(id TEXT PRIMARY KEY,challenge TEXT NOT NULL,kind TEXT NOT NULL,expires INTEGER NOT NULL);

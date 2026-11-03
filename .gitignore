@@ -7,3 +7,6 @@ output/
 .playwright-cli/
 __pycache__/
 *.pyc
+
+.wrangler/
+.dev.vars*

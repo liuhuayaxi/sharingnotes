@@ -1,0 +1,5 @@
+import {startRegistration,startAuthentication} from '@simplewebauthn/browser';
+async function call(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await r.json();if(!r.ok)throw Error(data.error||'验证失败');return data;}
+async function run(register){const status=document.getElementById('passkey-status');status.textContent='请按浏览器提示验证…';try{const base='/passkey/'+(register?'register':'login'),{id,options}=await call(base+'/options',{});const response=register?await startRegistration({optionsJSON:options}):await startAuthentication({optionsJSON:options});await call(base+'/verify',{id,response});if(register)status.textContent='通行密钥已创建，下次可直接登录。';else location.href='/';}catch(error){status.textContent=error.name==='NotAllowedError'?'已取消验证，可重试或使用口令登录':error.message;}}
+document.getElementById('passkey-login')?.addEventListener('click',()=>run(false));
+document.getElementById('passkey-register')?.addEventListener('click',()=>run(true));

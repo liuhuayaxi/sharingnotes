@@ -1,0 +1,11 @@
+{
+ "name":"sharingnotes-analytics",
+ "main":"src/worker.js",
+ "compatibility_date":"2026-11-03",
+ "workers_dev":true,
+ "preview_urls":false,
+ "observability":{"enabled":false},
+ "vars":{"ALLOWED_ORIGIN":"https://liuhuayaxi.github.io"},
+ "triggers":{"crons":["15 * * * *"]},
+ "d1_databases":[{"binding":"DB","database_name":"sharingnotes-analytics","database_id":"6badd1b4-a355-4378-9657-7004bf59e7b7","migrations_dir":"migrations"}]
+}

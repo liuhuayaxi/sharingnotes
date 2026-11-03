@@ -20,5 +20,17 @@ export function restoreReadingPosition(note, body, win = window, storage) {
   const top = rect && block.textContent.slice(0,100) === value.text && value.top > 110
     ? rect.top+win.scrollY+Math.max(0,Math.min(1,Number(value.fraction)||0))*rect.height-110
     : Number(value.top)||0;
-  win.scrollTo({top:Math.max(0,top),behavior:"instant"});
+  const target=Math.max(0,top);
+  if(!win.addEventListener){win.scrollTo({top:target,behavior:"smooth"});return;}
+  win.scrollTo({top:0,behavior:"instant"});
+  return new Promise(resolve=>{
+    let timer,frame;
+    const finish=()=>{clearTimeout(timer);win.cancelAnimationFrame(frame);win.removeEventListener('scrollend',finish);win.removeEventListener('wheel',finish);win.removeEventListener('touchstart',finish);resolve();};
+    frame=win.requestAnimationFrame(()=>{
+      win.addEventListener('scrollend',finish,{once:true});
+      win.addEventListener('wheel',finish,{once:true,passive:true});win.addEventListener('touchstart',finish,{once:true,passive:true});
+      timer=setTimeout(finish,1800);
+      win.scrollTo({top:target,behavior:win.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    });
+  });
 }

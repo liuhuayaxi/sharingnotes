@@ -6,6 +6,6 @@ for(const e of data.daily){const day=days[e.day]??={visit:0,open:0,ms:0,errors:0
 $('summary').replaceChildren();for(const [label,value] of [['访问次数',visits],['笔记打开',opens],['专注分钟',Math.round(ms/60000)],['错误次数',errors]]){const p=document.createElement('p');p.textContent=label;const strong=document.createElement('strong');strong.textContent=value;p.append(strong);$('summary').append(p);}
 $('days').replaceChildren();for(const [date,d] of Object.entries(days).sort((a,b)=>b[0].localeCompare(a[0])))row($('days'),[date,d.visit,d.open,Math.round(d.ms/60000),d.errors]);
 $('notes').replaceChildren();for(const [id,n] of Object.entries(notes).sort((a,b)=>b[1].open-a[1].open)){row($('notes'),[titles[id]||id,n.open,Math.round(n.ms/60000),n.complete]);const td=$('notes').lastChild.firstChild,a=document.createElement('a');a.href='https://liuhuayaxi.github.io/sharingnotes/?note='+id;a.textContent=td.textContent;a.target='_blank';a.rel='noopener';td.replaceChildren(a);}
-$('diagnostics').replaceChildren();for(const d of data.diagnostics)row($('diagnostics'),[new Date(d.received_at).toLocaleString(),d.ip,d.browser,d.platform,d.language+' / '+d.viewport]);$('status').textContent='已更新 · 汇总使用统计，不统计独立用户人数';
+$('diagnostics').replaceChildren();for(const d of data.diagnostics)row($('diagnostics'),[new Date(d.received_at).toLocaleString(),d.ip,d.browser,d.platform,d.language+' / '+d.viewport]);$('status').textContent='已更新';
 }catch{$('status').textContent='读取失败，请稍后重试';}}
 $('range').onchange=load;load();

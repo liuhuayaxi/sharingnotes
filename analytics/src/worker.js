@@ -83,6 +83,24 @@ export default {
    if(url.pathname==='/logout')return new Response(null,{status:303,headers:headers({'Location':'/','Set-Cookie':'sn_admin=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'})});
    if(!await authorized(request,env))return url.pathname.startsWith('/api/')?response({error:'unauthorized'},401):html(loginPage());
    if(url.pathname==='/')return html(dashboard);
+   if(url.pathname==='/api/export') {
+    const end=Date.now(),start=end-30*DAY_MS,day=new Date(start+8*3600000).toISOString().slice(0,10);
+    const stream=new ReadableStream({async start(controller){
+      const emit=text=>controller.enqueue(enc.encode(text));
+      try{
+        const daily=await env.DB.prepare('SELECT day,kind,note,events,value FROM daily WHERE day>=? ORDER BY day').bind(day).all();
+        emit(JSON.stringify({exportedAt:new Date(end).toISOString(),from:new Date(start).toISOString(),to:new Date(end).toISOString(),daily:daily.results}).slice(0,-1)+',"diagnostics":[');
+        let cursor=0,first=true;
+        while(true){
+          const page=await env.DB.prepare('SELECT id,received_at,ip,browser,platform,language,viewport FROM diagnostics WHERE id>? AND received_at>=? AND received_at<=? ORDER BY id LIMIT 500').bind(cursor,start,end).all();
+          if(!page.results.length)break;
+          for(const row of page.results){cursor=row.id;const {id,...data}=row;emit((first?'':',')+JSON.stringify(data));first=false;}
+        }
+        emit(']}');controller.close();
+      }catch(error){controller.error(error);}
+    }});
+    return new Response(stream,{headers:headers({'Content-Type':'application/json; charset=utf-8','Content-Disposition':'attachment; filename="sharingnotes-last-30-days-'+new Date(end).toISOString().slice(0,10)+'.json"'})});
+   }
    if(url.pathname==='/dashboard.js')return new Response(dashboardScript,{headers:headers({'Content-Type':'text/javascript'})});
    if(url.pathname==='/api/stats') {
     const days=Math.min(30,Math.max(1,Number(url.searchParams.get('days'))||30)),since=new Date(Date.now()+8*3600000-(days-1)*DAY_MS).toISOString().slice(0,10);

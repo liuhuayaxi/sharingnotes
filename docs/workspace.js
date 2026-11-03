@@ -1,6 +1,6 @@
 import {escapeHtml as esc, newestNotes, snippet, chapterLabel, UNASSIGNED_CHAPTER} from './core.js?v=chapters1';
 
-export function initWorkspace({catalog, getFavorites, getCourse, getChapter = () => '', getNotes, getSort = () => 'newest', openNote}) {
+export function initWorkspace({catalog, getFavorites, getCourse, getChapter = () => '', getNotes, getSort = () => 'newest', openNote, toggleFavorite}) {
   const root=document.getElementById('workspace');
   function render({favoritesOnly=false}={}) {
     const course=getCourse();
@@ -18,7 +18,19 @@ export function initWorkspace({catalog, getFavorites, getCourse, getChapter = ()
     }).join('')}</div></section>`).join('')||'<p class="workspace-empty">这里暂时没有笔记。可以切换课程、章节或取消收藏筛选。</p>';
   }
   root.addEventListener('click',event=>{
+    const favorite=event.target.closest('[data-favorite-note]');if(favorite){toggleFavorite?.(favorite.dataset.favoriteNote);return;}
     const open=event.target.closest('[data-open-note]');if(open)openNote(open.dataset.openNote);
   });
-  return {render};
+  const renderNotes=render;
+  function renderWithFavorites(options){
+    renderNotes(options);
+    for(const card of root.querySelectorAll('.workspace-note')){
+      const id=card.querySelector('[data-open-note]').dataset.openNote;
+      const button=document.createElement('button');button.type='button';button.className='quiet-button';button.dataset.favoriteNote=id;
+      const saved=getFavorites().has(id);button.textContent=saved?'★ 已收藏':'☆ 收藏';button.setAttribute('aria-pressed',String(saved));
+      button.setAttribute('aria-label',(saved?'取消收藏 ':'收藏 ')+catalog.notes.find(n=>n.id===id).title);
+      card.querySelector('.workspace-note-actions').prepend(button);
+    }
+  }
+  return {render:renderWithFavorites};
 }

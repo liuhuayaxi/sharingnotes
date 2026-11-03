@@ -14,7 +14,8 @@ export function validateBatch(body,now=Date.now()) {
   const note=e.note||'';if(note!==''&&!/^[a-f0-9]{20}$/.test(note))throw Error('note');
   if((e.kind==='note_open'||e.kind.startsWith('read_'))&&!note)throw Error('note');
   const value=e.kind==='focus'?e.value:1;if(!Number.isInteger(value)||value<1||value>120000)throw Error('value');
-  return {id:e.id,at:e.at,day:new Date(e.at+8*3600000).toISOString().slice(0,10),kind:e.kind,note,value};
+  const identity=body.linkVisits===true&&UUID.test(e.visitor||'')&&UUID.test(e.session||'')?{visitor:e.visitor,session:e.session}:{};
+  return {...identity,id:e.id,at:e.at,day:new Date(e.at+8*3600000).toISOString().slice(0,10),kind:e.kind,note,value};
  });
  // Missing/false option always disables environment persistence.
  const details=body.details===true&&body.environment&&typeof body.environment==='object';
@@ -51,10 +52,11 @@ export async function collect(request,env) {
   batch=validateBatch(JSON.parse(new TextDecoder().decode(joined)));
  }catch{return response({error:'invalid'},400,cors);}
  const now=Date.now();
- await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(new Date(now+8*3600000-30*DAY_MS).toISOString().slice(0,10))]);
+ await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM visitor_events WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(new Date(now+8*3600000-30*DAY_MS).toISOString().slice(0,10))]);
  const writes=batch.events.map(e=>env.DB.prepare('INSERT OR IGNORE INTO receipts(id,received_at,day,kind,note,value) VALUES(?,?,?,?,?,?)').bind(e.id,now,e.day,e.kind,e.note,e.value));
- // Server IP isolated from reading events; 30-day expiry.
+ // Event association requires the client to send its enabled preference.
  if(batch.environment){const d=batch.environment;writes.push(env.DB.prepare('INSERT INTO diagnostics(received_at,ip,browser,platform,language,viewport) VALUES(?,?,?,?,?,?)').bind(now,safeText(request.headers.get('CF-Connecting-IP'),64),d.browser,d.platform,d.language,d.viewport));}
+ for(const e of batch.events)if(e.visitor){const d=batch.environment;writes.push(env.DB.prepare('INSERT OR IGNORE INTO visitor_events(id,visitor,session,received_at,at,kind,note,value,ip,browser) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(e.id,e.visitor,e.session,now,e.at,e.kind,e.note,e.value,d?safeText(request.headers.get('CF-Connecting-IP'),64):'',d?.browser||''));}
  await env.DB.batch(writes);return response({accepted:batch.events.map(e=>e.id)},200,cors);
 }
 export default {
@@ -96,19 +98,25 @@ export default {
           if(!page.results.length)break;
           for(const row of page.results){cursor=row.id;const {id,...data}=row;emit((first?'':',')+JSON.stringify(data));first=false;}
         }
+        emit('],"visitorEvents":[');cursor='';first=true;
+        while(true){const page=await env.DB.prepare('SELECT * FROM visitor_events WHERE id>? AND received_at>=? AND received_at<=? ORDER BY id LIMIT 500').bind(cursor,start,end).all();if(!page.results.length)break;for(const row of page.results){cursor=row.id;emit((first?'':',')+JSON.stringify(row));first=false;}}
         emit(']}');controller.close();
       }catch(error){controller.error(error);}
     }});
     return new Response(stream,{headers:headers({'Content-Type':'application/json; charset=utf-8','Content-Disposition':'attachment; filename="sharingnotes-last-30-days-'+new Date(end).toISOString().slice(0,10)+'.json"'})});
    }
    if(url.pathname==='/dashboard.js')return new Response(dashboardScript,{headers:headers({'Content-Type':'text/javascript'})});
+   if(url.pathname==='/api/visitor'){
+    const id=url.searchParams.get('id');if(!UUID.test(id||''))return response({error:'invalid'},400);
+    const result=await env.DB.prepare('SELECT at,session,kind,note,value,ip,browser FROM visitor_events WHERE visitor=? AND received_at>=? ORDER BY at DESC LIMIT 500').bind(id,Date.now()-30*DAY_MS).all();return response({events:result.results});
+   }
    if(url.pathname==='/api/stats') {
     const days=Math.min(30,Math.max(1,Number(url.searchParams.get('days'))||30)),since=new Date(Date.now()+8*3600000-(days-1)*DAY_MS).toISOString().slice(0,10);
-    const [daily,diagnostics]=await env.DB.batch([env.DB.prepare('SELECT day,kind,note,events,value FROM daily WHERE day>=? ORDER BY day DESC').bind(since),env.DB.prepare('SELECT received_at,ip,browser,platform,language,viewport FROM diagnostics WHERE received_at>=? ORDER BY received_at DESC LIMIT 100').bind(Date.now()-30*DAY_MS)]);
-    return response({daily:daily.results,diagnostics:diagnostics.results});
+    const [daily,diagnostics,visitors]=await env.DB.batch([env.DB.prepare('SELECT day,kind,note,events,value FROM daily WHERE day>=? ORDER BY day DESC').bind(since),env.DB.prepare('SELECT received_at,ip,browser,platform,language,viewport FROM diagnostics WHERE received_at>=? ORDER BY received_at DESC LIMIT 100').bind(Date.now()-30*DAY_MS),env.DB.prepare("SELECT visitor,MIN(at) AS first_seen,MAX(at) AS last_seen,COUNT(DISTINCT session) AS sessions,SUM(CASE WHEN kind='visit' THEN 1 ELSE 0 END) AS visits,SUM(CASE WHEN kind='note_open' THEN 1 ELSE 0 END) AS opens,SUM(CASE WHEN kind='focus' THEN value ELSE 0 END) AS focus_ms FROM visitor_events WHERE received_at>=? GROUP BY visitor ORDER BY last_seen DESC LIMIT 200").bind(Date.now()-days*DAY_MS)]);
+    return response({daily:daily.results,diagnostics:diagnostics.results,visitors:visitors.results});
    }
    return response({error:'not_found'},404);
   }catch{return response({error:'unavailable'},503);}
  },
- async scheduled(event,env){const cutoff=Date.now()-30*DAY_MS;await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(new Date(cutoff+8*3600000).toISOString().slice(0,10))]);}
+ async scheduled(event,env){const cutoff=Date.now()-30*DAY_MS;await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM visitor_events WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(new Date(cutoff+8*3600000).toISOString().slice(0,10))]);}
 };

@@ -1,4 +1,4 @@
-import {initAnalytics} from './analytics.js?v=stats1';
+import {initAnalytics} from './analytics.js?v=visitors1';
 import {saveReadingPosition,restoreReadingPosition} from './reading-progress.js?v=favorites3';
 import {initStudy} from './study.js?v=stats1';
 import {renderMarkdown} from './render.js?v=cite1';

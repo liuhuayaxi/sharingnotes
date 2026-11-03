@@ -31,3 +31,10 @@ test('login pages keep same-origin referrer policy and passkey script is public'
  const script=await worker.fetch(new Request('https://test/passkey.js'),{DB,ADMIN_SECRET:'secret'});assert.equal(script.status,200);
  const registration=await worker.fetch(new Request('https://test/passkey/register/options',{method:'POST',headers:{Origin:'https://test','Content-Type':'application/json'},body:'{}'}),{DB,ADMIN_SECRET:'secret'});assert.equal(registration.status,401);
 });
+test('association requires preference and valid IDs; environment opt-out still respected',async()=>{
+ const visitor='22345678-1234-4123-8123-123456789abc',session='32345678-1234-4123-8123-123456789abc';
+ const linked={...event,visitor,session};assert.equal(validateBatch({events:[linked]},now).events[0].visitor,undefined);
+ assert.equal(validateBatch({events:[linked],linkVisits:true},now).events[0].visitor,visitor);
+ const DB=fakeDB();await collect(new Request('https://test/collect',{method:'POST',headers:{Origin:'https://liuhuayaxi.github.io','CF-Connecting-IP':'192.0.2.9'},body:JSON.stringify({events:[linked],linkVisits:true,details:false})}),{DB,ALLOWED_ORIGIN:'https://liuhuayaxi.github.io'});
+ const write=DB.calls.find(c=>c.sql.startsWith('INSERT OR IGNORE INTO visitor_events'));assert.ok(write);assert.equal(write.values[1],visitor);assert.equal(write.values[8],'');
+});

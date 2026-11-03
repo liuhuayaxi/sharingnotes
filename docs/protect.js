@@ -1,6 +1,6 @@
 // Copy protection for the shared reading site.
 // Display is never changed here: this module only listens to clipboard,
-// selection, context-menu, drag and keyboard events. Editable fields (search
+// context-menu, drag and keyboard events. Text selection stays available. Editable fields (search
 // boxes, the personal-note textarea) keep their normal behaviour.
 const NOISE_RANGES = [[0x4e00, 0x9fa5], [0x3400, 0x4db5]];
 const NOISE_SYMBOLS = [...'※¤§¶†‡◆◇○●□■△▲▽▼☆★♀♂♪♫∮∴∵≒≡⊕⊗⊙⌒⌘⏃⏚⍟⎔⏣╳╱╲▓▒░〓〼〄㊣㍿'];
@@ -66,21 +66,17 @@ export function installCopyProtection(doc = globalThis.document) {
     if (isEditable(element) || element?.closest?.(MATERIAL_SELECTOR)) return;
     event.preventDefault();
   }, true);
-  for (const type of ['selectstart', 'dragstart']) {
-    doc.addEventListener(type, event => {
-      if (isEditable(event.target)) return;
-      if (type === 'dragstart' && elementOf(event.target)?.closest?.(MATERIAL_SELECTOR)) return;
-      event.preventDefault();
-    }, true);
-  }
+  doc.addEventListener('dragstart', event => {
+    if (isEditable(event.target) || elementOf(event.target)?.closest?.(MATERIAL_SELECTOR)) return;
+    event.preventDefault();
+  }, true);
   doc.addEventListener('keydown', event => {
     if (!(event.ctrlKey || event.metaKey)) return;
     // event.code survives Option/Alt combinations such as Cmd+Option+U.
     const key = /^Key[A-Z]$/.test(event.code || '') ? event.code.slice(3).toLowerCase() : String(event.key || '').toLowerCase();
     const typing = isEditable(event.target);
-    // Inside a search box or the personal note, copy / cut / select-all act on
-    // the reader's own typing and remain available.
-    if (['c', 'x', 'a'].includes(key) && !typing) event.preventDefault();
+    // Select-all stays available; copy / cut remain available for reader input.
+    if (['c', 'x'].includes(key) && !typing) event.preventDefault();
     // Save page, print and view source are blocked everywhere.
     if (['s', 'p', 'u'].includes(key)) event.preventDefault();
   }, true);

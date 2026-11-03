@@ -56,13 +56,16 @@ test('search boxes and the personal note keep normal copy, selection and shortcu
   assert.equal(fire('keydown',{target:search,ctrlKey:true,key:'a',code:'KeyA'}).defaultPrevented,false);
   assert.equal(isEditable(element('input',{type:'checkbox'})),false);
 });
-test('content selection, context menu, drag and copy/save/print/source shortcuts are blocked',()=>{
+test('content selection and select-all work while copying and dragging stay blocked',()=>{
   const {doc,fire}=fakeDocument();installCopyProtection(doc);
   const text={nodeType:3,parentElement:element('p')};
-  assert.equal(fire('selectstart',{target:text}).defaultPrevented,true);
+  assert.equal(fire('selectstart',{target:text}).defaultPrevented,false);
   assert.equal(fire('contextmenu',{target:element('img')}).defaultPrevented,true);
   assert.equal(fire('dragstart',{target:element('img')}).defaultPrevented,true);
-  for(const key of ['c','x','a','s','p','u'])assert.equal(fire('keydown',{target:element('body'),ctrlKey:true,key,code:'Key'+key.toUpperCase()}).defaultPrevented,true,key);
+  for(const modifier of ['ctrlKey','metaKey']){
+    assert.equal(fire('keydown',{target:element('body'),[modifier]:true,key:'a',code:'KeyA'}).defaultPrevented,false);
+    for(const key of ['c','x','s','p','u'])assert.equal(fire('keydown',{target:element('body'),[modifier]:true,key,code:'Key'+key.toUpperCase()}).defaultPrevented,true,key);
+  }
   assert.equal(fire('keydown',{target:element('body'),metaKey:true,altKey:true,key:'ú',code:'KeyU'}).defaultPrevented,true);
   assert.equal(fire('keydown',{target:element('body'),key:'/',code:'Slash'}).defaultPrevented,false);
   // Course materials (AI PDFs) keep their link menu for downloading.
@@ -78,9 +81,10 @@ test('note and transcript downloads are gone while course materials stay downloa
   assert.equal(html.includes('id="audio-download"'),false);assert.equal(library.includes('下载录音'),false);assert.ok(library.includes('打开 / 下载'));
   assert.ok(html.indexOf('protect.js')>0&&html.indexOf('protect.js')<html.indexOf('app.js'));
 });
-test('copy protection CSS changes selection only and print hiding is print-only',()=>{
+test('copy protection CSS permits text selection and print hiding is print-only',()=>{
   const css=readFileSync(docs('style.css'),'utf8');
-  assert.match(css,/html\{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none\}/);
+  assert.match(css,/html\{-webkit-user-select:text;user-select:text;-webkit-touch-callout:none\}/);
+  assert.equal(/user-select\s*:\s*none/.test(css),false);
   assert.match(css,/input,textarea,select,[^{]*\{-webkit-user-select:text;user-select:text/);
   assert.match(css,/@media print\{body>\*\{display:none!important\}/);
 });

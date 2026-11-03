@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-03T10:30:48+08:00",
+  "publishedAt": "2026-11-03T20:25:36+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -20,11 +20,11 @@
       ],
       "date": "2026-11-02",
       "abstract": "部分响应系统与时域均衡原理",
-      "reviewStatus": "skipped",
-      "version": "4e3209235535ead2d7501e5899cd8ea99c353f512dbc6eeffc5436e7450094d8",
-      "wordCount": 16189,
+      "reviewStatus": "stale",
+      "version": "839afd3605bc514f4549e142d792d59f4bf562f947e8c1aa766de41b080182c6",
+      "wordCount": 16215,
       "imageCount": 9,
-      "file": "notes/2026d187082bdfdfd550-4e3209235535.json",
+      "file": "notes/2026d187082bdfdfd550-839afd3605bc.json",
       "sourceCount": 55,
       "lessonAt": "2026-11-02T21:40:10+08:00"
     },

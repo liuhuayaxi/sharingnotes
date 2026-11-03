@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-10-31T17:10:59+08:00",
+  "publishedAt": "2026-11-03T10:30:48+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,60 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "2026d187082bdfdfd550",
+      "course": "通信原理 C",
+      "title": "部分响应系统与时域均衡原理",
+      "chapter": "第6章 数字基带传输",
+      "chapters": [
+        "第6章 数字基带传输"
+      ],
+      "date": "2026-11-02",
+      "abstract": "部分响应系统与时域均衡原理",
+      "reviewStatus": "skipped",
+      "version": "4e3209235535ead2d7501e5899cd8ea99c353f512dbc6eeffc5436e7450094d8",
+      "wordCount": 16189,
+      "imageCount": 9,
+      "file": "notes/2026d187082bdfdfd550-4e3209235535.json",
+      "sourceCount": 55,
+      "lessonAt": "2026-11-02T21:40:10+08:00"
+    },
+    {
+      "id": "07e1bcd9347ac9f25a84",
+      "course": "物理光学",
+      "title": "物理光学：扩展光源干涉与空间相干性",
+      "chapter": "第3章 光的干涉与干涉仪",
+      "chapters": [
+        "第3章 光的干涉与干涉仪"
+      ],
+      "date": "2026-11-02",
+      "abstract": "物理光学 · 2026-11-02 13:45–15:20",
+      "reviewStatus": "skipped",
+      "version": "7fc4790eab47b6877008ab58af46ba0e7ab2c895030b886f6032e0632916bbf3",
+      "wordCount": 14756,
+      "imageCount": 9,
+      "file": "notes/07e1bcd9347ac9f25a84-7fc4790eab47.json",
+      "sourceCount": 92,
+      "lessonAt": "2026-11-02T13:45:00+08:00"
+    },
+    {
+      "id": "68179602d817d0387153",
+      "course": "光电子学",
+      "title": "光电探测器物理效应与半导体光吸收",
+      "chapter": "第6章 半导体中的光吸收与光探测器",
+      "chapters": [
+        "第6章 半导体中的光吸收与光探测器"
+      ],
+      "date": "2026-11-02",
+      "abstract": "光电子学 · 2026-11-02 09:50–11:25",
+      "reviewStatus": "skipped",
+      "version": "06f3c37feb0e27b26b3a11343aa0564a24e8bdea90ae6e630857c5af68bb5871",
+      "wordCount": 24666,
+      "imageCount": 28,
+      "file": "notes/68179602d817d0387153-06f3c37feb0e.json",
+      "sourceCount": 82,
+      "lessonAt": "2026-11-02T09:50:00+08:00"
+    },
     {
       "id": "9b4ab47fadd488e657db",
       "course": "光电子学",

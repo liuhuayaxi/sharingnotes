@@ -214,6 +214,10 @@ function renderTrend() {
   const ceiling = Math.ceil((Math.ceil(maximum / magnitude) * magnitude) / 4) * 4;
   const slot = (width - left - right) / days.length;
   const barWidth = Math.min(44, slot * 0.58);
+  const labelEvery = Math.max(
+    1,
+    Math.ceil(days.length / Math.max(2, Math.floor((width - left - right) / 55))),
+  );
   const svg = [
     `<svg class="trend-chart" viewBox="0 0 ${width} ${height}" role="group" aria-label="${metricNames[metric]}每日柱状图">`,
   ];
@@ -234,7 +238,10 @@ function renderTrend() {
     svg.push(
       `<g class="chart-hit" role="button" tabindex="0" data-day="${day.day}" aria-label="${label}" aria-pressed="${day.day === state.day}"><title>${label}</title><rect fill="transparent" x="${x - slot / 2}" y="0" width="${slot}" height="${height}"/><rect class="${day.recorded ? 'chart-bar' : 'chart-no-data'} ${day.day === state.day ? 'selected' : ''}" x="${x - barWidth / 2}" y="${top + plotHeight - barHeight}" width="${barWidth}" height="${barHeight}" rx="3"/>`,
     );
-    if (days.length <= 14 || index % 3 === 0 || index === days.length - 1)
+    if (
+      index === days.length - 1 ||
+      (index % labelEvery === 0 && days.length - 1 - index >= labelEvery / 2)
+    )
       svg.push(
         `<text class="chart-label" x="${x}" y="${height - 7}" text-anchor="middle">${day.day.slice(5).replace('-', '/')}</text>`,
       );

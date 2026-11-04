@@ -451,6 +451,18 @@
       "sha256": "a6d2508ca8b2a8a9f8a270567e2b3c4666c6ecc7d5eba67ef9cd1a3bd7d9fa89",
       "bytes": 32357603,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-a6d2508ca8b2a8a9f8a270567e2b3c4666c6ecc7d5eba67ef9cd1a3bd7d9fa89.pdf"
+    },
+    {
+      "id": "d54cfcf907ae80e8544b",
+      "course": "激光原理",
+      "title": "第5讲Ch3-激光模式与谐振腔损耗.pdf",
+      "kind": "课件",
+      "pages": 29,
+      "updatedAt": "2026-11-05T01:30:11+08:00",
+      "sha256": "336bd07de9625bdb4420275c8b71420cf6289f4d85e95f04b10f1b5f3a810f5a",
+      "bytes": 23571346,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

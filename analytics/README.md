@@ -2,7 +2,9 @@
 
 管理看板：https://sharingnotes-analytics.sharingnotes-service.workers.dev/
 
-首次使用管理员口令登录，点击“创建通行密钥”，按浏览器提示用 Touch ID / Face ID 或密码管理器保存。之后可使用通行密钥登录，查看最近 7 天／30 天的访问次数、笔记打开、专注时长、阅读节点与错误。热门笔记可点击打开。点击“导出近 30 天数据”下载 JSON，包含使用汇总和环境记录。环境诊断显示最近 100 条开启分享的记录。
+首次使用管理员口令登录，在“账号与安全”中创建通行密钥，按浏览器提示用 Touch ID / Face ID 或密码管理器保存。面板支持最近 7／14／30 天及自定义日期，统一按 UTC+8 自然日汇总。点击趋势图、日期卡片或每日明细中的日期，可查看当天总结、24 小时专注分布、热门笔记、阅读节点、课程投入占比与分页访问足迹。笔记表现支持搜索和排序，访客可展开分页明细。浏览器和系统分布按所选范围的全部环境上报批次计算，诊断表显示最近 100 条。导出按钮下载近 30 天 JSON。
+
+访问、笔记打开、专注时长和阅读节点来自全部汇总记录。访客、会话、时段和访问足迹来自开启访问关联的记录，按事件发生时间筛选。环境诊断按接收时间筛选。汇总卡片的访客与会话在整个日期范围内去重，访客列表最多显示最近活跃的 200 个。最早保留记录之前的日期显示“未记录”。
 
 使用数据按天汇总。访问关联默认开启：本地随机访客 ID 长期保存，换 IP 后仍能关联同一浏览器。关闭后停止上传并删除本地 ID；再次开启会生成新 ID。看板可点击访客查看会话、笔记与专注时长。环境诊断独立保存 IP、User-Agent、平台、语言和视口，不保存 Canvas、音频、字体枚举，开启访问关联后，环境信息也可随关联事件保存。设置关闭后，后续请求不保存环境诊断，但基础统计继续。随机事件 ID 仅用于重试去重。
 
@@ -15,13 +17,13 @@
 ```bash
 npx wrangler login
 npx wrangler d1 migrations apply sharingnotes-analytics --remote --config analytics/wrangler.jsonc
-npx wrangler deploy --config analytics/wrangler.jsonc
+npm run deploy --prefix analytics
 ```
 
 管理员口令通过 `wrangler secret put ADMIN_SECRET --config analytics/wrangler.jsonc` 配置，不能写入仓库。更换口令会使旧登录会话失效。
 
 ```bash
-node --test analytics/tests/*.test.js
+npm test --prefix analytics
 npm test
 ```
 

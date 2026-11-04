@@ -1,6 +1,7 @@
 import {passkeyRequest} from './passkeys.js';
 import passkeyClient from './passkey-client.js';
 import {dashboard,loginPage,dashboardScript} from './views.js';
+import {statisticsWindow,statistics,activity} from './statistics.js';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const TYPES=new Set(['visit','note_open','read_25','read_50','read_75','read_100','focus','error_load','error_script']);
 const DAY_MS=86400000,enc=new TextEncoder();
@@ -65,6 +66,7 @@ export default {
   try {
    if(url.pathname==='/collect')return await collect(request,env);
    if(url.pathname==='/health')return response({ok:true});
+   if(url.pathname==='/favicon.ico')return new Response(null,{status:204});
    if(url.pathname==='/passkey.js')return new Response(passkeyClient,{headers:headers({'Content-Type':'text/javascript'})});
    if(url.pathname.startsWith('/passkey/')){
     if(overloaded())return response({error:'busy'},429);
@@ -106,14 +108,12 @@ export default {
     return new Response(stream,{headers:headers({'Content-Type':'application/json; charset=utf-8','Content-Disposition':'attachment; filename="sharingnotes-last-30-days-'+new Date(end).toISOString().slice(0,10)+'.json"'})});
    }
    if(url.pathname==='/dashboard.js')return new Response(dashboardScript,{headers:headers({'Content-Type':'text/javascript'})});
-   if(url.pathname==='/api/visitor'){
-    const id=url.searchParams.get('id');if(!UUID.test(id||''))return response({error:'invalid'},400);
-    const result=await env.DB.prepare('SELECT at,session,kind,note,value,ip,browser FROM visitor_events WHERE visitor=? AND received_at>=? ORDER BY at DESC LIMIT 500').bind(id,Date.now()-30*DAY_MS).all();return response({events:result.results});
+   if(url.pathname==='/api/visitor'||url.pathname==='/api/activity'){
+    const id=url.searchParams.get('id')||'';if((url.pathname==='/api/visitor'||id)&&!UUID.test(id))return response({error:'invalid'},400);
+    try{return response(await activity(env.DB,url,statisticsWindow(url),id));}catch(error){if(error.message.startsWith('invalid_'))return response({error:error.message},400);throw error;}
    }
    if(url.pathname==='/api/stats') {
-    const days=Math.min(30,Math.max(1,Number(url.searchParams.get('days'))||30)),since=new Date(Date.now()+8*3600000-(days-1)*DAY_MS).toISOString().slice(0,10);
-    const [daily,diagnostics,visitors]=await env.DB.batch([env.DB.prepare('SELECT day,kind,note,events,value FROM daily WHERE day>=? ORDER BY day DESC').bind(since),env.DB.prepare('SELECT received_at,ip,browser,platform,language,viewport FROM diagnostics WHERE received_at>=? ORDER BY received_at DESC LIMIT 100').bind(Date.now()-30*DAY_MS),env.DB.prepare("SELECT visitor,MIN(at) AS first_seen,MAX(at) AS last_seen,COUNT(DISTINCT session) AS sessions,SUM(CASE WHEN kind='visit' THEN 1 ELSE 0 END) AS visits,SUM(CASE WHEN kind='note_open' THEN 1 ELSE 0 END) AS opens,SUM(CASE WHEN kind='focus' THEN value ELSE 0 END) AS focus_ms FROM visitor_events WHERE received_at>=? GROUP BY visitor ORDER BY last_seen DESC LIMIT 200").bind(Date.now()-days*DAY_MS)]);
-    return response({daily:daily.results,diagnostics:diagnostics.results,visitors:visitors.results});
+    try{return response(await statistics(env.DB,statisticsWindow(url)));}catch(error){if(error.message==='invalid_range')return response({error:error.message},400);throw error;}
    }
    return response({error:'not_found'},404);
   }catch{return response({error:'unavailable'},503);}

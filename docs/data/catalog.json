@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T02:24:56+08:00",
+  "publishedAt": "2026-11-05T02:25:31+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -524,12 +524,12 @@
         "第3章 光学谐振腔与激光模式"
       ],
       "date": "2026-10-13",
-      "abstract": "激光原理光学谐振腔核心理论，涵盖无源开腔纵模驻波自洽条件、谐振频率与频率梳、起振纵模数计算，以及腔体损耗机理、光子平均寿命与品质因数Q的定量分析。",
-      "reviewStatus": "stale",
-      "version": "5167e9245aee9da63ae3cf4d137f4a4e237760c9ac193c9367431b3a3bb7b951",
-      "wordCount": 44092,
-      "imageCount": 0,
-      "file": "notes/1d42bc6edff69dfcd960-5167e9245aee.json",
+      "abstract": "激光谐振腔纵模理论与损耗机制",
+      "reviewStatus": "skipped",
+      "version": "1003b621c52bcac0b9df6e95706969df1d0dba1be74b1f4ff42f0490dae9cc8a",
+      "wordCount": 18020,
+      "imageCount": 14,
+      "file": "notes/1d42bc6edff69dfcd960-1003b621c52b.json",
       "sourceCount": 91,
       "lessonAt": "2026-10-13T09:50:00+08:00"
     },

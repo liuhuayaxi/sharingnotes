@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-04T17:49:40+08:00",
+  "publishedAt": "2026-11-05T00:34:07+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -435,11 +435,11 @@
       ],
       "date": "2026-10-15",
       "abstract": "光纤波导理论与非线性光学效应",
-      "reviewStatus": "skipped",
-      "version": "b7aa554bde6cc20862be35314b052cbe1bf11d87b2facf9b4401bf5f5ff77643",
-      "wordCount": 31189,
+      "reviewStatus": "stale",
+      "version": "29e459273a5270c63ade4d1b324c7216d1b5677590d3b7e9a42eb41cbb9f1532",
+      "wordCount": 31196,
       "imageCount": 8,
-      "file": "notes/9d0e8d80420bbcda8ab3-b7aa554bde6c.json",
+      "file": "notes/9d0e8d80420bbcda8ab3-29e459273a52.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-15T13:45:00+08:00"
     },

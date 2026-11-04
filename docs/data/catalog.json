@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T02:21:55+08:00",
+  "publishedAt": "2026-11-05T02:24:56+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -1045,12 +1045,12 @@
         "第1章 激光发展简史、特性与应用"
       ],
       "date": "2026-09-01",
-      "abstract": "激光四大基本特性（单色性、方向性、相干性、高亮度）的物理本质、定量指标与限制机理，以及其在通信、信息、工业制造、生物医疗和前沿科学等领域的关键应用。",
-      "reviewStatus": "passed",
-      "version": "9bbad874eb921309321900dea1340990a6a068134d17086da55817a5180dc05e",
-      "wordCount": 26130,
-      "imageCount": 0,
-      "file": "notes/11125c566d5cd066e358-9bbad874eb92.json",
+      "abstract": "激光四大基本特性与前沿应用",
+      "reviewStatus": "skipped",
+      "version": "2221268f839224a6f55232a89686ebc042ca928281ad9eb07df7b0a663b59128",
+      "wordCount": 11767,
+      "imageCount": 11,
+      "file": "notes/11125c566d5cd066e358-2221268f8392.json",
       "sourceCount": 46,
       "lessonAt": "2026-09-01T10:40:00+08:00"
     },

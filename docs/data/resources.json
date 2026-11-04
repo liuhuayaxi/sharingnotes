@@ -396,6 +396,18 @@
       "sha256": "74aaef186190ac45e6e7ba065b7f25c8da6b6e19a2428be930b6fd54d2a6f4ac",
       "bytes": 74311300,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-74aaef186190ac45e6e7ba065b7f25c8da6b6e19a2428be930b6fd54d2a6f4ac.pdf"
+    },
+    {
+      "id": "3c8a746222ed8ca6b4a0",
+      "course": "激光原理",
+      "title": "第1讲Ch1-激光发展简史特性与应用.pdf",
+      "kind": "课件",
+      "pages": 31,
+      "updatedAt": "2026-11-05T00:46:59+08:00",
+      "sha256": "19cbf76be5a30e245364be7d3a9e69a9a2b620fe77dd8b408388d1c828a7b51f",
+      "bytes": 23468199,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

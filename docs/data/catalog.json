@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T00:40:49+08:00",
+  "publishedAt": "2026-11-05T00:46:09+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -19,12 +19,12 @@
         "第7章 数字带通传输"
       ],
       "date": "2026-11-04",
-      "abstract": "通信原理C（混合式） · 2026-11-04 09:50–11:25",
+      "abstract": "数字通信调制技术与信息量度量",
       "reviewStatus": "skipped",
-      "version": "652cc23bf3b2fbc785037055d6e11eceed6e0e657f62f3ff2b1d7190b9666231",
-      "wordCount": 4245,
+      "version": "2a63509b57ef2c925866a707725afbc772c2d8068053b5b72b16f43a50b99eed",
+      "wordCount": 3999,
       "imageCount": 3,
-      "file": "notes/e7573a9899a6cd3f5846-652cc23bf3b2.json",
+      "file": "notes/e7573a9899a6cd3f5846-2a63509b57ef.json",
       "sourceCount": 0,
       "lessonAt": "2026-11-04T09:50:00+08:00"
     },

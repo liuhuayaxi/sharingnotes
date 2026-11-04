@@ -418,6 +418,18 @@
       "sha256": "b6eb032c2043d22ce8f5e1ec40e280b3bab76b3c1ed08bee997494e6b57fe2fb",
       "bytes": 23766258,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-b6eb032c2043d22ce8f5e1ec40e280b3bab76b3c1ed08bee997494e6b57fe2fb.pdf"
+    },
+    {
+      "id": "060d1fbb5c694cd538c3",
+      "course": "激光原理",
+      "title": "第2讲Ch2-激光产生机理与特性.pdf",
+      "kind": "课件",
+      "pages": 27,
+      "updatedAt": "2026-11-05T01:05:39+08:00",
+      "sha256": "f05f2c5e1f5abf2f8ff73aff10fbd5c1ddbd30ce680ac2c5bd98587accf55159",
+      "bytes": 10479074,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

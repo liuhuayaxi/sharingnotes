@@ -506,6 +506,18 @@
       "sha256": "6c5af2bf3625e35091b625a95597da9d55f287d08550c792ee9aa081c5b7a5ea",
       "bytes": 19724228,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-6c5af2bf3625e35091b625a95597da9d55f287d08550c792ee9aa081c5b7a5ea.pdf"
+    },
+    {
+      "id": "0bc38f695971bad2e115",
+      "course": "激光原理",
+      "title": "第10讲Ch4-高斯光束1.pdf",
+      "kind": "课件",
+      "pages": 12,
+      "updatedAt": "2026-11-05T02:07:08+08:00",
+      "sha256": "eae533f20429ebe91723f3a8ceb1a1896f852a9f34d97f7b918e98ff8138442c",
+      "bytes": 11266611,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

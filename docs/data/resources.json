@@ -385,6 +385,18 @@
       "sha256": "ea2890788103d0abef23dc5369618573cc3b6ea5673dda8d698397c7921053e3",
       "bytes": 55101248,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-ea2890788103d0abef23dc5369618573cc3b6ea5673dda8d698397c7921053e3.pdf"
+    },
+    {
+      "id": "4de9af011daa33792bef",
+      "course": "通信原理 C",
+      "title": "第07章 数字调制.pdf",
+      "kind": "课件",
+      "pages": 133,
+      "updatedAt": "2026-11-05T00:39:24+08:00",
+      "sha256": "74aaef186190ac45e6e7ba065b7f25c8da6b6e19a2428be930b6fd54d2a6f4ac",
+      "bytes": 74311300,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

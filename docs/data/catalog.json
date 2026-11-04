@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T00:46:38+08:00",
+  "publishedAt": "2026-11-05T02:21:30+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -517,15 +517,17 @@
       "id": "1d42bc6edff69dfcd960",
       "course": "激光原理",
       "title": "激光谐振腔纵模理论与损耗机制",
-      "chapter": "",
-      "chapters": [],
+      "chapter": "第3章 光学谐振腔与激光模式",
+      "chapters": [
+        "第3章 光学谐振腔与激光模式"
+      ],
       "date": "2026-10-13",
       "abstract": "激光原理光学谐振腔核心理论，涵盖无源开腔纵模驻波自洽条件、谐振频率与频率梳、起振纵模数计算，以及腔体损耗机理、光子平均寿命与品质因数Q的定量分析。",
       "reviewStatus": "stale",
-      "version": "6a891204c15c815380df6ab0f111ef8b84057cfff064e9543faf71683d6439f6",
+      "version": "5167e9245aee9da63ae3cf4d137f4a4e237760c9ac193c9367431b3a3bb7b951",
       "wordCount": 44092,
       "imageCount": 0,
-      "file": "notes/1d42bc6edff69dfcd960-6a891204c15c.json",
+      "file": "notes/1d42bc6edff69dfcd960-5167e9245aee.json",
       "sourceCount": 91,
       "lessonAt": "2026-10-13T09:50:00+08:00"
     },
@@ -945,15 +947,17 @@
       "id": "21a009c11cc033170a8b",
       "course": "激光原理",
       "title": "激光微观跃迁机理与粒子数反转",
-      "chapter": "",
-      "chapters": [],
+      "chapter": "第2章 激光产生机理与特性",
+      "chapters": [
+        "第2章 激光产生机理与特性"
+      ],
       "date": "2026-09-03",
       "abstract": "系统阐述激光产生机理与光放大理论，涵盖三大辐射跃迁微观过程、爱因斯坦系数推导、能级寿命测定、粒子数反转条件，以及多能级系统动力学和小信号增益饱和机制。",
       "reviewStatus": "passed",
-      "version": "349ffab98c0399adea22229d73e207d9619fa5ad2cdeaa404d66ce719d484564",
+      "version": "404952dbde5cbf3312e5093d3538da785c5a8e0bf98f4b0fae2c84010e386380",
       "wordCount": 43025,
       "imageCount": 0,
-      "file": "notes/21a009c11cc033170a8b-349ffab98c03.json",
+      "file": "notes/21a009c11cc033170a8b-404952dbde5c.json",
       "sourceCount": 93,
       "lessonAt": "2026-09-03T09:50:00+08:00"
     },
@@ -1034,15 +1038,17 @@
       "id": "11125c566d5cd066e358",
       "course": "激光原理",
       "title": "激光四大基本特性与前沿应用",
-      "chapter": "",
-      "chapters": [],
+      "chapter": "第1章 激光发展简史、特性与应用",
+      "chapters": [
+        "第1章 激光发展简史、特性与应用"
+      ],
       "date": "2026-09-01",
       "abstract": "激光四大基本特性（单色性、方向性、相干性、高亮度）的物理本质、定量指标与限制机理，以及其在通信、信息、工业制造、生物医疗和前沿科学等领域的关键应用。",
       "reviewStatus": "passed",
-      "version": "ddaf6fd95d74e34e384e9b7a8d7c4acccdd4ba1a59cc66374ab84d13d0ac6d69",
+      "version": "9bbad874eb921309321900dea1340990a6a068134d17086da55817a5180dc05e",
       "wordCount": 26130,
       "imageCount": 0,
-      "file": "notes/11125c566d5cd066e358-ddaf6fd95d74.json",
+      "file": "notes/11125c566d5cd066e358-9bbad874eb92.json",
       "sourceCount": 46,
       "lessonAt": "2026-09-01T10:40:00+08:00"
     },

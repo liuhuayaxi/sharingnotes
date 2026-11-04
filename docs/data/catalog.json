@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-04T15:50:30+08:00",
+  "publishedAt": "2026-11-04T17:48:30+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -27,6 +27,24 @@
       "file": "notes/e7573a9899a6cd3f5846-a47c977bc1f5.json",
       "sourceCount": 0,
       "lessonAt": "2026-11-04T09:50:00+08:00"
+    },
+    {
+      "id": "854302fb96f3ebde0565",
+      "course": "光电子学",
+      "title": "光电子学 · 2026-11-04 08:00–09:35",
+      "chapter": "第6章 半导体中的光吸收与光探测器",
+      "chapters": [
+        "第6章 半导体中的光吸收与光探测器"
+      ],
+      "date": "2026-11-04",
+      "abstract": "光电子学 · 2026-11-04 08:00–09:35",
+      "reviewStatus": "skipped",
+      "version": "14bed8d66b0e1de9c5713a99078a7e7fe5d1e5154951f386bbe684839ff40521",
+      "wordCount": 17904,
+      "imageCount": 6,
+      "file": "notes/854302fb96f3ebde0565-14bed8d66b0e.json",
+      "sourceCount": 92,
+      "lessonAt": "2026-11-04T08:00:00+08:00"
     },
     {
       "id": "2026d187082bdfdfd550",

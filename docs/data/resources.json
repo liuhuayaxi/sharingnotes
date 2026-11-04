@@ -440,6 +440,18 @@
       "sha256": "3493d3269f1634a266a772e6e9982ce8255977a1a0c529472e21375d0e8a6ea2",
       "bytes": 37740918,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-3493d3269f1634a266a772e6e9982ce8255977a1a0c529472e21375d0e8a6ea2.pdf"
+    },
+    {
+      "id": "b0a8f01513904df0dc0c",
+      "course": "激光原理",
+      "title": "第4讲Ch3-光线传输矩阵及稳定性条件.pdf",
+      "kind": "课件",
+      "pages": 41,
+      "updatedAt": "2026-11-05T01:22:54+08:00",
+      "sha256": "a6d2508ca8b2a8a9f8a270567e2b3c4666c6ecc7d5eba67ef9cd1a3bd7d9fa89",
+      "bytes": 32357603,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

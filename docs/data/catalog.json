@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T02:21:30+08:00",
+  "publishedAt": "2026-11-05T02:21:55+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -447,15 +447,17 @@
       "id": "e669084ef0b919712a67",
       "course": "激光原理",
       "title": "光学谐振腔横模与自再现模理论",
-      "chapter": "",
-      "chapters": [],
+      "chapter": "第3章 光学谐振腔与激光模式",
+      "chapters": [
+        "第3章 光学谐振腔与激光模式"
+      ],
       "date": "2026-10-15",
       "abstract": "光学谐振腔横模与自再现模理论",
       "reviewStatus": "skipped",
-      "version": "0759a3b56981018d39a7e65373a0258c8317d339dff97ae5ba4585cdf2be3640",
+      "version": "6a8d56fd907ed76829c128267533e5b118d0cac61ffdd37fe28d8feb0417040d",
       "wordCount": 10614,
       "imageCount": 0,
-      "file": "notes/e669084ef0b919712a67-0759a3b56981.json",
+      "file": "notes/e669084ef0b919712a67-6a8d56fd907e.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-15T09:50:00+08:00"
     },

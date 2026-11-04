@@ -462,6 +462,18 @@
       "sha256": "336bd07de9625bdb4420275c8b71420cf6289f4d85e95f04b10f1b5f3a810f5a",
       "bytes": 23571346,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-336bd07de9625bdb4420275c8b71420cf6289f4d85e95f04b10f1b5f3a810f5a.pdf"
+    },
+    {
+      "id": "bc0430b9597d5719cad7",
+      "course": "激光原理",
+      "title": "第6讲Ch3-平行平面腔的自再现模.pdf",
+      "kind": "课件",
+      "pages": 44,
+      "updatedAt": "2026-11-05T01:40:14+08:00",
+      "sha256": "e21b7b3f0bae9f034381f1e73f94d0dd98bac20d1eeb2b32d776232710d1cdee",
+      "bytes": 27015054,
+      "url": "",
+      "pending": true
     }
   ],
   "noteMaterials": {

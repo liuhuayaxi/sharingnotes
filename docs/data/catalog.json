@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T14:45:48+08:00",
+  "publishedAt": "2026-11-05T14:47:51+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -875,15 +875,18 @@
       "id": "da5200198a6b9c3bf439",
       "course": "激光原理",
       "title": "激光原理：产生机理、四大特性与分类",
-      "chapter": "",
-      "chapters": [],
+      "chapter": "第2章 激光产生机理与特性；第8章 典型激光器",
+      "chapters": [
+        "第2章 激光产生机理与特性",
+        "第8章 典型激光器"
+      ],
       "date": "2026-09-08",
       "abstract": "1. 激光的全称为受激辐射光放大，其物理基础建立在普朗克能量子假说与爱因斯坦受激辐射理论之上，1960年由梅曼研制出世界上第一台红宝石激光器。",
       "reviewStatus": "skipped",
-      "version": "c02d7d3b37249cd4ce3e280fefc206b7262cae4fceef8482e90283e9ffb19eef",
+      "version": "935afbf54c06d12e36d3db351245f4eb63a6e1eebfb234d92cca432a6a6c4752",
       "wordCount": 5285,
       "imageCount": 0,
-      "file": "notes/da5200198a6b9c3bf439-c02d7d3b3724.json",
+      "file": "notes/da5200198a6b9c3bf439-935afbf54c06.json",
       "sourceCount": 0,
       "lessonAt": "2026-09-08T09:50:00+08:00"
     },

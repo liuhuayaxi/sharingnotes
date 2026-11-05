@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T12:51:01+08:00",
+  "publishedAt": "2026-11-05T13:44:07+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -225,6 +225,22 @@
       "file": "notes/c4794188e384cce5ebbe-f303abcffa91.json",
       "sourceCount": 91,
       "lessonAt": "2026-10-28T08:00:00+08:00"
+    },
+    {
+      "id": "48d9538d475eee9156b5",
+      "course": "激光原理",
+      "title": "激光原理 · 2026-10-27 09:50–11:25",
+      "chapter": "",
+      "chapters": [],
+      "date": "2026-10-27",
+      "abstract": "激光原理 · 2026-10-27 09:50–11:25",
+      "reviewStatus": "skipped",
+      "version": "8dbef71e98e4d0e266778b37c7d8085c7464e1d4f635a3f42193c276de36e88a",
+      "wordCount": 14618,
+      "imageCount": 15,
+      "file": "notes/48d9538d475eee9156b5-8dbef71e98e4.json",
+      "sourceCount": 81,
+      "lessonAt": "2026-10-27T09:50:00+08:00"
     },
     {
       "id": "d106c1d3d265c3027b45",

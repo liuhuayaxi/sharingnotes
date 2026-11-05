@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T18:53:55+08:00",
+  "publishedAt": "2026-11-05T18:54:35+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -13,7 +13,7 @@
     {
       "id": "5c7ee7aee02ddc3f3a66",
       "course": "光电子器件（全英文）",
-      "title": "光电子器件（全英文） · 2026-11-05 13:45–15:20",
+      "title": "波分复用与光开关器件原理",
       "chapter": "Chapter 8",
       "chapters": [
         "Chapter 8"

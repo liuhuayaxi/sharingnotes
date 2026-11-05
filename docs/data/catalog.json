@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T14:21:00+08:00",
+  "publishedAt": "2026-11-05T14:45:48+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -872,6 +872,22 @@
       "lessonAt": "2026-09-09T13:47:06+08:00"
     },
     {
+      "id": "da5200198a6b9c3bf439",
+      "course": "激光原理",
+      "title": "激光原理：产生机理、四大特性与分类",
+      "chapter": "",
+      "chapters": [],
+      "date": "2026-09-08",
+      "abstract": "1. 激光的全称为受激辐射光放大，其物理基础建立在普朗克能量子假说与爱因斯坦受激辐射理论之上，1960年由梅曼研制出世界上第一台红宝石激光器。",
+      "reviewStatus": "skipped",
+      "version": "c02d7d3b37249cd4ce3e280fefc206b7262cae4fceef8482e90283e9ffb19eef",
+      "wordCount": 5285,
+      "imageCount": 0,
+      "file": "notes/da5200198a6b9c3bf439-c02d7d3b3724.json",
+      "sourceCount": 0,
+      "lessonAt": "2026-09-08T09:50:00+08:00"
+    },
+    {
       "id": "7cc09ef35376c0e00ce9",
       "course": "微型计算机原理与接口技术",
       "title": "微机原理：补码加减运算与进位溢出判定",
@@ -1123,22 +1139,6 @@
       "file": "notes/7a6bc401802cb22236e7-5faf69a281cf.json",
       "sourceCount": 75,
       "lessonAt": "2026-09-01T13:45:00+08:00"
-    },
-    {
-      "id": "da5200198a6b9c3bf439",
-      "course": "激光原理",
-      "title": "激光原理：产生机理、四大特性与分类",
-      "chapter": "",
-      "chapters": [],
-      "date": "2026-09-08",
-      "abstract": "1. 激光的全称为受激辐射光放大，其物理基础建立在普朗克能量子假说与爱因斯坦受激辐射理论之上，1960年由梅曼研制出世界上第一台红宝石激光器。",
-      "reviewStatus": "skipped",
-      "version": "1fb602152a09de94d93afab04b09f22a2d9544e797d1c0c0d2f39b085fd51000",
-      "wordCount": 5285,
-      "imageCount": 0,
-      "file": "notes/da5200198a6b9c3bf439-1fb602152a09.json",
-      "sourceCount": 87,
-      "lessonAt": "2026-09-08T09:50:00+08:00"
     }
   ],
   "textOnly": false,

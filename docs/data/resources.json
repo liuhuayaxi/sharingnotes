@@ -517,6 +517,17 @@
       "sha256": "393a2b239dc1658160a17656fc89f615836a965b33f160c105fa3dc5c48ab8a3",
       "bytes": 18034745,
       "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-393a2b239dc1658160a17656fc89f615836a965b33f160c105fa3dc5c48ab8a3.pdf"
+    },
+    {
+      "id": "7c1fd7c13c729a7770d9",
+      "course": "物理光学",
+      "title": "物理光学_03_光的干涉与干涉仪.pdf",
+      "kind": "课件",
+      "pages": 125,
+      "updatedAt": "2026-10-25T11:30:36+08:00",
+      "sha256": "aeb1a73503e9e737b05bdd54e0761e801c8701516496b9a8a773872011fa6062",
+      "bytes": 46966395,
+      "url": "https://github.com/liuhuayaxi/sharingnotes/releases/download/course-media/pdf-aeb1a73503e9e737b05bdd54e0761e801c8701516496b9a8a773872011fa6062.pdf"
     }
   ],
   "noteMaterials": {
@@ -674,7 +685,8 @@
       "056563103a3be1e1ea62"
     ],
     "db92d1184ade974d90a3": [
-      "21b00bd6835b25b4f8e4"
+      "21b00bd6835b25b4f8e4",
+      "7c1fd7c13c729a7770d9"
     ],
     "d106c1d3d265c3027b45": [
       "6d310d723f831cbb369c"
@@ -689,14 +701,18 @@
     "ca612a080d912e7a71db": [
       "e39b143647e7e6521a73"
     ],
-    "fd680e60359a73f2526a": [],
+    "fd680e60359a73f2526a": [
+      "7c1fd7c13c729a7770d9"
+    ],
     "9b4ab47fadd488e657db": [
       "115c37ca96f2a0ca7d1e"
     ],
     "2026d187082bdfdfd550": [
       "d21008416be8e0ced209"
     ],
-    "07e1bcd9347ac9f25a84": [],
+    "07e1bcd9347ac9f25a84": [
+      "7c1fd7c13c729a7770d9"
+    ],
     "68179602d817d0387153": [
       "440f6500047ed86d28c9"
     ],

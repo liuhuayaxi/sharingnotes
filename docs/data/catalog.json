@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T11:24:40+08:00",
+  "publishedAt": "2026-11-05T12:12:23+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -45,6 +45,24 @@
       "file": "notes/e7573a9899a6cd3f5846-6bdae7d73ed0.json",
       "sourceCount": 0,
       "lessonAt": "2026-11-04T09:50:00+08:00"
+    },
+    {
+      "id": "45d4a52cd42b4bff2ac8",
+      "course": "激光原理",
+      "title": "激光原理：横模图样识别与非稳腔",
+      "chapter": "第3章 小结非稳腔",
+      "chapters": [
+        "第3章 小结非稳腔"
+      ],
+      "date": "2026-11-03",
+      "abstract": "激光原理 · 2026-11-03 09:50–11:25",
+      "reviewStatus": "skipped",
+      "version": "e24423ea6e80fd0178a51b33baa78a9c9771ad96cf7cabea1c9fc2f473733e41",
+      "wordCount": 22569,
+      "imageCount": 10,
+      "file": "notes/45d4a52cd42b4bff2ac8-e24423ea6e80.json",
+      "sourceCount": 78,
+      "lessonAt": "2026-11-03T09:50:00+08:00"
     },
     {
       "id": "2026d187082bdfdfd550",

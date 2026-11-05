@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T12:32:17+08:00",
+  "publishedAt": "2026-11-05T12:32:47+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -155,24 +155,6 @@
       "lessonAt": "2026-10-30T08:00:00+08:00"
     },
     {
-      "id": "43568a39e8c29617687d",
-      "course": "激光原理",
-      "title": "激光原理 · 2026-10-29 09:50–11:25",
-      "chapter": "第3章 小结非稳腔",
-      "chapters": [
-        "第3章 小结非稳腔"
-      ],
-      "date": "2026-10-29",
-      "abstract": "激光原理 · 2026-10-29 09:50–11:25",
-      "reviewStatus": "skipped",
-      "version": "24762499777437929de59e7de538e6ae4726f325d788c835366fc83c827195cd",
-      "wordCount": 13675,
-      "imageCount": 8,
-      "file": "notes/43568a39e8c29617687d-247624997774.json",
-      "sourceCount": 85,
-      "lessonAt": "2026-10-29T09:50:00+08:00"
-    },
-    {
       "id": "ca612a080d912e7a71db",
       "course": "光电子器件（全英文）",
       "title": "法拉第旋转效应与光隔离器原理",
@@ -189,6 +171,24 @@
       "file": "notes/ca612a080d912e7a71db-0e8d3b608357.json",
       "sourceCount": 84,
       "lessonAt": "2026-10-29T13:45:00+08:00"
+    },
+    {
+      "id": "43568a39e8c29617687d",
+      "course": "激光原理",
+      "title": "基模高斯光束与等价共焦腔计算",
+      "chapter": "第3章 小结非稳腔",
+      "chapters": [
+        "第3章 小结非稳腔"
+      ],
+      "date": "2026-10-29",
+      "abstract": "激光原理 · 2026-10-29 09:50–11:25",
+      "reviewStatus": "skipped",
+      "version": "24762499777437929de59e7de538e6ae4726f325d788c835366fc83c827195cd",
+      "wordCount": 13675,
+      "imageCount": 8,
+      "file": "notes/43568a39e8c29617687d-247624997774.json",
+      "sourceCount": 85,
+      "lessonAt": "2026-10-29T09:50:00+08:00"
     },
     {
       "id": "07eb529042997b9b7667",

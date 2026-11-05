@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T14:54:08+08:00",
+  "publishedAt": "2026-11-05T14:59:55+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -881,12 +881,12 @@
         "第8章 典型激光器"
       ],
       "date": "2026-09-08",
-      "abstract": "激光原理：产生机理、四大特性与分类",
+      "abstract": "激光原理：微观跃迁与爱因斯坦系数",
       "reviewStatus": "skipped",
-      "version": "9140011fb2ad0c9c9dbb18a3cded147547b2639619863081161d6bfde095ec56",
-      "wordCount": 40983,
-      "imageCount": 12,
-      "file": "notes/da5200198a6b9c3bf439-9140011fb2ad.json",
+      "version": "69e2f7a6f7561e422bb9488bfdbadd3cbcbc15fa16e005717b74166743b7ecb3",
+      "wordCount": 37828,
+      "imageCount": 23,
+      "file": "notes/da5200198a6b9c3bf439-69e2f7a6f756.json",
       "sourceCount": 0,
       "lessonAt": "2026-09-08T09:50:00+08:00"
     },

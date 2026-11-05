@@ -1,11 +1,11 @@
 {
-  "publishedAt": "2026-11-05T12:15:05+08:00",
+  "publishedAt": "2026-11-05T12:25:53+08:00",
   "notes": [
     {
       "id": "e7573a9899a6cd3f5846",
-      "file": "notes/e7573a9899a6cd3f5846-2acf80caa765.json",
-      "sha256": "a426d6068c6f9ed0c11117827bac70bdd3798b86f11c46ca397cb21e2e2b6ced",
-      "bytes": 56562
+      "file": "notes/e7573a9899a6cd3f5846-9701ae362518.json",
+      "sha256": "249b0f41b7a6fbd38a453259f2b6a46204843066856ec66a4a635906270128df",
+      "bytes": 64751
     },
     {
       "id": "854302fb96f3ebde0565",
@@ -378,23 +378,9 @@
       "height": 952
     },
     {
-      "file": "images/b73f6f91adcebc2b7b7b829b3af3ff81cd1821977672a843ce0c5c7d60f6e239.png",
-      "sha256": "b73f6f91adcebc2b7b7b829b3af3ff81cd1821977672a843ce0c5c7d60f6e239",
-      "bytes": 248642,
-      "width": 1348,
-      "height": 952
-    },
-    {
       "file": "images/504a85cdf42d9c1100d46d6c14d9fb81132184feb4377e213f64d359b7fe2ba4.png",
       "sha256": "504a85cdf42d9c1100d46d6c14d9fb81132184feb4377e213f64d359b7fe2ba4",
       "bytes": 307110,
-      "width": 1348,
-      "height": 952
-    },
-    {
-      "file": "images/3b3fdf063a34faf82cca9deace06362b45c3685349ff63618463eabfa3e62274.png",
-      "sha256": "3b3fdf063a34faf82cca9deace06362b45c3685349ff63618463eabfa3e62274",
-      "bytes": 471690,
       "width": 1348,
       "height": 952
     },
@@ -434,9 +420,16 @@
       "height": 952
     },
     {
-      "file": "images/6ae8b656fa429d8a5c0368341901e3a545c686a5cc20a86f9c74da61b0e35255.png",
-      "sha256": "6ae8b656fa429d8a5c0368341901e3a545c686a5cc20a86f9c74da61b0e35255",
-      "bytes": 423165,
+      "file": "images/b832bf7fa547f228517bdbc87c1c7169f94b1cee6924943e05267cf810ade5d7.png",
+      "sha256": "b832bf7fa547f228517bdbc87c1c7169f94b1cee6924943e05267cf810ade5d7",
+      "bytes": 346628,
+      "width": 1348,
+      "height": 952
+    },
+    {
+      "file": "images/28d62d1f4eb4ec9925445e84b015f92722567d4a35627c48e9c6804f7b69bb44.png",
+      "sha256": "28d62d1f4eb4ec9925445e84b015f92722567d4a35627c48e9c6804f7b69bb44",
+      "bytes": 385275,
       "width": 1348,
       "height": 952
     },

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T11:17:41+08:00",
+  "publishedAt": "2026-11-05T11:18:05+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,24 +10,6 @@
     "通信原理 C"
   ],
   "notes": [
-    {
-      "id": "e7573a9899a6cd3f5846",
-      "course": "通信原理 C",
-      "title": "数字调制原理与正交相移键控",
-      "chapter": "第7章 数字带通传输",
-      "chapters": [
-        "第7章 数字带通传输"
-      ],
-      "date": "2026-11-04",
-      "abstract": "数字调制原理与正交相移键控",
-      "reviewStatus": "skipped",
-      "version": "2acf80caa765e8d6d4e31291d3186954f1ae4b0b6935e96ac4d5ec4957349cbd",
-      "wordCount": 27758,
-      "imageCount": 11,
-      "file": "notes/e7573a9899a6cd3f5846-2acf80caa765.json",
-      "sourceCount": 0,
-      "lessonAt": "2026-11-04T09:50:00+08:00"
-    },
     {
       "id": "854302fb96f3ebde0565",
       "course": "光电子学",
@@ -45,6 +27,24 @@
       "file": "notes/854302fb96f3ebde0565-14bed8d66b0e.json",
       "sourceCount": 92,
       "lessonAt": "2026-11-04T08:00:00+08:00"
+    },
+    {
+      "id": "e7573a9899a6cd3f5846",
+      "course": "通信原理 C",
+      "title": "二进制数字调制原理与抗噪声性能分析",
+      "chapter": "第7章 数字带通传输",
+      "chapters": [
+        "第7章 数字带通传输"
+      ],
+      "date": "2026-11-04",
+      "abstract": "数字调制原理与正交相移键控",
+      "reviewStatus": "skipped",
+      "version": "2acf80caa765e8d6d4e31291d3186954f1ae4b0b6935e96ac4d5ec4957349cbd",
+      "wordCount": 27758,
+      "imageCount": 11,
+      "file": "notes/e7573a9899a6cd3f5846-2acf80caa765.json",
+      "sourceCount": 0,
+      "lessonAt": "2026-11-04T09:50:00+08:00"
     },
     {
       "id": "2026d187082bdfdfd550",

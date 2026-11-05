@@ -5,10 +5,18 @@ const LINK_OPTION='sharingnotes.analytics.link.v1',VISITOR='sharingnotes.analyti
 export function linkedVisitor(storage,random=()=>crypto.randomUUID()){
  try{if(storage.getItem(LINK_OPTION)==='off')return '';let id=storage.getItem(VISITOR);if(!/^[0-9a-f-]{36}$/i.test(id||'')){id=random();storage.setItem(VISITOR,id);}return id;}catch{return '';}
 }
-export function makeBatch(events,enabled,nav,viewport,identity='') {
+export function referrerHost(value){
+ try{
+  const host=new URL(value).hostname.trim().toLowerCase().replace(/\.$/,'').replace(/^www\./,'');
+  if(!host||host==='liuhuayaxi.github.io'||host.length>80||/^\d{1,3}(?:\.\d{1,3}){3}$/.test(host))return '';
+  return /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/.test(host)?host:'';
+ }catch{return '';}
+}
+export function makeBatch(events,enabled,nav,viewport,identity='',referrer='') {
  const result={events:events.map(({id,at,kind,note,value})=>({id,at,kind,note,value})),details:enabled,linkVisits:Boolean(identity)};
  if(identity)result.events.forEach((event,index)=>{const original=events[index];if(original.visitor===identity){event.visitor=identity;event.session=original.session;}});
  if(enabled)result.environment={browser:String(nav.userAgent||'').slice(0,400),platform:String(nav.platform||'').slice(0,100),language:String(nav.language||'').slice(0,40),viewport:viewport.width+'×'+viewport.height};
+ const host=referrerHost(referrer);if(host)result.referrer=host;
  return result;
 }
 export function initAnalytics(getNote) {
@@ -22,7 +30,7 @@ export function initAnalytics(getNote) {
  function track(kind,note='',value=1){if(!ENDPOINT)return;const visitor=linkedVisitor(storage());queue.push({id:crypto.randomUUID(),at:Date.now(),kind,note,value,...(visitor?{visitor,session}:{})});queue=queue.slice(-200);persist();}
  async function flush(){
   if(!ENDPOINT||busy||!queue.length)return;busy=true;const events=queue.slice(0,20);
-  try{const payload=makeBatch(events,enabled(),navigator,{width:innerWidth,height:innerHeight},linkedVisitor(storage()));const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'},credentials:'omit',referrerPolicy:'no-referrer',keepalive:true});if(r.ok){const data=await r.json(),ids=new Set(data.accepted||[]);queue=queue.filter(e=>!ids.has(e.id));persist();}else if(r.status===400){queue=queue.filter(e=>!events.includes(e));persist();}}catch{}finally{busy=false;}
+  try{const payload=makeBatch(events,enabled(),navigator,{width:innerWidth,height:innerHeight},linkedVisitor(storage()),document.referrer);const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'},credentials:'omit',referrerPolicy:'no-referrer',keepalive:true});if(r.ok){const data=await r.json(),ids=new Set(data.accepted||[]);queue=queue.filter(e=>!ids.has(e.id));persist();}else if(r.status===400){queue=queue.filter(e=>!events.includes(e));persist();}}catch{}finally{busy=false;}
  }
  function flushFocus(){for(const [note,value] of Object.entries(focus)){if(value>=1)track('focus',note,Math.min(120000,Math.round(value)));}focus={};}
  const api={track,focus(ms){const note=getNote()?.id||'';focus[note]=(focus[note]||0)+ms;if(focus[note]>=60000){track('focus',note,Math.round(focus[note]));delete focus[note];}},progress(note,percent){if(!note)return;let seen=milestones.get(note);if(!seen){seen=new Set();milestones.set(note,seen);}for(const n of [25,50,75,100])if(percent>=n&&!seen.has(n)){seen.add(n);track('read_'+n,note);}},error(kind='error_load'){if(errors++<5)track(kind);},flush};

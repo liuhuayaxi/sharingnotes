@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { statisticsWindow, statistics, activity } from '../src/statistics.js';
+import { statisticsWindow, statistics, activity, comparisonWindow, tally } from '../src/statistics.js';
 import worker from '../src/worker.js';
 import { dashboardScript } from '../src/views.js';
 
@@ -18,7 +18,7 @@ test('deployed dashboard script matches the editable browser source', () => {
 
 function database() {
   const sqlite = new DatabaseSync(':memory:');
-  for (const name of ['0001_statistics', '0002_passkeys', '0003_visitors']) {
+  for (const name of ['0001_statistics', '0002_passkeys', '0003_visitors', '0004_context']) {
     sqlite.exec(readFileSync(new URL('../migrations/' + name + '.sql', import.meta.url), 'utf8'));
   }
   return {
@@ -38,10 +38,25 @@ function database() {
   };
 }
 
-function insertEvent(db, id, at, kind = 'visit', value = 1) {
+function insertEvent(db, id, at, kind = 'visit', value = 1, extra = {}) {
   db.sqlite
-    .prepare('INSERT INTO visitor_events VALUES(?,?,?,?,?,?,?,?,?,?)')
-    .run(id, visitor, session, now, at, kind, 'a'.repeat(20), value, '', '');
+    .prepare(
+      'INSERT INTO visitor_events(id,visitor,session,received_at,at,kind,note,value,ip,browser,country,referrer) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
+    )
+    .run(
+      id,
+      extra.visitor || visitor,
+      extra.session || session,
+      now,
+      at,
+      kind,
+      extra.note ?? 'a'.repeat(20),
+      value,
+      '',
+      extra.browser || '',
+      extra.country || '',
+      extra.referrer || '',
+    );
 }
 
 test('preset and custom ranges use UTC+8 calendar boundaries and reject invalid dates', () => {
@@ -166,6 +181,104 @@ test('all new APIs remain protected and reject invalid authenticated date input'
   DB.sqlite.close();
 });
 
+test('comparison window stays inside retention and tally separates actions', () => {
+  const week = statisticsWindow(url('days=7'), now);
+  const previous = comparisonWindow(week, now);
+  assert.equal(previous.from, '2026-10-22');
+  assert.equal(previous.to, '2026-10-28');
+  assert.equal(comparisonWindow(statisticsWindow(url('days=30'), now), now), null);
+  assert.deepEqual(
+    tally([
+      { kind: 'visit', events: 3, value: 3 },
+      { kind: 'focus', events: 2, value: 90000 },
+      { kind: 'copy', events: 4, value: 4 },
+      { kind: 'transcript', events: 1, value: 1 },
+      { kind: 'page_library', events: 2, value: 2 },
+      { kind: 'error_script', events: 1, value: 1 },
+    ]),
+    {
+      visits: 3,
+      opens: 0,
+      focus: 90000,
+      errors: 1,
+      completions: 0,
+      copies: 4,
+      transcripts: 1,
+      searches: 0,
+      library: 2,
+      workspace: 0,
+    },
+  );
+});
+
+test('new and returning visitors, session span, referrers, countries and devices', async () => {
+  const db = database();
+  const current = Date.parse('2026-11-04T04:00:00Z');
+  const earlier = Date.parse('2026-10-24T04:00:00Z');
+  insertEvent(db, 'old-1', earlier, 'visit', 1, { referrer: 'github.com' });
+  insertEvent(db, 'old-2', current, 'visit', 1, { referrer: 'github.com' });
+  insertEvent(db, 'old-3', current + 30 * 60000, 'focus', 60000);
+  const fresh = '42345678-1234-4123-8123-123456789abc';
+  const freshSession = '52345678-1234-4123-8123-123456789abc';
+  insertEvent(db, 'new-1', current + 60000, 'visit', 1, {
+    visitor: fresh,
+    session: freshSession,
+    referrer: '',
+  });
+  db.sqlite.exec(`
+    INSERT INTO daily VALUES
+      ('2026-10-24','visit','',4,4),
+      ('2026-11-04','visit','',6,6),
+      ('2026-11-04','copy','${'b'.repeat(20)}',3,3),
+      ('2026-11-04','transcript','${'b'.repeat(20)}',2,2);
+    INSERT INTO traffic VALUES
+      ('2026-10-24','referrer','github.com',4),
+      ('2026-11-04','referrer','github.com',5),
+      ('2026-11-04','referrer','direct',2),
+      ('2026-11-04','country','CN',6),
+      ('2026-10-24','country','JP',1);
+  `);
+  db.sqlite
+    .prepare(
+      'INSERT INTO diagnostics(received_at,ip,browser,platform,language,viewport,country) VALUES(?,?,?,?,?,?,?)',
+    )
+    .run(
+      current,
+      '',
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit Mobile/15E148',
+      'iPhone',
+      'zh-CN',
+      '390×844',
+      'CN',
+    );
+  const data = await statistics(db, statisticsWindow(url('days=7'), now), now);
+  assert.equal(data.engagement.newVisitors, 1);
+  assert.equal(data.engagement.returningVisitors, 1);
+  assert.equal(data.engagement.sessions, 2);
+  assert.equal(data.engagement.avgSpanMs, 15 * 60000);
+  assert.equal(data.engagement.focusMs, 60000);
+  assert.deepEqual(
+    data.referrers.map((row) => [row.label, row.events]),
+    [
+      ['github.com', 5],
+      ['direct', 2],
+    ],
+  );
+  assert.equal(data.countries.length, 1);
+  assert.equal(data.countries[0].label, 'CN');
+  assert.equal(Number(data.countries[0].events), 6);
+  assert.equal(data.devices[0].label, '手机');
+  assert.equal(data.languages[0].label, 'zh-CN');
+  assert.equal(data.compare.from, '2026-10-22');
+  assert.equal(data.compare.visits, 4);
+  assert.equal(data.compare.copies, 0);
+  assert.equal(data.compare.visitors, 1);
+  assert.equal(tally(data.daily).copies, 3);
+  assert.equal(tally(data.daily).transcripts, 2);
+  assert.equal(data.diagnostics[0].country, 'CN');
+  db.sqlite.close();
+});
+
 test('browser model keeps unrecorded dates distinct and sums all reading nodes', () => {
   const context = { document: { addEventListener() {} }, Intl, URLSearchParams, Date };
   runInNewContext(
@@ -190,4 +303,13 @@ test('browser model keeps unrecorded dates distinct and sums all reading nodes',
   assert.equal(model.notes[0].read_100, 3);
   assert.equal(context.duration(32000), '32 秒');
   assert.equal(runInNewContext("escapeHTML('<script>')", context), '&lt;script&gt;');
+  assert.equal(context.weekStart('2026-11-04'), '2026-11-02');
+  assert.equal(context.weekStart('2026-11-08'), '2026-11-02');
+  const up = context.changeFrom(12, 8);
+  assert.equal(up.text, '+50%');
+  assert.equal(up.direction, 'up');
+  const down = context.changeFrom(4, 8);
+  assert.equal(down.text, '-50%');
+  assert.equal(down.direction, 'down');
+  assert.equal(context.changeFrom(1, null), null);
 });

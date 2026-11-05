@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {sharingEnvironment,makeBatch} from '../docs/analytics.js';
+import {sharingEnvironment,makeBatch,referrerHost} from '../docs/analytics.js';
 test('environment sharing defaults on and persists opt-out',()=>{assert.equal(sharingEnvironment({getItem:()=>null}),true);assert.equal(sharingEnvironment({getItem:()=> 'off'}),false);});
 test('opt-out still sends basic events with no environment or user identifiers',()=>{
  const e={id:'retry-id',at:1,kind:'visit',note:'',value:1,personal:'private',visitor:'secret'};
@@ -18,4 +18,14 @@ test('linking includes only events recorded with the current enabled identity',(
  const id='12345678-1234-4123-8123-123456789abc';const events=[{id:'a',visitor:id,session:'s',kind:'visit'},{id:'b',kind:'visit'},{id:'c',visitor:'old',kind:'visit'}];
  const on=makeBatch(events,false,{}, {width:1,height:1},id);assert.equal(on.events[0].visitor,id);assert.equal(on.events[1].visitor,undefined);assert.equal(on.events[2].visitor,undefined);
  const off=makeBatch(events,false,{}, {width:1,height:1});assert.equal(off.linkVisits,false);assert.ok(off.events.every(e=>!e.visitor));
+});
+test('referrer keeps the hostname and drops path, query and this site',()=>{
+ assert.equal(referrerHost('https://www.github.com/sharingnotes?q=notes'),'github.com');
+ assert.equal(referrerHost('https://liuhuayaxi.github.io/sharingnotes/'),'');
+ assert.equal(referrerHost('not a url'),'');
+ const batch=makeBatch([{id:'a',at:1,kind:'visit',note:'',value:1,text:'copied paragraph'}],false,{userAgent:'secret'},{width:1,height:1},'','https://www.google.com/search?q=notes');
+ assert.equal(batch.referrer,'google.com');
+ assert.equal(JSON.stringify(batch).includes('copied'),false);
+ assert.equal(JSON.stringify(batch).includes('search'),false);
+ assert.equal(JSON.stringify(batch).includes('secret'),false);
 });

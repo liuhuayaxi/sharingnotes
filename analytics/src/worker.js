@@ -3,11 +3,21 @@ import passkeyClient from './passkey-client.js';
 import {dashboard,loginPage,dashboardScript} from './views.js';
 import {statisticsWindow,statistics,activity} from './statistics.js';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const TYPES=new Set(['visit','note_open','read_25','read_50','read_75','read_100','focus','error_load','error_script']);
+const TYPES=new Set(['visit','note_open','read_25','read_50','read_75','read_100','focus','error_load','error_script','copy','transcript','search','page_library','page_workspace']);
 const DAY_MS=86400000,enc=new TextEncoder();
 function headers(extra={}) {return {'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin',...extra};}
 function response(value,status=200,extra={}) {return Response.json(value,{status,headers:headers(extra)});}
 function safeText(value,max){return typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,'').slice(0,max):'';}
+export function referrerHost(value){
+ if(typeof value!=='string')return '';
+ const host=value.trim().toLowerCase().replace(/\.$/,'').replace(/^www\./,'');
+ if(!host||host==='liuhuayaxi.github.io'||host.length>80||/^\d{1,3}(?:\.\d{1,3}){3}$/.test(host))return '';
+ return /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/.test(host)?host:'';
+}
+function countryCode(request){
+ const code=String(request.headers.get('CF-IPCountry')||'').toUpperCase();
+ return /^[A-Z]{2}$/.test(code)&&code!=='XX'&&code!=='T1'?code:'';
+}
 export function validateBatch(body,now=Date.now()) {
  if(!body||!Array.isArray(body.events)||body.events.length<1||body.events.length>20)throw Error('batch');
  const events=body.events.map(e=>{
@@ -21,7 +31,7 @@ export function validateBatch(body,now=Date.now()) {
  // Missing/false option always disables environment persistence.
  const details=body.details===true&&body.environment&&typeof body.environment==='object';
  const environment=details?{browser:safeText(body.environment.browser,400),platform:safeText(body.environment.platform,100),language:safeText(body.environment.language,40),viewport:safeText(body.environment.viewport,30)}:null;
- return {events,environment};
+ return {events,environment,referrer:referrerHost(body.referrer)};
 }
 async function sign(value,secret) {
  const key=await crypto.subtle.importKey('raw',enc.encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);
@@ -53,11 +63,16 @@ export async function collect(request,env) {
   batch=validateBatch(JSON.parse(new TextDecoder().decode(joined)));
  }catch{return response({error:'invalid'},400,cors);}
  const now=Date.now();
- await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM visitor_events WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(new Date(now+8*3600000-30*DAY_MS).toISOString().slice(0,10))]);
+ const dayCutoff=new Date(now+8*3600000-30*DAY_MS).toISOString().slice(0,10);
+ await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM visitor_events WHERE received_at<?').bind(now-30*DAY_MS),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(dayCutoff),env.DB.prepare('DELETE FROM traffic WHERE day<?').bind(dayCutoff)]);
  const writes=batch.events.map(e=>env.DB.prepare('INSERT OR IGNORE INTO receipts(id,received_at,day,kind,note,value) VALUES(?,?,?,?,?,?)').bind(e.id,now,e.day,e.kind,e.note,e.value));
  // Event association requires the client to send its enabled preference.
- if(batch.environment){const d=batch.environment;writes.push(env.DB.prepare('INSERT INTO diagnostics(received_at,ip,browser,platform,language,viewport) VALUES(?,?,?,?,?,?)').bind(now,safeText(request.headers.get('CF-Connecting-IP'),64),d.browser,d.platform,d.language,d.viewport));}
- for(const e of batch.events)if(e.visitor){const d=batch.environment;writes.push(env.DB.prepare('INSERT OR IGNORE INTO visitor_events(id,visitor,session,received_at,at,kind,note,value,ip,browser) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(e.id,e.visitor,e.session,now,e.at,e.kind,e.note,e.value,d?safeText(request.headers.get('CF-Connecting-IP'),64):'',d?.browser||''));}
+ const country=batch.environment?countryCode(request):'';
+ if(batch.environment){const d=batch.environment;writes.push(env.DB.prepare('INSERT INTO diagnostics(received_at,ip,browser,platform,language,viewport,country) VALUES(?,?,?,?,?,?,?)').bind(now,safeText(request.headers.get('CF-Connecting-IP'),64),d.browser,d.platform,d.language,d.viewport,country));}
+ for(const e of batch.events){
+  if(e.visitor){const d=batch.environment;writes.push(env.DB.prepare('INSERT OR IGNORE INTO visitor_events(id,visitor,session,received_at,at,kind,note,value,ip,browser,country,referrer) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)').bind(e.id,e.visitor,e.session,now,e.at,e.kind,e.note,e.value,d?safeText(request.headers.get('CF-Connecting-IP'),64):'',d?.browser||'',country,e.kind==='visit'?batch.referrer:''));}
+  if(e.kind==='visit'){writes.push(env.DB.prepare("INSERT INTO traffic(day,kind,label,events) VALUES(?,?,?,1) ON CONFLICT(day,kind,label) DO UPDATE SET events=events+1").bind(e.day,'referrer',batch.referrer||'direct'));if(country)writes.push(env.DB.prepare("INSERT INTO traffic(day,kind,label,events) VALUES(?,?,?,1) ON CONFLICT(day,kind,label) DO UPDATE SET events=events+1").bind(e.day,'country',country));}
+ }
  await env.DB.batch(writes);return response({accepted:batch.events.map(e=>e.id)},200,cors);
 }
 export default {
@@ -93,7 +108,8 @@ export default {
       const emit=text=>controller.enqueue(enc.encode(text));
       try{
         const daily=await env.DB.prepare('SELECT day,kind,note,events,value FROM daily WHERE day>=? ORDER BY day').bind(day).all();
-        emit(JSON.stringify({exportedAt:new Date(end).toISOString(),from:new Date(start).toISOString(),to:new Date(end).toISOString(),daily:daily.results}).slice(0,-1)+',"diagnostics":[');
+        const traffic=await env.DB.prepare('SELECT day,kind,label,events FROM traffic WHERE day>=? ORDER BY day,kind,label').bind(day).all();
+        emit(JSON.stringify({exportedAt:new Date(end).toISOString(),from:new Date(start).toISOString(),to:new Date(end).toISOString(),daily:daily.results,traffic:traffic.results}).slice(0,-1)+',"diagnostics":[');
         let cursor=0,first=true;
         while(true){
           const page=await env.DB.prepare('SELECT id,received_at,ip,browser,platform,language,viewport FROM diagnostics WHERE id>? AND received_at>=? AND received_at<=? ORDER BY id LIMIT 500').bind(cursor,start,end).all();
@@ -118,5 +134,5 @@ export default {
    return response({error:'not_found'},404);
   }catch{return response({error:'unavailable'},503);}
  },
- async scheduled(event,env){const cutoff=Date.now()-30*DAY_MS;await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM visitor_events WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(new Date(cutoff+8*3600000).toISOString().slice(0,10))]);}
+ async scheduled(event,env){const cutoff=Date.now()-30*DAY_MS,day=new Date(cutoff+8*3600000).toISOString().slice(0,10);await env.DB.batch([env.DB.prepare('DELETE FROM diagnostics WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM receipts WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM visitor_events WHERE received_at<?').bind(cutoff),env.DB.prepare('DELETE FROM daily WHERE day<?').bind(day),env.DB.prepare('DELETE FROM traffic WHERE day<?').bind(day)]);}
 };

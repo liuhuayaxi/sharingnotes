@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-05T11:18:05+08:00",
+  "publishedAt": "2026-11-05T11:24:40+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -37,12 +37,12 @@
         "第7章 数字带通传输"
       ],
       "date": "2026-11-04",
-      "abstract": "数字调制原理与正交相移键控",
+      "abstract": "二进制数字调制原理与抗噪声性能分析",
       "reviewStatus": "skipped",
-      "version": "2acf80caa765e8d6d4e31291d3186954f1ae4b0b6935e96ac4d5ec4957349cbd",
-      "wordCount": 27758,
-      "imageCount": 11,
-      "file": "notes/e7573a9899a6cd3f5846-2acf80caa765.json",
+      "version": "6bdae7d73ed0067e48178af1a2577eabc5f047d3fc2cdf6d19a290d8e2190610",
+      "wordCount": 32882,
+      "imageCount": 20,
+      "file": "notes/e7573a9899a6cd3f5846-6bdae7d73ed0.json",
       "sourceCount": 0,
       "lessonAt": "2026-11-04T09:50:00+08:00"
     },

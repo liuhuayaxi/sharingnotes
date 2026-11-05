@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import worker,{validateBatch,collect} from '../src/worker.js';
+import worker,{validateBatch,collect,referrerHost} from '../src/worker.js';
 const now=Date.now(),event={id:'12345678-1234-4123-8123-123456789abc',at:now,kind:'note_open',note:'a'.repeat(20),value:1};
 function fakeDB(){const calls=[];return {calls,prepare(sql){return {bind(...values){return {sql,values};}}},async batch(items){calls.push(...items);return items.map(()=>({success:true,meta:{changes:1}}));}};}
 test('opt-out ignores environment and any extra identifiers',()=>{
@@ -36,5 +36,41 @@ test('association requires preference and valid IDs; environment opt-out still r
  const linked={...event,visitor,session};assert.equal(validateBatch({events:[linked]},now).events[0].visitor,undefined);
  assert.equal(validateBatch({events:[linked],linkVisits:true},now).events[0].visitor,visitor);
  const DB=fakeDB();await collect(new Request('https://test/collect',{method:'POST',headers:{Origin:'https://liuhuayaxi.github.io','CF-Connecting-IP':'192.0.2.9'},body:JSON.stringify({events:[linked],linkVisits:true,details:false})}),{DB,ALLOWED_ORIGIN:'https://liuhuayaxi.github.io'});
- const write=DB.calls.find(c=>c.sql.startsWith('INSERT OR IGNORE INTO visitor_events'));assert.ok(write);assert.equal(write.values[1],visitor);assert.equal(write.values[8],'');
+ const write=DB.calls.find(c=>c.sql.startsWith('INSERT OR IGNORE INTO visitor_events'));assert.ok(write);assert.equal(write.values[1],visitor);assert.equal(write.values[8],'');assert.equal(write.values[10],'');
+});
+test('referrer host drops paths, this site and addresses; new actions keep no copied text',()=>{
+ assert.equal(referrerHost('github.com'),'github.com');
+ assert.equal(referrerHost('https://github.com/path?q=1'),'');
+ assert.equal(referrerHost('liuhuayaxi.github.io'),'');
+ assert.equal(referrerHost('192.0.2.1'),'');
+ const note='a'.repeat(20);
+ const copy=validateBatch({events:[{...event,kind:'copy',note,text:'private paragraph'}],referrer:'github.com'},now);
+ assert.equal(copy.events[0].kind,'copy');assert.equal(copy.events[0].note,note);assert.equal('text' in copy.events[0],false);assert.equal(copy.referrer,'github.com');
+ assert.equal(validateBatch({events:[{...event,kind:'transcript',note}],referrer:'www.google.com'},now).referrer,'google.com');
+ for(const kind of ['search','page_library','page_workspace'])assert.equal(validateBatch({events:[{...event,kind,note:''}]},now).events[0].kind,kind);
+ assert.throws(()=>validateBatch({events:[{...event,kind:'copy',note:'private paragraph'}]},now));
+});
+test('visits record referrer host, and country only when environment sharing is on',async()=>{
+ const visit={...event,kind:'visit',note:''};
+ const DB=fakeDB();
+ await collect(new Request('https://test/collect',{method:'POST',headers:{Origin:'https://liuhuayaxi.github.io','CF-Connecting-IP':'192.0.2.8','CF-IPCountry':'CN'},body:JSON.stringify({events:[visit],details:false,referrer:'github.com'})}),{DB,ALLOWED_ORIGIN:'https://liuhuayaxi.github.io'});
+ const referrer=DB.calls.find(c=>c.sql.includes('INTO traffic')&&c.values[1]==='referrer');
+ assert.equal(referrer.values[2],'github.com');
+ assert.equal(DB.calls.some(c=>c.values.includes('CN')),false);
+ const linked={...visit,visitor:'22345678-1234-4123-8123-123456789abc',session:'32345678-1234-4123-8123-123456789abc'};
+ const on=fakeDB();
+ await collect(new Request('https://test/collect',{method:'POST',headers:{Origin:'https://liuhuayaxi.github.io','CF-Connecting-IP':'192.0.2.8','CF-IPCountry':'T1'},body:JSON.stringify({events:[linked],linkVisits:true,details:true,referrer:'not a host',environment:{browser:'Mozilla/5.0 (iPhone)'}})}),{DB:on,ALLOWED_ORIGIN:'https://liuhuayaxi.github.io'});
+ const diagnostic=on.calls.find(c=>c.sql.startsWith('INSERT INTO diagnostics'));
+ assert.equal(diagnostic.values.at(-1),'');
+ const visitor=on.calls.find(c=>c.sql.startsWith('INSERT OR IGNORE INTO visitor_events'));
+ assert.equal(visitor.values.at(-1),'');
+ assert.equal(on.calls.find(c=>c.sql.includes('INTO traffic')&&c.values[1]==='referrer').values[2],'direct');
+ assert.equal(on.calls.some(c=>c.values[1]==='country'),false);
+});
+test('hourly cleanup also expires coarse traffic rows',async()=>{
+ const DB=fakeDB();
+ await worker.scheduled({}, {DB});
+ const deletion=DB.calls.find(c=>c.sql.startsWith('DELETE FROM traffic'));
+ assert.ok(deletion);
+ assert.match(deletion.values[0],/^\d{4}-\d{2}-\d{2}$/);
 });

@@ -10,14 +10,20 @@ const kinds = {
   read_100: '读至 100%',
   error_load: '加载错误',
   error_script: '程序错误',
+  copy: '复制文字',
+  transcript: '打开课堂原文',
+  search: '搜索',
+  page_library: '打开资料库',
+  page_workspace: '打开工作台',
 };
-const metricNames = { visits: '访问次数', opens: '笔记打开', focus: '专注分钟' };
+const metricNames = { visits: '访问次数', opens: '笔记打开', focus: '专注分钟', visitors: '去重访客' };
 const colors = ['#147d67', '#73acbf', '#d8b16a', '#8f8eb1', '#bb8793', '#a6afb8'];
 const state = {
   data: null,
   model: null,
   catalog: {},
   metric: 'visits',
+  grain: 'day',
   day: '',
   sort: 'focus',
   visitor: '',
@@ -80,8 +86,44 @@ function emptyMetrics() {
     read_50: 0,
     read_75: 0,
     read_100: 0,
+    copies: 0,
+    transcripts: 0,
+    searches: 0,
+    library: 0,
+    workspace: 0,
     events: 0,
   };
+}
+
+function weekStart(day) {
+  const date = new Date(day + 'T00:00:00Z');
+  const weekday = date.getUTCDay();
+  date.setUTCDate(date.getUTCDate() - (weekday === 0 ? 6 : weekday - 1));
+  return date.toISOString().slice(0, 10);
+}
+
+function changeFrom(current, previous) {
+  if (previous == null || !Number.isFinite(Number(previous))) return null;
+  const before = Number(previous);
+  const nowValue = Number(current);
+  if (!before) return { text: nowValue ? '上期为 0' : '持平', direction: nowValue ? 'up' : 'flat' };
+  const pct = Math.round(((nowValue - before) / before) * 100);
+  if (!pct) return { text: '持平', direction: 'flat' };
+  return { text: `${pct > 0 ? '+' : ''}${pct}%`, direction: pct > 0 ? 'up' : 'down' };
+}
+
+function weekdayIndex(day) {
+  return (new Date(day + 'T00:00:00Z').getUTCDay() + 6) % 7;
+}
+
+function countryLabel(code) {
+  try {
+    const name = new Intl.DisplayNames(['zh-CN'], { type: 'region' }).of(code);
+    if (name && name !== code) return name;
+  } catch {
+    /* Keep the stored code when the runtime has no region names. */
+  }
+  return code;
 }
 
 function accumulate(target, event) {
@@ -93,6 +135,11 @@ function accumulate(target, event) {
   if (event.kind.startsWith('error_')) target.errors += count;
   if (event.kind.startsWith('read_')) target[event.kind] += count;
   if (event.kind === 'read_100') target.complete += count;
+  if (event.kind === 'copy') target.copies += count;
+  if (event.kind === 'transcript') target.transcripts += count;
+  if (event.kind === 'search') target.searches += count;
+  if (event.kind === 'page_library') target.library += count;
+  if (event.kind === 'page_workspace') target.workspace += count;
 }
 
 function aggregate(rows) {
@@ -164,52 +211,120 @@ function rangeParams() {
   return new URLSearchParams({ from: state.data.range.from, to: state.data.range.to });
 }
 
+function deltaHTML(current, previous) {
+  if (!state.data.compare) return '';
+  const change = changeFrom(current, previous);
+  return change ? `<small class="delta ${change.direction}">较上期 ${change.text}</small>` : '';
+}
+
 function renderSummary() {
   const { total, notes, days } = state.model;
   const activeDays = days.filter((day) => day.total.events > 0).length;
+  const compare = state.data.compare;
+  const visitors = Number(state.data.linked?.visitors || 0);
+  const perVisitor = visitors ? Math.round((total.visits / visitors) * 10) / 10 : 0;
   const metrics = [
-    ['访问次数', number(total.visits), `${activeDays} 天有使用记录`],
-    ['笔记打开', number(total.opens), `涉及 ${notes.length} 篇笔记`],
+    ['访问次数', number(total.visits), `${activeDays} 天有记录`, deltaHTML(total.visits, compare?.visits)],
+    [
+      '去重访客',
+      number(visitors),
+      visitors ? `人均 ${number(perVisitor)} 次访问` : '按浏览器标识去重',
+      deltaHTML(visitors, compare?.visitors),
+    ],
+    ['笔记打开', number(total.opens), `涉及 ${notes.length} 篇笔记`, deltaHTML(total.opens, compare?.opens)],
     [
       '专注时长',
       number(Math.round(total.focus / 6000) / 10) + '<span class="metric-unit">分钟</span>',
       duration(total.focus),
+      deltaHTML(total.focus, compare?.focus),
     ],
-    ['关联访客', number(state.data.linked.visitors), '按浏览器标识去重'],
-    ['关联会话', number(state.data.linked.sessions), '所选日期内去重'],
     [
-      '错误记录',
-      number(total.errors),
-      `加载 ${number(state.data.daily.filter((e) => e.kind === 'error_load').reduce((sum, e) => sum + e.events, 0))} · 程序 ${number(state.data.daily.filter((e) => e.kind === 'error_script').reduce((sum, e) => sum + e.events, 0))}`,
+      '关联会话',
+      number(state.data.linked?.sessions || 0),
+      '所选日期内去重',
+      deltaHTML(state.data.linked?.sessions || 0, compare?.sessions),
+    ],
+    [
+      '复制 / 原文',
+      number(total.copies) + '<span class="metric-unit">/ ' + number(total.transcripts) + '</span>',
+      '复制文字 · 打开课堂原文',
+      deltaHTML(total.copies + total.transcripts, (compare?.copies || 0) + (compare?.transcripts || 0)),
     ],
   ];
   $('summary').innerHTML = metrics
     .map(
-      ([label, value, caption]) =>
-        `<article class="metric-card"><div class="metric-label"><i class="metric-dot"></i>${label}</div><strong>${value}</strong><small>${caption}</small></article>`,
+      ([label, value, caption, delta]) =>
+        `<article class="metric-card"><div class="metric-label"><i class="metric-dot"></i>${label}</div><strong>${value}</strong><small>${caption}</small>${delta || ''}</article>`,
     )
     .join('');
 }
 
 function chartValue(day) {
-  return state.metric === 'focus' ? day.total.focus / 60000 : day.total[state.metric];
+  if (state.metric === 'focus') return day.total.focus / 60000;
+  if (state.metric === 'visitors') return Number(day.linked?.visitors || 0);
+  return day.total[state.metric] || 0;
+}
+
+function chartSeries() {
+  if (state.grain !== 'week') {
+    return state.model.days.map((day) => ({
+      ...day,
+      selectDay: day.day,
+      selected: day.day === state.day,
+      axis: day.day.slice(5).replace('-', '/'),
+    }));
+  }
+  const buckets = [];
+  for (const day of state.model.days) {
+    const key = weekStart(day.day);
+    let bucket = buckets.at(-1);
+    if (!bucket || bucket.key !== key) {
+      bucket = {
+        key,
+        recorded: false,
+        total: emptyMetrics(),
+        linked: { visitors: 0, sessions: 0, events: 0 },
+        days: [],
+        axis: key.slice(5).replace('-', '/'),
+      };
+      buckets.push(bucket);
+    }
+    bucket.recorded = bucket.recorded || day.recorded;
+    bucket.days.push(day.day);
+    for (const name of Object.keys(bucket.total)) bucket.total[name] += day.total[name] || 0;
+    bucket.linked.visitors += Number(day.linked.visitors || 0);
+    bucket.linked.sessions += Number(day.linked.sessions || 0);
+    bucket.linked.events += Number(day.linked.events || 0);
+  }
+  return buckets.map((bucket) => ({
+    ...bucket,
+    day: bucket.days.at(-1),
+    selectDay: bucket.days.at(-1),
+    selected: bucket.days.includes(state.day),
+  }));
 }
 
 function renderTrend() {
-  const { days, total } = state.model;
+  const { total } = state.model;
   const metric = state.metric;
+  const days = chartSeries();
+  const showVisitors = metric === 'visits' && state.grain !== 'week';
   const width = Math.max(320, $('trend-chart').clientWidth),
-    height = 235,
+    height = 248,
     left = 42,
     right = 12,
-    top = 12,
+    top = 16,
     bottom = 30;
   const plotHeight = height - top - bottom;
   const peak = days.reduce(
     (best, day) => (chartValue(day) > chartValue(best) ? day : best),
     days[0],
   );
-  const maximum = Math.max(...days.map(chartValue), 1);
+  const maximum = Math.max(
+    ...days.map(chartValue),
+    ...(showVisitors ? days.map((day) => Number(day.linked?.visitors || 0)) : []),
+    1,
+  );
   const magnitude = 10 ** Math.floor(Math.log10(maximum));
   const ceiling = Math.ceil((Math.ceil(maximum / magnitude) * magnitude) / 4) * 4;
   const slot = (width - left - right) / days.length;
@@ -219,7 +334,7 @@ function renderTrend() {
     Math.ceil(days.length / Math.max(2, Math.floor((width - left - right) / 55))),
   );
   const svg = [
-    `<svg class="trend-chart" viewBox="0 0 ${width} ${height}" role="group" aria-label="${metricNames[metric]}每日柱状图">`,
+    `<svg class="trend-chart" viewBox="0 0 ${width} ${height}" role="group" aria-label="${metricNames[metric]}${state.grain === 'week' ? '每周' : '每日'}柱状图">`,
   ];
   for (let tick = 0; tick <= 4; tick++) {
     const y = top + (plotHeight * tick) / 4;
@@ -228,40 +343,63 @@ function renderTrend() {
       `<line class="chart-grid" x1="${left}" x2="${width - right}" y1="${y}" y2="${y}"/><text class="chart-label" x="${left - 10}" y="${y + 4}" text-anchor="end">${number(Math.round(value * 10) / 10)}</text>`,
     );
   }
+  if (showVisitors) {
+    const points = days
+      .map((day, index) => {
+        const visitors = Number(day.linked?.visitors || 0);
+        const x = left + slot * index + slot / 2;
+        const y = top + plotHeight - (visitors / ceiling) * plotHeight;
+        return `${x},${y}`;
+      })
+      .join(' ');
+    svg.push(`<polyline class="chart-line" points="${points}"/>`);
+  }
   days.forEach((day, index) => {
     const value = chartValue(day);
     const x = left + slot * index + slot / 2;
     const barHeight = day.recorded ? Math.max((value / ceiling) * plotHeight, 2) : 3;
     const label = day.recorded
-      ? `${day.day}，${metricNames[metric]} ${number(Math.round(value * 10) / 10)}`
-      : `${day.day}，未记录`;
+      ? `${day.axis}，${metricNames[metric]} ${number(Math.round(value * 10) / 10)}`
+      : `${day.axis}，未记录`;
     svg.push(
-      `<g class="chart-hit" role="button" tabindex="0" data-day="${day.day}" aria-label="${label}" aria-pressed="${day.day === state.day}"><title>${label}</title><rect fill="transparent" x="${x - slot / 2}" y="0" width="${slot}" height="${height}"/><rect class="${day.recorded ? 'chart-bar' : 'chart-no-data'} ${day.day === state.day ? 'selected' : ''}" x="${x - barWidth / 2}" y="${top + plotHeight - barHeight}" width="${barWidth}" height="${barHeight}" rx="3"/>`,
+      `<g class="chart-hit" role="button" tabindex="0" data-day="${day.selectDay}" aria-label="${label}" aria-pressed="${day.selected}"><title>${label}</title><rect fill="transparent" x="${x - slot / 2}" y="0" width="${slot}" height="${height}"/><rect class="${day.recorded ? 'chart-bar' : 'chart-no-data'} ${day.selected ? 'selected' : ''}" x="${x - barWidth / 2}" y="${top + plotHeight - barHeight}" width="${barWidth}" height="${barHeight}" rx="4"/>`,
     );
     if (
       index === days.length - 1 ||
       (index % labelEvery === 0 && days.length - 1 - index >= labelEvery / 2)
     )
+      svg.push(`<text class="chart-label" x="${x}" y="${height - 7}" text-anchor="middle">${day.axis}</text>`);
+    if (value > 0 && (days.length <= 14 || day.selectDay === peak.selectDay))
       svg.push(
-        `<text class="chart-label" x="${x}" y="${height - 7}" text-anchor="middle">${day.day.slice(5).replace('-', '/')}</text>`,
-      );
-    if (value > 0 && (days.length <= 14 || day.day === peak.day))
-      svg.push(
-        `<text class="chart-label" x="${x}" y="${top + plotHeight - barHeight - 7}" text-anchor="middle">${number(Math.round(value * 10) / 10)}</text>`,
+        `<text class="chart-value" x="${x}" y="${Math.max(12, top + plotHeight - barHeight - 7)}" text-anchor="middle">${number(Math.round(value * 10) / 10)}</text>`,
       );
     svg.push('</g>');
   });
   svg.push('</svg>');
   $('trend-chart').innerHTML = svg.join('');
   $('trend-legend').textContent = metricNames[metric];
-  $('trend-range').textContent = `${state.data.range.from} — ${state.data.range.to} · UTC+8`;
-  const recorded = days.filter((day) => day.recorded);
-  const sum = metric === 'focus' ? total.focus / 60000 : total[metric];
+  if ($('visitor-legend')) $('visitor-legend').hidden = !showVisitors;
+  $('trend-range').textContent = `${state.data.range.from} — ${state.data.range.to} · ${state.grain === 'week' ? '按周' : '按日'} · UTC+8`;
+  const recorded = state.model.days.filter((day) => day.recorded);
+  const sum =
+    metric === 'focus'
+      ? total.focus / 60000
+      : metric === 'visitors'
+        ? Number(state.data.linked?.visitors || 0)
+        : total[metric];
+  const averageBase =
+    metric === 'visitors'
+      ? recorded.reduce((totalVisitors, day) => totalVisitors + Number(day.linked.visitors || 0), 0)
+      : sum;
   const insights = [
-    ['期间合计', metric === 'focus' ? duration(total.focus) : number(sum), metricNames[metric]],
     [
-      '单日最高',
-      maximum === 1 && sum === 0 ? '暂无记录' : peak.day.slice(5).replace('-', ' / '),
+      '期间合计',
+      metric === 'focus' ? duration(total.focus) : number(sum),
+      metric === 'visitors' ? '范围内每个浏览器只计一次' : metricNames[metric],
+    ],
+    [
+      state.grain === 'week' ? '单周最高' : '单日最高',
+      maximum === 1 && sum === 0 ? '暂无记录' : peak.axis.replace('/', ' / '),
       sum === 0
         ? '等待新的使用记录'
         : metric === 'focus'
@@ -270,8 +408,8 @@ function renderTrend() {
     ],
     [
       '日均',
-      recorded.length ? number(Math.round((sum / recorded.length) * 10) / 10) : '—',
-      `按 ${recorded.length} 个已记录自然日计算${metric === 'focus' ? ' · 分钟' : ' · 次'}`,
+      recorded.length ? number(Math.round((averageBase / recorded.length) * 10) / 10) : '—',
+      `按 ${recorded.length} 个已记录自然日计算${metric === 'focus' ? ' · 分钟' : metric === 'visitors' ? ' · 当日访客' : ' · 次'}`,
     ],
   ];
   $('trend-insights').innerHTML = insights
@@ -284,6 +422,11 @@ function renderTrend() {
     .querySelectorAll('button')
     .forEach((button) =>
       button.setAttribute('aria-pressed', String(button.dataset.metric === metric)),
+    );
+  $('grain-controls')
+    ?.querySelectorAll('button')
+    .forEach((button) =>
+      button.setAttribute('aria-pressed', String(button.dataset.grain === state.grain)),
     );
 }
 
@@ -332,7 +475,7 @@ function renderDay() {
       )
       .join(
         '',
-      )}</div><div class="day-highlights"><div><span>最投入课程</span>${courses[0]?.[1] ? escapeHTML(courses[0][0]) + ' · ' + duration(courses[0][1]) : '暂无专注记录'}</div><div><span>当天错误</span>${number(total.errors)} 次</div></div>`;
+      )}</div><div class="day-highlights"><div><span>最投入课程</span>${courses[0]?.[1] ? escapeHTML(courses[0][0]) + ' · ' + duration(courses[0][1]) : '暂无专注记录'}</div><div><span>复制文字</span>${number(total.copies)} 次</div><div><span>课堂原文</span>${number(total.transcripts)} 次</div><div><span>当天错误</span>${number(total.errors)} 次</div></div>`;
   $('daily-note-count').textContent = notes.length + ' 篇';
   if (!ranked.length) empty($('day-ranking'), '当天暂无笔记阅读记录');
   else
@@ -406,12 +549,12 @@ function renderNotes() {
       return (info.course + ' ' + info.title).toLocaleLowerCase().includes(search);
     })
     .sort((a, b) => b[state.sort] - a[state.sort] || b.opens - a.opens);
-  if (!notes.length) emptyTable($('notes'), 7, search ? '没有匹配的笔记' : '所选范围暂无笔记记录');
+  if (!notes.length) emptyTable($('notes'), 9, search ? '没有匹配的笔记' : '所选范围暂无笔记记录');
   else
     $('notes').innerHTML = notes
       .map(
         (note) =>
-          `<tr><td class="title-cell">${noteLink(note.id)}<small>${escapeHTML(noteInfo(note.id).course)}</small></td><td class="number">${number(note.opens)}</td><td class="number">${duration(note.focus)}</td>${[25, 50, 75, 100].map((value) => `<td class="number">${number(note['read_' + value])}</td>`).join('')}</tr>`,
+          `<tr><td class="title-cell">${noteLink(note.id)}<small>${escapeHTML(noteInfo(note.id).course)}</small></td><td class="number">${number(note.opens)}</td><td class="number">${duration(note.focus)}</td>${[25, 50, 75, 100].map((value) => `<td class="number">${number(note['read_' + value])}</td>`).join('')}<td class="number">${number(note.copies)}</td><td class="number">${number(note.transcripts)}</td></tr>`,
       )
       .join('');
   $('notes-foot').textContent =
@@ -434,31 +577,127 @@ function renderVisitors() {
     `显示最近活跃的 ${visitors.length} / ${number(state.data.linked.visitors)} 个关联访客 · 浏览器标识对应同一浏览器的访问记录`;
 }
 
-function distribution(target, rows) {
-  const total = rows.reduce((sum, row) => sum + row.records, 0);
+function distribution(target, rows, message = '暂无环境分享记录') {
+  const counts = rows.map((row) => Number(row.records ?? row.events ?? 0));
+  const total = counts.reduce((sum, count) => sum + count, 0);
   if (!total) {
-    empty(target, '暂无环境分享记录');
+    empty(target, message);
     return;
   }
   target.innerHTML = rows
-    .map(
-      (row) =>
-        `<div class="distribution-row"><header><span>${escapeHTML(row.label)}</span><span>${number(row.records)} · ${Math.round((row.records / total) * 100)}%</span></header><div class="bar-track"><div class="bar-fill" style="width:${(row.records / total) * 100}%"></div></div></div>`,
-    )
+    .map((row, index) => {
+      const count = counts[index];
+      return `<div class="distribution-row"><header><span>${escapeHTML(row.label)}</span><span>${number(count)} · ${Math.round((count / total) * 100)}%</span></header><div class="bar-track"><div class="bar-fill" style="width:${(count / total) * 100}%"></div></div></div>`;
+    })
     .join('');
+}
+
+function renderInsights() {
+  const { total } = state.model;
+  const engagement = state.data.engagement || {
+    newVisitors: 0,
+    returningVisitors: 0,
+    sessions: 0,
+    avgSpanMs: 0,
+    focusMs: 0,
+  };
+  const people = engagement.newVisitors + engagement.returningVisitors;
+  const freshShare = people ? Math.round((engagement.newVisitors / people) * 100) : 0;
+  $('returning-card').innerHTML = `<h2>新访客与回访</h2><p class="panel-copy">以保留期内第一次出现的时间区分。更早的访问已被清理时，会显示为新访客。</p><div class="split-meter" role="img" aria-label="新访客 ${freshShare}%，回访 ${100 - freshShare}%"><span style="width:${freshShare}%"></span></div><div class="split-legend"><span><i></i>新访客 ${number(engagement.newVisitors)}</span><span><i class="return"></i>回访 ${number(engagement.returningVisitors)}</span></div>`;
+  const sessions = engagement.sessions || Number(state.data.linked?.sessions || 0);
+  const avgFocus = sessions ? engagement.focusMs / sessions : 0;
+  $('session-card').innerHTML = `<h2>会话与投入</h2><p class="panel-copy">会话跨度是同一次浏览里首条和末条关联事件的间隔。</p><div class="stat-pair"><div><strong>${sessions ? duration(engagement.avgSpanMs) : '—'}</strong><span>平均会话跨度</span></div><div><strong>${sessions ? duration(avgFocus) : '—'}</strong><span>平均专注 / 会话</span></div></div><p class="small-caption">${number(sessions)} 个关联会话</p>`;
+  $('actions-card').innerHTML = `<h2>复制、原文与搜索</h2><p class="panel-copy">只记录动作次数，不保存复制内容或搜索词。</p><div class="stat-trio">${[
+    ['复制', total.copies],
+    ['课堂原文', total.transcripts],
+    ['搜索', total.searches],
+  ]
+    .map(([label, value]) => `<div><strong>${number(value)}</strong><span>${label}</span></div>`)
+    .join('')}</div>`;
+  const pages = [
+    ['进入站点', total.visits],
+    ['工作台', total.workspace],
+    ['资料库', total.library],
+    ['打开笔记', total.opens],
+  ];
+  $('pages-card').innerHTML = `<h2>页面与笔记</h2><p class="panel-copy">进入站点按页面打开计算，笔记按打开次数计算。</p>${pages.map(([label, value]) => `<div class="mini-row"><span>${label}</span><strong>${number(value)}</strong></div>`).join('')}`;
+  renderWeekdays();
+  renderHeatmap();
+  distribution(
+    $('referrer-chart'),
+    (state.data.referrers || []).map((row) => ({
+      label: row.label === 'direct' ? '直接访问' : row.label,
+      records: row.events,
+    })),
+    '所选范围还没有访问来源。之后的访问会记录来源域名。',
+  );
+  distribution(
+    $('country-chart'),
+    (state.data.countries || []).map((row) => ({ label: countryLabel(row.label), records: row.events })),
+    '开启环境分享后，这里显示访问来自哪些国家。',
+  );
+}
+
+function renderWeekdays() {
+  const names = ['一', '二', '三', '四', '五', '六', '日'];
+  const visits = Array(7).fill(0);
+  for (const day of state.model.days) visits[weekdayIndex(day.day)] += day.total.visits;
+  const peak = Math.max(...visits, 1);
+  $('weekday-chart').innerHTML = `<div class="weekday-chart">${visits
+    .map(
+      (value, index) =>
+        `<div class="weekday-col ${value === peak && value > 0 ? 'peak' : ''}"><div class="weekday-bar" style="height:${(value / peak) * 100}%"></div><span>${names[index]}</span><small>${number(value)}</small></div>`,
+    )
+    .join('')}</div>`;
+}
+
+function renderHeatmap() {
+  const names = ['一', '二', '三', '四', '五', '六', '日'];
+  const hourly = state.data.hourly || [];
+  const useFocus = hourly.some((row) => row.focus_ms > 0);
+  const grid = Array.from({ length: 7 }, () => Array(24).fill(0));
+  for (const row of hourly) {
+    const value = useFocus ? Number(row.focus_ms || 0) : Number(row.events || 0);
+    grid[weekdayIndex(row.day)][row.hour] += value;
+  }
+  const peak = Math.max(...grid.flat(), 1);
+  let peakAt = null;
+  grid.forEach((hours, day) =>
+    hours.forEach((value, hour) => {
+      if (!peakAt || value > peakAt.value) peakAt = { day, hour, value };
+    }),
+  );
+  $('heatmap').innerHTML = `<div class="heatmap" role="img" aria-label="星期与小时活跃热力">${grid
+    .map(
+      (hours, day) =>
+        `<div class="heat-row"><span>${names[day]}</span>${hours
+          .map((value, hour) => {
+            const opacity = value ? 0.14 + (value / peak) * 0.86 : 0.08;
+            const detail = useFocus ? `专注 ${duration(value)}` : `${number(value)} 个关联事件`;
+            return `<i style="opacity:${value ? opacity : 0.14}" title="周${names[day]} ${String(hour).padStart(2, '0')}:00 · ${detail}"></i>`;
+          })
+          .join('')}</div>`,
+    )
+    .join('')}</div><div class="heat-scale"><span>低</span><i></i><span>高</span><span>${useFocus ? '颜色表示专注时长' : '暂无专注，颜色表示关联事件数'}</span></div>`;
+  $('heatmap-peak').textContent =
+    peakAt?.value > 0
+      ? `周${names[peakAt.day]} ${String(peakAt.hour).padStart(2, '0')}:00 最活跃`
+      : '暂无分布';
 }
 
 function renderEnvironment() {
   const { environment, diagnostics } = state.data;
   distribution($('browser-chart'), environment.browsers);
   distribution($('platform-chart'), environment.platforms);
+  distribution($('device-chart'), state.data.devices || [], '暂无环境分享记录');
+  distribution($('language-chart'), state.data.languages || [], '暂无环境分享记录');
   $('environment-count').textContent = number(environment.records) + ' 次上报';
   if (!diagnostics.length) emptyTable($('diagnostics'), 5, '所选范围暂无环境诊断记录');
   else
     $('diagnostics').innerHTML = diagnostics
       .map(
         (row) =>
-          `<tr><td>${dateTime(row.received_at)}</td><td>${escapeHTML(row.ip)}</td><td class="ua">${escapeHTML(row.browser)}</td><td>${escapeHTML(row.platform)}</td><td>${escapeHTML(row.language + ' / ' + row.viewport)}</td></tr>`,
+          `<tr><td>${dateTime(row.received_at)}</td><td>${escapeHTML(row.ip)}</td><td class="ua">${escapeHTML(row.browser)}</td><td>${escapeHTML(row.platform)}</td><td>${escapeHTML([row.language, row.viewport, row.country].filter(Boolean).join(' / '))}</td></tr>`,
       )
       .join('');
   $('diagnostics-foot').textContent =
@@ -467,7 +706,13 @@ function renderEnvironment() {
 
 function eventBadge(event) {
   const className =
-    event.kind === 'focus' ? ' focus' : event.kind.startsWith('error_') ? ' error' : '';
+    event.kind === 'focus'
+      ? ' focus'
+      : event.kind === 'copy' || event.kind === 'transcript'
+        ? ' action'
+        : event.kind.startsWith('error_')
+          ? ' error'
+          : '';
   return `<span class="event-kind${className}">${escapeHTML(kinds[event.kind] || event.kind)}</span>`;
 }
 
@@ -580,13 +825,19 @@ async function load() {
     state.data = data;
     state.model = buildModel(data);
     renderSummary();
+    renderInsights();
     renderNotes();
     renderVisitors();
     renderEnvironment();
     selectDay(state.model.days.some((day) => day.day === state.day) ? state.day : data.range.to);
     if (state.visitor) void showVisitor(state.visitor, false, false);
     $('dashboard').classList.remove('loading');
-    $('status').textContent = '更新于 ' + time(data.updatedAt);
+    $('status').textContent =
+      '更新于 ' +
+      time(data.updatedAt) +
+      (data.compare
+        ? ` · 对照 ${data.compare.from} – ${data.compare.to}`
+        : ' · 上一周期超出 30 天保留范围');
     $('coverage-note').textContent = data.firstDay
       ? `最早保留记录 ${data.firstDay} · 使用记录保留约 30 天`
       : '暂无使用记录 · 数据保留约 30 天';
@@ -650,6 +901,13 @@ async function initialize() {
     const button = event.target.closest('[data-metric]');
     if (button && state.model) {
       state.metric = button.dataset.metric;
+      renderTrend();
+    }
+  };
+  $('grain-controls').onclick = (event) => {
+    const button = event.target.closest('[data-grain]');
+    if (button && state.model) {
+      state.grain = button.dataset.grain;
       renderTrend();
     }
   };

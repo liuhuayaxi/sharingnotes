@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-06T20:32:04+08:00",
+  "publishedAt": "2026-11-06T21:04:20+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -10,6 +10,24 @@
     "通信原理 C"
   ],
   "notes": [
+    {
+      "id": "452ade4700f54ef556cb",
+      "course": "光电子学",
+      "title": "光电子学 · 2026-11-06 15:35–17:10",
+      "chapter": "第6章 半导体中的光吸收与光探测器",
+      "chapters": [
+        "第6章 半导体中的光吸收与光探测器"
+      ],
+      "date": "2026-11-06",
+      "abstract": "光电子学 · 2026-11-06 15:35–17:10",
+      "reviewStatus": "skipped",
+      "version": "645f0041a5378e8ad36e825cfa2293d99afff7ae007ac0dc83815bc588813c21",
+      "wordCount": 21757,
+      "imageCount": 13,
+      "file": "notes/452ade4700f54ef556cb-645f0041a537.json",
+      "sourceCount": 93,
+      "lessonAt": "2026-11-06T15:35:00+08:00"
+    },
     {
       "id": "5c7ee7aee02ddc3f3a66",
       "course": "光电子器件（全英文）",

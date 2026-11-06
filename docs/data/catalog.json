@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-06T20:27:42+08:00",
+  "publishedAt": "2026-11-06T20:32:04+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -37,12 +37,12 @@
         "第7章 输入/输出系统"
       ],
       "date": "2026-11-05",
-      "abstract": "微型计算机原理与接口技术 · 2026-11-05 15:35–17:10",
+      "abstract": "微机I/O接口与外设数据传送方式",
       "reviewStatus": "skipped",
-      "version": "6616356fe139a0554baeb06174d104444807dbb23fd5d5ae0306ca30fa59778b",
-      "wordCount": 17315,
-      "imageCount": 8,
-      "file": "notes/f90b4a2c8f07bf1795e5-6616356fe139.json",
+      "version": "63a026b2106f11802f31d0c8e546a9c377fe6e266c804352aaee573db840fc86",
+      "wordCount": 15037,
+      "imageCount": 5,
+      "file": "notes/f90b4a2c8f07bf1795e5-63a026b2106f.json",
       "sourceCount": 89,
       "lessonAt": "2026-11-05T15:35:00+08:00"
     },

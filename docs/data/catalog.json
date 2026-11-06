@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-06T10:10:16+08:00",
+  "publishedAt": "2026-11-06T20:27:07+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -32,18 +32,17 @@
       "id": "f90b4a2c8f07bf1795e5",
       "course": "微型计算机原理与接口技术",
       "title": "微机I/O接口与外设数据传送方式",
-      "chapter": "第1章 计算机基础；第3章 汇编语言指令集",
+      "chapter": "第7章 输入/输出系统",
       "chapters": [
-        "第1章 计算机基础",
-        "第3章 汇编语言指令集"
+        "第7章 输入/输出系统"
       ],
       "date": "2026-11-05",
       "abstract": "微型计算机原理与接口技术 · 2026-11-05 15:35–17:10",
       "reviewStatus": "skipped",
-      "version": "ec1202bcbbdbb46d3cab285382b51a1c408f04a3ea0e31cc40116ad8427bcc50",
+      "version": "6616356fe139a0554baeb06174d104444807dbb23fd5d5ae0306ca30fa59778b",
       "wordCount": 17315,
       "imageCount": 8,
-      "file": "notes/f90b4a2c8f07bf1795e5-ec1202bcbbdb.json",
+      "file": "notes/f90b4a2c8f07bf1795e5-6616356fe139.json",
       "sourceCount": 89,
       "lessonAt": "2026-11-05T15:35:00+08:00"
     },
@@ -534,17 +533,17 @@
       "id": "9d0e8d80420bbcda8ab3",
       "course": "光电子器件（全英文）",
       "title": "光纤波导理论与非线性光学效应",
-      "chapter": "第5章 光纤非线性效应",
+      "chapter": "Chapter 5",
       "chapters": [
-        "第5章 光纤非线性效应"
+        "Chapter 5"
       ],
       "date": "2026-10-15",
       "abstract": "光纤波导理论与非线性光学效应",
       "reviewStatus": "stale",
-      "version": "29e459273a5270c63ade4d1b324c7216d1b5677590d3b7e9a42eb41cbb9f1532",
+      "version": "9f2db0967bfe3e770e3d4e90575a4b440a7a9a3cf167388c3e4aa85ace18be95",
       "wordCount": 31196,
       "imageCount": 8,
-      "file": "notes/9d0e8d80420bbcda8ab3-29e459273a52.json",
+      "file": "notes/9d0e8d80420bbcda8ab3-9f2db0967bfe.json",
       "sourceCount": 93,
       "lessonAt": "2026-10-15T13:45:00+08:00"
     },
@@ -750,17 +749,17 @@
       "id": "5ceda219f9f7bbf3f3d5",
       "course": "光电子器件（全英文）",
       "title": "光纤色散与脉冲展宽原理及控制",
-      "chapter": "第4章 光纤色散",
+      "chapter": "Chapter 4",
       "chapters": [
-        "第4章 光纤色散"
+        "Chapter 4"
       ],
       "date": "2026-10-08",
       "abstract": "光纤色散与脉冲展宽原理及控制",
       "reviewStatus": "skipped",
-      "version": "a165b2ad1808b059720d62b63f1f6783e604ed5377b39f2ce48df087f0835145",
+      "version": "6a7623b3a2b51a29bf8d74c295b411c33a210fb19aac41a69726193b743fc3a8",
       "wordCount": 22495,
       "imageCount": 9,
-      "file": "notes/5ceda219f9f7bbf3f3d5-a165b2ad1808.json",
+      "file": "notes/5ceda219f9f7bbf3f3d5-6a7623b3a2b5.json",
       "sourceCount": 89,
       "lessonAt": "2026-10-08T13:45:00+08:00"
     },
@@ -822,17 +821,17 @@
       "id": "3ba4e5a297637e35b0f1",
       "course": "光电子器件（全英文）",
       "title": "光纤损耗机制与分贝计算原理",
-      "chapter": "第3章 光纤损耗",
+      "chapter": "Chapter 3",
       "chapters": [
-        "第3章 光纤损耗"
+        "Chapter 3"
       ],
       "date": "2026-09-10",
       "abstract": "光纤损耗机制与分贝计算原理",
       "reviewStatus": "skipped",
-      "version": "e6d8d6a74994703969078e9ffb37eba247803f62c2ef945d1fa51307f0f8c157",
+      "version": "2accc6a5fa2485e536cdd46e5dcd3475a72396117c44b7d817aceaa0211f3631",
       "wordCount": 23806,
       "imageCount": 10,
-      "file": "notes/3ba4e5a297637e35b0f1-e6d8d6a74994.json",
+      "file": "notes/3ba4e5a297637e35b0f1-2accc6a5fa24.json",
       "sourceCount": 91,
       "lessonAt": "2026-09-10T13:45:00+08:00"
     },
@@ -894,17 +893,17 @@
       "id": "400f8e68c45142474c26",
       "course": "光电子器件（全英文）",
       "title": "光纤结构分类、制造工艺与导光原理",
-      "chapter": "第2章 光纤结构与导光原理",
+      "chapter": "Chapter 2",
       "chapters": [
-        "第2章 光纤结构与导光原理"
+        "Chapter 2"
       ],
       "date": "2026-09-09",
       "abstract": "光纤结构分类、制造工艺与导光原理",
       "reviewStatus": "skipped",
-      "version": "cd2c4f18ddf2b9788a487681b394decf0ee79b3a6e590ad9bfeaca72c5f297bd",
+      "version": "1bfdd8d317bf469c8b9dff7f2b90f781adcb4be47cc9efa6f6d5718d54d674b9",
       "wordCount": 16333,
       "imageCount": 9,
-      "file": "notes/400f8e68c45142474c26-cd2c4f18ddf2.json",
+      "file": "notes/400f8e68c45142474c26-1bfdd8d317bf.json",
       "sourceCount": 37,
       "lessonAt": "2026-09-09T13:47:06+08:00"
     },
@@ -1075,17 +1074,17 @@
       "id": "59422eac0ff2478a6daa",
       "course": "光电子器件（全英文）",
       "title": "光电子器件概述与光纤通信系统基础",
-      "chapter": "第1章 绪论",
+      "chapter": "绪论",
       "chapters": [
-        "第1章 绪论"
+        "绪论"
       ],
       "date": "2026-09-03",
       "abstract": "光电子器件概述与光纤通信系统基础",
       "reviewStatus": "skipped",
-      "version": "66dba2ff10924d0a7ddd9e762ca8481e18146ca95eba5177e0abccdc167b0207",
+      "version": "563b855e645332e08c28534e6af574f134d5cf92d60d70f11de10527e79bd548",
       "wordCount": 24492,
       "imageCount": 15,
-      "file": "notes/59422eac0ff2478a6daa-66dba2ff1092.json",
+      "file": "notes/59422eac0ff2478a6daa-563b855e6453.json",
       "sourceCount": 70,
       "lessonAt": "2026-09-03T13:45:00+08:00"
     },
@@ -1111,17 +1110,17 @@
       "id": "a8338a4e16a22ed25869",
       "course": "通信原理 C",
       "title": "通信系统模型与信息度量",
-      "chapter": "第1章",
+      "chapter": "第1章 绪论",
       "chapters": [
-        "第1章"
+        "第1章 绪论"
       ],
       "date": "2026-09-02",
       "abstract": "- 通信的本质是传输消息中所包含的信息，课程聚焦于通信物理层原理的抽象数学模型与系统性能分析，而非具体电路实现。",
       "reviewStatus": "stale",
-      "version": "e138264107d313bcba34462af9e2e0774f3088682bdc4a2b8882b6d95c0722d5",
+      "version": "67317378141c48e4d1d7b47297d0a42a6936d39dd79906d0c940eb1bcbfb538c",
       "wordCount": 13481,
       "imageCount": 8,
-      "file": "notes/a8338a4e16a22ed25869-e138264107d3.json",
+      "file": "notes/a8338a4e16a22ed25869-67317378141c.json",
       "sourceCount": 49,
       "lessonAt": "2026-09-02T09:50:00+08:00"
     },

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-06T20:27:07+08:00",
+  "publishedAt": "2026-11-06T20:27:42+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -194,17 +194,17 @@
       "id": "ca612a080d912e7a71db",
       "course": "光电子器件（全英文）",
       "title": "法拉第旋转效应与光隔离器原理",
-      "chapter": "第7章 光隔离器",
+      "chapter": "Chapter 7",
       "chapters": [
-        "第7章 光隔离器"
+        "Chapter 7"
       ],
       "date": "2026-10-29",
       "abstract": "光电子器件（全英文） · 2026-10-29 13:45–15:20",
       "reviewStatus": "stale",
-      "version": "0e8d3b6083579bb86496ce138fc49db804009966412b0da7e5fabd52df9b4bd1",
+      "version": "a9c54248deada8d796815d8d6967a95a45a3c88df0ac9e6f3aabe4e90526aa74",
       "wordCount": 20682,
       "imageCount": 10,
-      "file": "notes/ca612a080d912e7a71db-0e8d3b608357.json",
+      "file": "notes/ca612a080d912e7a71db-a9c54248dead.json",
       "sourceCount": 84,
       "lessonAt": "2026-10-29T13:45:00+08:00"
     },
@@ -355,17 +355,17 @@
       "id": "838e5f7f3c0b1e825547",
       "course": "光电子器件（全英文）",
       "title": "光纤连接技术与光纤耦合器",
-      "chapter": "第6章 光纤连接",
+      "chapter": "Chapter 6",
       "chapters": [
-        "第6章 光纤连接"
+        "Chapter 6"
       ],
       "date": "2026-10-22",
       "abstract": "光纤连接技术与光纤耦合器",
       "reviewStatus": "stale",
-      "version": "8efb74ea94a6f78471299c468ab7c9d3580aa207574a76f6517a66a02425a0d6",
+      "version": "7564183a585a693651117c45d644079fafdc0b90949454185e21ea9305f27478",
       "wordCount": 33991,
       "imageCount": 9,
-      "file": "notes/838e5f7f3c0b1e825547-8efb74ea94a6.json",
+      "file": "notes/838e5f7f3c0b1e825547-7564183a585a.json",
       "sourceCount": 92,
       "lessonAt": "2026-10-22T13:45:00+08:00"
     },

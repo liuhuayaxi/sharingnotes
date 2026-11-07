@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-11-06T21:05:52+08:00",
+  "publishedAt": "2026-11-07T15:22:22+08:00",
   "courses": [
     "光电子器件（全英文）",
     "光电子学",
@@ -117,6 +117,24 @@
       "file": "notes/45d4a52cd42b4bff2ac8-e24423ea6e80.json",
       "sourceCount": 78,
       "lessonAt": "2026-11-03T09:50:00+08:00"
+    },
+    {
+      "id": "42ce32a28992724a52a7",
+      "course": "微型计算机原理与接口技术",
+      "title": "微型计算机原理与接口技术 · 2026-11-03 13:45–15:20",
+      "chapter": "第4章 汇编语言程序设计",
+      "chapters": [
+        "第4章 汇编语言程序设计"
+      ],
+      "date": "2026-11-03",
+      "abstract": "微型计算机原理与接口技术 · 2026-11-03 13:45–15:20",
+      "reviewStatus": "skipped",
+      "version": "eb2d546292313d413d62b446e3bcad3f8a27ccef0ed5b1b6e9f1588651ad841a",
+      "wordCount": 22902,
+      "imageCount": 6,
+      "file": "notes/42ce32a28992724a52a7-eb2d54629231.json",
+      "sourceCount": 80,
+      "lessonAt": "2026-11-03T13:45:00+08:00"
     },
     {
       "id": "2026d187082bdfdfd550",

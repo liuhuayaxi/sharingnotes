@@ -1,5 +1,5 @@
 {
-  "publishedAt": "2026-11-06T21:05:52+08:00",
+  "publishedAt": "2026-11-07T15:22:22+08:00",
   "notes": [
     {
       "id": "452ade4700f54ef556cb",
@@ -30,6 +30,12 @@
       "file": "notes/854302fb96f3ebde0565-14bed8d66b0e.json",
       "sha256": "76c2b6fd72a02a5ec2ee890c21106d69e3933bb0b74271d0512f28dfbb7de80d",
       "bytes": 95622
+    },
+    {
+      "id": "42ce32a28992724a52a7",
+      "file": "notes/42ce32a28992724a52a7-eb2d54629231.json",
+      "sha256": "5d033624eaf1316f69fb29c2d0bf289a2b94d7023105073138888908cff9375b",
+      "bytes": 95649
     },
     {
       "id": "45d4a52cd42b4bff2ac8",
@@ -713,6 +719,48 @@
       "bytes": 399464,
       "width": 1348,
       "height": 952
+    },
+    {
+      "file": "images/83fb54b3e0fcd16c05acc9c170a4db37e63e8d8fbcb70acc4c1cba9a86a060af.png",
+      "sha256": "83fb54b3e0fcd16c05acc9c170a4db37e63e8d8fbcb70acc4c1cba9a86a060af",
+      "bytes": 239616,
+      "width": 1152,
+      "height": 864
+    },
+    {
+      "file": "images/b96be9c2c8d3bd3d272c82767ee13a5c6b5e2ff71c08e15968c6b585e23f4a57.png",
+      "sha256": "b96be9c2c8d3bd3d272c82767ee13a5c6b5e2ff71c08e15968c6b585e23f4a57",
+      "bytes": 211016,
+      "width": 1152,
+      "height": 864
+    },
+    {
+      "file": "images/b7d27c702406d0a47af812818a35530a728d96c822db3c05b2963f84c68e2262.png",
+      "sha256": "b7d27c702406d0a47af812818a35530a728d96c822db3c05b2963f84c68e2262",
+      "bytes": 205149,
+      "width": 1152,
+      "height": 864
+    },
+    {
+      "file": "images/ee2ae1af4a371a69d5a5894a9612af39bbc2ffe3ac050bfbb211dc0943a345e7.png",
+      "sha256": "ee2ae1af4a371a69d5a5894a9612af39bbc2ffe3ac050bfbb211dc0943a345e7",
+      "bytes": 284873,
+      "width": 1152,
+      "height": 864
+    },
+    {
+      "file": "images/322cc51245e230e53fa41c5d705094262718d20eaccb1e556a59edfdc8fcf420.png",
+      "sha256": "322cc51245e230e53fa41c5d705094262718d20eaccb1e556a59edfdc8fcf420",
+      "bytes": 199185,
+      "width": 1152,
+      "height": 864
+    },
+    {
+      "file": "images/64079e686cca2e25c871725f0399731d0a2b6b755779c1ed8889584ac0f667a4.png",
+      "sha256": "64079e686cca2e25c871725f0399731d0a2b6b755779c1ed8889584ac0f667a4",
+      "bytes": 267032,
+      "width": 1152,
+      "height": 864
     },
     {
       "file": "images/2b031ef5ff665d04cc2631300d0b6b3a5bb48ccc369e294359012e68346fccd2.png",
@@ -4845,5 +4893,5 @@
       "height": 864
     }
   ],
-  "sourceCount": 4792
+  "sourceCount": 4872
 }
